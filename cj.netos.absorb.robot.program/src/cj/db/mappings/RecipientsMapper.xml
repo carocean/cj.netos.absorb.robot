@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cj.netos.absorb.robot.mapper.RecipientsMapper">
+  <resultMap id="BaseResultMap" type="cj.netos.absorb.robot.model.Recipients">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="person" jdbcType="VARCHAR" property="person" />
+    <result column="absorber" jdbcType="VARCHAR" property="absorber" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="ctime" jdbcType="VARCHAR" property="ctime" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="encourage_code" jdbcType="VARCHAR" property="encourageCode" />
+    <result column="encourage_cause" jdbcType="VARCHAR" property="encourageCause" />
+    <result column="desire_amount" jdbcType="BIGINT" property="desireAmount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    id, person, absorber, person_name, ctime, weight, encourage_code, encourage_cause, 
+    desire_amount
+  </sql>
+  <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.RecipientsExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from recipients
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select 
+    <include refid="Base_Column_List" />
+    from recipients
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from recipients
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cj.netos.absorb.robot.model.RecipientsExample">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from recipients
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cj.netos.absorb.robot.model.Recipients">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into recipients (id, person, absorber, 
+      person_name, ctime, weight, 
+      encourage_code, encourage_cause, desire_amount
+      )
+    values (#{id,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, 
+      #{personName,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, #{weight,jdbcType=INTEGER}, 
+      #{encourageCode,jdbcType=VARCHAR}, #{encourageCause,jdbcType=VARCHAR}, #{desireAmount,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.Recipients">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into recipients
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="person != null">
+        person,
+      </if>
+      <if test="absorber != null">
+        absorber,
+      </if>
+      <if test="personName != null">
+        person_name,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="encourageCode != null">
+        encourage_code,
+      </if>
+      <if test="encourageCause != null">
+        encourage_cause,
+      </if>
+      <if test="desireAmount != null">
+        desire_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="absorber != null">
+        #{absorber,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="encourageCode != null">
+        #{encourageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="encourageCause != null">
+        #{encourageCause,jdbcType=VARCHAR},
+      </if>
+      <if test="desireAmount != null">
+        #{desireAmount,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cj.netos.absorb.robot.model.RecipientsExample" resultType="java.lang.Long">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select count(*) from recipients
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update recipients
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.person != null">
+        person = #{record.person,jdbcType=VARCHAR},
+      </if>
+      <if test="record.absorber != null">
+        absorber = #{record.absorber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personName != null">
+        person_name = #{record.personName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=INTEGER},
+      </if>
+      <if test="record.encourageCode != null">
+        encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.encourageCause != null">
+        encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.desireAmount != null">
+        desire_amount = #{record.desireAmount,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update recipients
+    set id = #{record.id,jdbcType=VARCHAR},
+      person = #{record.person,jdbcType=VARCHAR},
+      absorber = #{record.absorber,jdbcType=VARCHAR},
+      person_name = #{record.personName,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=VARCHAR},
+      weight = #{record.weight,jdbcType=INTEGER},
+      encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
+      encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
+      desire_amount = #{record.desireAmount,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cj.netos.absorb.robot.model.Recipients">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update recipients
+    <set>
+      <if test="person != null">
+        person = #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="absorber != null">
+        absorber = #{absorber,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="encourageCode != null">
+        encourage_code = #{encourageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="encourageCause != null">
+        encourage_cause = #{encourageCause,jdbcType=VARCHAR},
+      </if>
+      <if test="desireAmount != null">
+        desire_amount = #{desireAmount,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cj.netos.absorb.robot.model.Recipients">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update recipients
+    set person = #{person,jdbcType=VARCHAR},
+      absorber = #{absorber,jdbcType=VARCHAR},
+      person_name = #{personName,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=INTEGER},
+      encourage_code = #{encourageCode,jdbcType=VARCHAR},
+      encourage_cause = #{encourageCause,jdbcType=VARCHAR},
+      desire_amount = #{desireAmount,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

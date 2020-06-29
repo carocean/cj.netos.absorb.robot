@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MybatisBuilder.project.settings">
+    <option name="connectionInfoList">
+      <list>
+        <ConnectionInfo>
+          <option name="database" value="netos.absorb.robot" />
+          <option name="description" value="" />
+          <option name="driverClass" value="" />
+          <option name="driverLibrary" value="" />
+          <option name="driverType" value="MySQL" />
+          <option name="host" value="47.104.128.137" />
+          <option name="id" value="cc3ff3ad68b848428c78b6a1971d007e" />
+          <option name="name" value="netos.absorb.robot" />
+          <option name="port" value="3306" />
+          <option name="url" value="" />
+          <option name="userName" value="cj" />
+        </ConnectionInfo>
+      </list>
+    </option>
+    <option name="defaultParameters">
+      <DefaultParameters>
+        <option name="renameConfig">
+          <Config>
+            <option name="mapperTypePattern" value="" />
+            <option name="exampleTypePattern" value="" />
+            <option name="sqlFileNamePattern" value="" />
+          </Config>
+        </option>
+        <option name="selectWithLockConfig">
+          <SelectWithLockConfig>
+            <option name="byPrimaryKeyWithLockOverride" value="" />
+            <option name="byExampleWithLockOverride" value="" />
+          </SelectWithLockConfig>
+        </option>
+      </DefaultParameters>
+    </option>
+    <option name="historyMap">
+      <map>
+        <entry key="JAVA_CLIENT_PACKAGE">
+          <value>
+            <list>
+              <option value="cj.netos.absorb.robot.mapper" />
+            </list>
+          </value>
+        </entry>
+        <entry key="JAVA_MODEL_PACKAGE">
+          <value>
+            <list>
+              <option value="cj.netos.absorb.robot.model" />
+            </list>
+          </value>
+        </entry>
+        <entry key="SQL_MAP_PACKAGE">
+          <value>
+            <list>
+              <option value="cj.db.mappings" />
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="lastGeneratorParamWrapper">
+      <GeneratorParamWrapper>
+        <option name="defaultTableConfigWrapper">
+          <TableConfigurationWrapper>
+            <option name="domainObjectRenamingRule">
+              <DomainObjectRenamingRule>
+                <option name="replaceString" value="" />
+                <option name="searchString" value="" />
+              </DomainObjectRenamingRule>
+            </option>
+            <option name="generatedKeyWrapper">
+              <GeneratedKeyWrapper>
+                <option name="column" value="" />
+              </GeneratedKeyWrapper>
+            </option>
+          </TableConfigurationWrapper>
+        </option>
+        <option name="javaClientConfig">
+          <JavaClientGeneratorConfiguration>
+            <option name="configurationType" value="XMLMAPPER" />
+            <option name="targetPackage" value="cj.netos.absorb.robot.mapper" />
+            <option name="targetProject" value="$PROJECT_DIR$/cj.netos.absorb.robot.program/src" />
+          </JavaClientGeneratorConfiguration>
+        </option>
+        <option name="javaModelConfig">
+          <JavaModelGeneratorConfiguration>
+            <option name="targetPackage" value="cj.netos.absorb.robot.model" />
+            <option name="targetProject" value="$PROJECT_DIR$/cj.netos.absorb.robot.openports/src" />
+          </JavaModelGeneratorConfiguration>
+        </option>
+        <option name="sqlMapConfig">
+          <SqlMapGeneratorConfiguration>
+            <option name="targetPackage" value="cj.db.mappings" />
+            <option name="targetProject" value="$PROJECT_DIR$/cj.netos.absorb.robot.program/src" />
+          </SqlMapGeneratorConfiguration>
+        </option>
+      </GeneratorParamWrapper>
+    </option>
+    <option name="tableInfoMap">
+      <map>
+        <entry key="netos.absorb.robot#absorber">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="Absorber" />
+              <option name="tableComment" value="洇取器&#10;可以是金证喷泉、店、文章等&#10;归纳为两类洇取器：&#10;1.地理洇取器，圆心和半径。范围内的动态收件人+固定的收件人；&#10;2.普通洇取器，只有固定的收件人；" />
+              <option name="tableName" value="absorber" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#absorber_bill">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="AbsorberBill" />
+              <option name="tableComment" value="洇取器账单" />
+              <option name="tableName" value="absorber_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#absorber_bucket">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="AbsorberBucket" />
+              <option name="tableComment" value="洇取桶&#10;用于让个人或商家向洇取器投资，为了派发资金" />
+              <option name="tableName" value="absorber_bucket" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#recipients">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="Recipients" />
+              <option name="tableComment" value="固定收件人&#10;对于动态的收件人也应按此信息生成，洇取器只认识固定收件人属性" />
+              <option name="tableName" value="recipients" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#recipients_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="RecipientsRecord" />
+              <option name="tableComment" value="收件人记录流水&#10;派发出去的洇金日志" />
+              <option name="tableName" value="recipients_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#withdraw_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="WithdrawRecord" />
+              <option name="tableComment" value="机器人提现记录流水" />
+              <option name="tableName" value="withdraw_record" />
+            </TableInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

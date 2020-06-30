@@ -1,0 +1,87 @@
+package cj.netos.absorb.robot.ports;
+
+import cj.netos.absorb.robot.bo.LatLng;
+import cj.netos.absorb.robot.model.Absorber;
+import cj.studio.ecm.net.CircuitException;
+import cj.studio.openport.IOpenportService;
+import cj.studio.openport.ISecuritySession;
+import cj.studio.openport.annotations.CjOpenport;
+import cj.studio.openport.annotations.CjOpenportParameter;
+import cj.studio.openport.annotations.CjOpenports;
+
+import java.util.List;
+
+@CjOpenports(usage = "洇取器集成器")
+public interface IAbsorberHubPorts extends IOpenportService {
+    @CjOpenport(usage = "创建一个简单的洇取器")
+    Absorber createSimpleAbsorber(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "银行标识", name = "bankid") String bankid,
+            @CjOpenportParameter(usage = "洇取器名称\n" +
+                    "一般以proxy对应对象的名称命名", name = "title") String title,
+            @CjOpenportParameter(usage = "分类，如：喷泉、店、平聊、网流地微中文章、追链中的文章等等，以英文代码表示", name = "category") String category,
+            @CjOpenportParameter(usage = "代表的对象的标识，如具体的文章标识，具体的实体店标识、具体的金证喷泉标识等\n" +
+                    "它与category对应，category说明是哪类实体\n" +
+                    "代表的对象如果是以地址表示的则指向其地址，没有的可为空", name = "proxy") String proxy,
+            @CjOpenportParameter(usage = "洇取器过期时间\n" +
+                    "0表示不限期\n" +
+                    "当达到过期时间则删除", name = "exitExpire") long exitExpire,
+            @CjOpenportParameter(usage = "限制的洇取金额，当达到该金额时删除洇取器\n" +
+                    "0表示洇取器不受限制的洇取资金", name = "exitAmount") long exitAmount
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "创建一个地理洇取器")
+    Absorber createGeoAbsorber(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "银行标识", name = "bankid") String bankid,
+            @CjOpenportParameter(usage = "洇取器名称\n" +
+                    "一般以proxy对应对象的名称命名", name = "title") String title,
+            @CjOpenportParameter(usage = "分类，如：喷泉、店、平聊、网流地微中文章、追链中的文章等等，以英文代码表示", name = "category") String category,
+            @CjOpenportParameter(usage = "代表的对象的标识，如具体的文章标识，具体的实体店标识、具体的金证喷泉标识等\n" +
+                    "它与category对应，category说明是哪类实体\n" +
+                    "代表的对象如果是以地址表示的则指向其地址，没有的可为空", name = "proxy") String proxy,
+            @CjOpenportParameter(usage = "位置，经纬度json，格式为：{\"latitude\":%s,\"longitude\":%s}", name = "location") LatLng location,
+            @CjOpenportParameter(usage = "半径，单位米", name = "radius") long radius,
+            @CjOpenportParameter(usage = "洇取器过期时间\n" +
+                    "0表示不限期\n" +
+                    "当达到过期时间则删除", name = "exitExpire") long exitExpire,
+            @CjOpenportParameter(usage = "限制的洇取金额，当达到该金额时删除洇取器\n" +
+                    "0表示洇取器不受限制的洇取资金", name = "exitAmount") long exitAmount
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取洇取器")
+    Absorber getAbsorber(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页洇取器")
+    List<Absorber> pageAbsorber(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "银行标识", name = "bankid") String bankid,
+            @CjOpenportParameter(usage = "洇取器类型。0指所有洇取器；1指非地理洇取器；2指地理洇取器", name = "type") int type,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "移除指定的洇取器")
+    void removeAbsorber(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "添加自已为洇金收取人")
+    void addRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "激励代码，如\n" +
+                    "great\n" +
+                    "like\n" +
+                    "ingeo\n" +
+                    "等等", name = "encourageCode") String encourageCode,
+            @CjOpenportParameter(usage = "激励原因：如他点了赞或做了评论，或在地圈等等原因", name = "encourageCause") String encourageCause,
+            @CjOpenportParameter(usage = "期望的激励金，如果达到激励金额则移除\n" +
+                    "激励金如果为0表示永远洇取洇金", name = "desireAmount") long desireAmount
+    ) throws CircuitException;
+
+}

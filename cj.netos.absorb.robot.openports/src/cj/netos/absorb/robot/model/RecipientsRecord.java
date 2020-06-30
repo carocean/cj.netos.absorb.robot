@@ -1,5 +1,7 @@
 package cj.netos.absorb.robot.model;
 
+import java.math.BigDecimal;
+
 /**
  * Table: recipients_record
  */
@@ -11,28 +13,16 @@ public class RecipientsRecord {
     private String sn;
 
     /**
-     * Column: absorber
-     * Remark: 洇取器
-     */
-    private String absorber;
-
-    /**
      * Column: recipient
-     * Remark: 收件人
+     * Remark: 收取人公号，与absorber一起对应recipients表的标识 一个收取人会多次领取发到同一个洇取器的洇金
      */
     private String recipient;
 
     /**
-     * Column: person_name
-     * Remark: 收件人姓名
-     */
-    private String personName;
-
-    /**
      * Column: amount
-     * Remark: 派出的金额
+     * Remark: 派出的金额 单位为分，充许8位小数
      */
-    private Long amount;
+    private BigDecimal amount;
 
     /**
      * Column: ctime
@@ -46,20 +36,17 @@ public class RecipientsRecord {
      */
     private String refsn;
 
+    /**
+     * Column: absorber
+     */
+    private String absorber;
+
     public String getSn() {
         return sn;
     }
 
     public void setSn(String sn) {
         this.sn = sn == null ? null : sn.trim();
-    }
-
-    public String getAbsorber() {
-        return absorber;
-    }
-
-    public void setAbsorber(String absorber) {
-        this.absorber = absorber == null ? null : absorber.trim();
     }
 
     public String getRecipient() {
@@ -70,19 +57,11 @@ public class RecipientsRecord {
         this.recipient = recipient == null ? null : recipient.trim();
     }
 
-    public String getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(String personName) {
-        this.personName = personName == null ? null : personName.trim();
-    }
-
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -100,5 +79,13 @@ public class RecipientsRecord {
 
     public void setRefsn(String refsn) {
         this.refsn = refsn == null ? null : refsn.trim();
+    }
+
+    public String getAbsorber() {
+        return absorber;
+    }
+
+    public void setAbsorber(String absorber) {
+        this.absorber = absorber == null ? null : absorber.trim();
     }
 }

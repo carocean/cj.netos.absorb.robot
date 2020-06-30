@@ -8,7 +8,7 @@
     <result column="absorber" jdbcType="VARCHAR" property="absorber" />
     <result column="person_name" jdbcType="VARCHAR" property="personName" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
-    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
     <result column="encourage_code" jdbcType="VARCHAR" property="encourageCode" />
     <result column="encourage_cause" jdbcType="VARCHAR" property="encourageCause" />
     <result column="desire_amount" jdbcType="BIGINT" property="desireAmount" />
@@ -119,7 +119,7 @@
       encourage_code, encourage_cause, desire_amount
       )
     values (#{id,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, 
-      #{personName,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, #{weight,jdbcType=INTEGER}, 
+      #{personName,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, #{weight,jdbcType=DECIMAL}, 
       #{encourageCode,jdbcType=VARCHAR}, #{encourageCause,jdbcType=VARCHAR}, #{desireAmount,jdbcType=BIGINT}
       )
   </insert>
@@ -172,7 +172,7 @@
         #{ctime,jdbcType=VARCHAR},
       </if>
       <if test="weight != null">
-        #{weight,jdbcType=INTEGER},
+        #{weight,jdbcType=DECIMAL},
       </if>
       <if test="encourageCode != null">
         #{encourageCode,jdbcType=VARCHAR},
@@ -212,7 +212,7 @@
         ctime = #{record.ctime,jdbcType=VARCHAR},
       </if>
       <if test="record.weight != null">
-        weight = #{record.weight,jdbcType=INTEGER},
+        weight = #{record.weight,jdbcType=DECIMAL},
       </if>
       <if test="record.encourageCode != null">
         encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
@@ -236,7 +236,7 @@
       absorber = #{record.absorber,jdbcType=VARCHAR},
       person_name = #{record.personName,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=VARCHAR},
-      weight = #{record.weight,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=DECIMAL},
       encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
       encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
       desire_amount = #{record.desireAmount,jdbcType=BIGINT}
@@ -261,7 +261,7 @@
         ctime = #{ctime,jdbcType=VARCHAR},
       </if>
       <if test="weight != null">
-        weight = #{weight,jdbcType=INTEGER},
+        weight = #{weight,jdbcType=DECIMAL},
       </if>
       <if test="encourageCode != null">
         encourage_code = #{encourageCode,jdbcType=VARCHAR},
@@ -282,10 +282,23 @@
       absorber = #{absorber,jdbcType=VARCHAR},
       person_name = #{personName,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=VARCHAR},
-      weight = #{weight,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DECIMAL},
       encourage_code = #{encourageCode,jdbcType=VARCHAR},
       encourage_cause = #{encourageCause,jdbcType=VARCHAR},
       desire_amount = #{desireAmount,jdbcType=BIGINT}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="totalWeightsOfRecipients" parameterType="cj.netos.absorb.robot.model.Recipients" resultType="java.math.BigDecimal">
+        select sum(weight)
+        from recipients
+        where absorber = #{absorber,jdbcType=VARCHAR}
+    </select>
+    <select id="page" parameterType="cj.netos.absorb.robot.model.Recipients" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from recipients
+        where absorber = #{absorber,jdbcType=VARCHAR}
+        order by weight desc
+        limit #{offset},#{limit}
+    </select>
 </mapper>

@@ -36,5 +36,7 @@
         <mapper resource="cj/db/mappings/RecipientsMapper.xml"/>
         <mapper resource="cj/db/mappings/RecipientsRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/WithdrawRecordMapper.xml"/>
+        <mapper resource="cj/db/mappings/HubTailsMapper.xml"/>
+        <mapper resource="cj/db/mappings/TailBillMapper.xml"/>
     </mappers>
 </configuration>

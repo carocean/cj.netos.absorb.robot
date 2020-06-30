@@ -1,5 +1,7 @@
 package cj.netos.absorb.robot.model;
 
+import java.math.BigDecimal;
+
 /**
  * Table: absorber
  */
@@ -11,15 +13,9 @@ public class Absorber {
 
     /**
      * Column: title
-     * Remark: 洇取器名称
+     * Remark: 洇取器名称 一般以proxy对应对象的名称命名
      */
     private String title;
-
-    /**
-     * Column: type
-     * Remark: 0为一般洇取器 1为地理洇取器
-     */
-    private Integer type;
 
     /**
      * Column: bankid
@@ -29,27 +25,33 @@ public class Absorber {
 
     /**
      * Column: category
-     * Remark: 分类，如：喷泉、店、平聊、网流地微中文章的赞、评论，追链中的阅读等等
+     * Remark: 分类，如：喷泉、店、平聊、网流地微中文章、追链中的文章等等,以英文代码表示
      */
     private String category;
 
     /**
      * Column: proxy
-     * Remark: 洇取器代表的真实对象，一般为标识，如具体的文章标识，具体的实体店标识、具体的金证喷泉标识等 它与category对应，category说明是哪类实体
+     * Remark: 代表的对象的标识，如具体的文章标识，具体的实体店标识、具体的金证喷泉标识等 它与category对应，category说明是哪类实体 代表的对象如果是以地址表示的则指向其地址，没有的可为空
      */
     private String proxy;
 
     /**
      * Column: location
-     * Remark: 位置，type=1才有用 经纬度json
+     * Remark: 位置，经纬度json，格式为：{"latitude":%s,"longitude":%s}
      */
     private String location;
 
     /**
      * Column: radius
-     * Remark: 位径，type=1才有用
+     * Remark: 半径，单位米
      */
-    private String radius;
+    private Long radius;
+
+    /**
+     * Column: type
+     * Remark: 洇取器类型, 0:简单洇取器 1:地理洇取器，是的时候其location和radius不为空
+     */
+    private Integer type;
 
     /**
      * Column: creator
@@ -67,13 +69,25 @@ public class Absorber {
      * Column: exit_expire
      * Remark: 洇取器过期时间 0表示不限期 当达到过期时间则删除
      */
-    private String exitExpire;
+    private Long exitExpire;
 
     /**
      * Column: exit_amount
-     * Remark: 限制的洇取金额，当达到该金额时删除洇取器
+     * Remark: 限制的洇取金额，当达到该金额时删除洇取器 0表示洇取器不受限制的洇取资金
      */
     private Long exitAmount;
+
+    /**
+     * Column: weight
+     * Remark: 洇取器权重。 一般固定洇取器权重高于一般的 权重比的调整只有地商才有权限调 算法：比重=1个洇取器的比重/（每个洇取器权重之和） 权重基数是1.00
+     */
+    private BigDecimal weight;
+
+    /**
+     * Column: max_recipients
+     * Remark: 收取人数限制
+     */
+    private Long maxRecipients;
 
     public String getId() {
         return id;
@@ -89,14 +103,6 @@ public class Absorber {
 
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public String getBankid() {
@@ -131,12 +137,20 @@ public class Absorber {
         this.location = location == null ? null : location.trim();
     }
 
-    public String getRadius() {
+    public Long getRadius() {
         return radius;
     }
 
-    public void setRadius(String radius) {
-        this.radius = radius == null ? null : radius.trim();
+    public void setRadius(Long radius) {
+        this.radius = radius;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getCreator() {
@@ -155,12 +169,12 @@ public class Absorber {
         this.ctime = ctime == null ? null : ctime.trim();
     }
 
-    public String getExitExpire() {
+    public Long getExitExpire() {
         return exitExpire;
     }
 
-    public void setExitExpire(String exitExpire) {
-        this.exitExpire = exitExpire == null ? null : exitExpire.trim();
+    public void setExitExpire(Long exitExpire) {
+        this.exitExpire = exitExpire;
     }
 
     public Long getExitAmount() {
@@ -169,5 +183,21 @@ public class Absorber {
 
     public void setExitAmount(Long exitAmount) {
         this.exitAmount = exitAmount;
+    }
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
+    public Long getMaxRecipients() {
+        return maxRecipients;
+    }
+
+    public void setMaxRecipients(Long maxRecipients) {
+        this.maxRecipients = maxRecipients;
     }
 }

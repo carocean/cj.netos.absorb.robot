@@ -42,6 +42,7 @@ public class CheckAccessTokenStrategy implements ICheckAccessTokenStrategy {
         String appid = _securitySession.principal().substring(pos + 1);
         _securitySession.property("appid", appid);
         _securitySession.property("device",tokeninfo.get("device"));
+        _securitySession.property("nickName",tokeninfo.get("nickName"));
         _securitySession.property("accessToken", accessToken);
         return _securitySession;
     }

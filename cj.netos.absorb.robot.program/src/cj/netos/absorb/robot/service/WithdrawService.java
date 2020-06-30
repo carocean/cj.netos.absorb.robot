@@ -1,12 +1,13 @@
 package cj.netos.absorb.robot.service;
 
-import cj.netos.absorb.robot.BankWithdrawResult;
-import cj.netos.absorb.robot.IWithdrawService;
+import cj.netos.absorb.robot.*;
+import cj.netos.absorb.robot.distributes.OnWithdrawHubDistribute;
 import cj.netos.absorb.robot.mapper.WithdrawRecordMapper;
 import cj.netos.absorb.robot.model.WithdrawRecord;
 import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
-import cj.netos.rabbitmq.RabbitMQException;
+import cj.netos.rabbitmq.IRabbitMQProducer;
+import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
@@ -16,10 +17,14 @@ import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 import cj.ultimate.gson2.com.google.gson.Gson;
-import com.rabbitmq.client.LongString;
-import okhttp3.*;
+import cj.ultimate.util.StringUtil;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -29,9 +34,13 @@ import java.util.UUID;
 public class WithdrawService implements IWithdrawService {
     @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.WithdrawRecordMapper")
     WithdrawRecordMapper withdrawRecordMapper;
-
     @CjServiceSite
     IServiceSite site;
+    @CjServiceRef
+    IAbsorberHubService absorberHubService;
+
+    @CjServiceRef(refByName = "@.rabbitmq.producer.wallet")
+    IRabbitMQProducer rabbitMQProducer;
 
     @CjTransaction
     @Override
@@ -121,13 +130,18 @@ public class WithdrawService implements IWithdrawService {
     @CjTransaction
     @Override
     public void error(String sn, String status, String message) {
-        withdrawRecordMapper.updateStatus(sn, status, message);
+        String msg = message;
+        if (!StringUtil.isEmpty(msg)) {
+            msg = msg.substring(0, msg.length() > 200 ? 200 : msg.length());
+        }
+        withdrawRecordMapper.updateStatus(sn, status, msg);
     }
 
     @CjTransaction
     @Override
     public void doResponse(BankWithdrawResult result) throws CircuitException {
         withdrawRecordMapper.done(result.getOutTradeSn(), result.getRealAmount(), RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
-
+        IHubDistribute<BankWithdrawResult> onWithdrawDistributeService = new OnWithdrawHubDistribute(absorberHubService, rabbitMQProducer);
+        onWithdrawDistributeService.distribute(result);
     }
 }

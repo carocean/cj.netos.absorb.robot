@@ -1,5 +1,6 @@
 package cj.netos.absorb.robot.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -274,66 +275,6 @@ public class AbsorberExample {
 
         public Criteria andTitleNotBetween(String value1, String value2) {
             addCriterion("title not between", value1, value2, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNull() {
-            addCriterion("`type` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNotNull() {
-            addCriterion("`type` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeEqualTo(Integer value) {
-            addCriterion("`type` =", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotEqualTo(Integer value) {
-            addCriterion("`type` <>", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThan(Integer value) {
-            addCriterion("`type` >", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`type` >=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThan(Integer value) {
-            addCriterion("`type` <", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThanOrEqualTo(Integer value) {
-            addCriterion("`type` <=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIn(List<Integer> values) {
-            addCriterion("`type` in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotIn(List<Integer> values) {
-            addCriterion("`type` not in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeBetween(Integer value1, Integer value2) {
-            addCriterion("`type` between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
-            addCriterion("`type` not between", value1, value2, "type");
             return (Criteria) this;
         }
 
@@ -627,63 +568,113 @@ public class AbsorberExample {
             return (Criteria) this;
         }
 
-        public Criteria andRadiusEqualTo(String value) {
+        public Criteria andRadiusEqualTo(Long value) {
             addCriterion("radius =", value, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusNotEqualTo(String value) {
+        public Criteria andRadiusNotEqualTo(Long value) {
             addCriterion("radius <>", value, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusGreaterThan(String value) {
+        public Criteria andRadiusGreaterThan(Long value) {
             addCriterion("radius >", value, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusGreaterThanOrEqualTo(String value) {
+        public Criteria andRadiusGreaterThanOrEqualTo(Long value) {
             addCriterion("radius >=", value, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusLessThan(String value) {
+        public Criteria andRadiusLessThan(Long value) {
             addCriterion("radius <", value, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusLessThanOrEqualTo(String value) {
+        public Criteria andRadiusLessThanOrEqualTo(Long value) {
             addCriterion("radius <=", value, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusLike(String value) {
-            addCriterion("radius like", value, "radius");
-            return (Criteria) this;
-        }
-
-        public Criteria andRadiusNotLike(String value) {
-            addCriterion("radius not like", value, "radius");
-            return (Criteria) this;
-        }
-
-        public Criteria andRadiusIn(List<String> values) {
+        public Criteria andRadiusIn(List<Long> values) {
             addCriterion("radius in", values, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusNotIn(List<String> values) {
+        public Criteria andRadiusNotIn(List<Long> values) {
             addCriterion("radius not in", values, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusBetween(String value1, String value2) {
+        public Criteria andRadiusBetween(Long value1, Long value2) {
             addCriterion("radius between", value1, value2, "radius");
             return (Criteria) this;
         }
 
-        public Criteria andRadiusNotBetween(String value1, String value2) {
+        public Criteria andRadiusNotBetween(Long value1, Long value2) {
             addCriterion("radius not between", value1, value2, "radius");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("`type` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("`type` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("`type` =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("`type` <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("`type` >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`type` >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("`type` <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("`type` <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("`type` in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("`type` not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("`type` between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("`type` not between", value1, value2, "type");
             return (Criteria) this;
         }
 
@@ -837,62 +828,52 @@ public class AbsorberExample {
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireEqualTo(String value) {
+        public Criteria andExitExpireEqualTo(Long value) {
             addCriterion("exit_expire =", value, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireNotEqualTo(String value) {
+        public Criteria andExitExpireNotEqualTo(Long value) {
             addCriterion("exit_expire <>", value, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireGreaterThan(String value) {
+        public Criteria andExitExpireGreaterThan(Long value) {
             addCriterion("exit_expire >", value, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireGreaterThanOrEqualTo(String value) {
+        public Criteria andExitExpireGreaterThanOrEqualTo(Long value) {
             addCriterion("exit_expire >=", value, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireLessThan(String value) {
+        public Criteria andExitExpireLessThan(Long value) {
             addCriterion("exit_expire <", value, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireLessThanOrEqualTo(String value) {
+        public Criteria andExitExpireLessThanOrEqualTo(Long value) {
             addCriterion("exit_expire <=", value, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireLike(String value) {
-            addCriterion("exit_expire like", value, "exitExpire");
-            return (Criteria) this;
-        }
-
-        public Criteria andExitExpireNotLike(String value) {
-            addCriterion("exit_expire not like", value, "exitExpire");
-            return (Criteria) this;
-        }
-
-        public Criteria andExitExpireIn(List<String> values) {
+        public Criteria andExitExpireIn(List<Long> values) {
             addCriterion("exit_expire in", values, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireNotIn(List<String> values) {
+        public Criteria andExitExpireNotIn(List<Long> values) {
             addCriterion("exit_expire not in", values, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireBetween(String value1, String value2) {
+        public Criteria andExitExpireBetween(Long value1, Long value2) {
             addCriterion("exit_expire between", value1, value2, "exitExpire");
             return (Criteria) this;
         }
 
-        public Criteria andExitExpireNotBetween(String value1, String value2) {
+        public Criteria andExitExpireNotBetween(Long value1, Long value2) {
             addCriterion("exit_expire not between", value1, value2, "exitExpire");
             return (Criteria) this;
         }
@@ -954,6 +935,126 @@ public class AbsorberExample {
 
         public Criteria andExitAmountNotBetween(Long value1, Long value2) {
             addCriterion("exit_amount not between", value1, value2, "exitAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightIsNull() {
+            addCriterion("weight is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightIsNotNull() {
+            addCriterion("weight is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightEqualTo(BigDecimal value) {
+            addCriterion("weight =", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightNotEqualTo(BigDecimal value) {
+            addCriterion("weight <>", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightGreaterThan(BigDecimal value) {
+            addCriterion("weight >", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("weight >=", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightLessThan(BigDecimal value) {
+            addCriterion("weight <", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("weight <=", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightIn(List<BigDecimal> values) {
+            addCriterion("weight in", values, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightNotIn(List<BigDecimal> values) {
+            addCriterion("weight not in", values, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("weight between", value1, value2, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("weight not between", value1, value2, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsIsNull() {
+            addCriterion("max_recipients is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsIsNotNull() {
+            addCriterion("max_recipients is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsEqualTo(Long value) {
+            addCriterion("max_recipients =", value, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsNotEqualTo(Long value) {
+            addCriterion("max_recipients <>", value, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsGreaterThan(Long value) {
+            addCriterion("max_recipients >", value, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsGreaterThanOrEqualTo(Long value) {
+            addCriterion("max_recipients >=", value, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsLessThan(Long value) {
+            addCriterion("max_recipients <", value, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsLessThanOrEqualTo(Long value) {
+            addCriterion("max_recipients <=", value, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsIn(List<Long> values) {
+            addCriterion("max_recipients in", values, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsNotIn(List<Long> values) {
+            addCriterion("max_recipients not in", values, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsBetween(Long value1, Long value2) {
+            addCriterion("max_recipients between", value1, value2, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxRecipientsNotBetween(Long value1, Long value2) {
+            addCriterion("max_recipients not between", value1, value2, "maxRecipients");
             return (Criteria) this;
         }
     }

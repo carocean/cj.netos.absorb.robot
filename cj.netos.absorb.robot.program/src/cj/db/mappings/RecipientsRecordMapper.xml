@@ -4,12 +4,11 @@
   <resultMap id="BaseResultMap" type="cj.netos.absorb.robot.model.RecipientsRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     <id column="sn" jdbcType="VARCHAR" property="sn" />
-    <result column="absorber" jdbcType="VARCHAR" property="absorber" />
     <result column="recipient" jdbcType="VARCHAR" property="recipient" />
-    <result column="person_name" jdbcType="VARCHAR" property="personName" />
-    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
     <result column="refsn" jdbcType="VARCHAR" property="refsn" />
+    <result column="absorber" jdbcType="VARCHAR" property="absorber" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -73,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, absorber, recipient, person_name, amount, ctime, refsn
+    sn, recipient, amount, ctime, refsn, absorber
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.RecipientsRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -111,12 +110,12 @@
   </delete>
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.RecipientsRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    insert into recipients_record (sn, absorber, recipient, 
-      person_name, amount, ctime, 
-      refsn)
-    values (#{sn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, #{recipient,jdbcType=VARCHAR}, 
-      #{personName,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{ctime,jdbcType=VARCHAR}, 
-      #{refsn,jdbcType=VARCHAR})
+    insert into recipients_record (sn, recipient, amount, 
+      ctime, refsn, absorber
+      )
+    values (#{sn,jdbcType=VARCHAR}, #{recipient,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
+      #{ctime,jdbcType=VARCHAR}, #{refsn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.RecipientsRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -125,14 +124,8 @@
       <if test="sn != null">
         sn,
       </if>
-      <if test="absorber != null">
-        absorber,
-      </if>
       <if test="recipient != null">
         recipient,
-      </if>
-      <if test="personName != null">
-        person_name,
       </if>
       <if test="amount != null">
         amount,
@@ -143,28 +136,28 @@
       <if test="refsn != null">
         refsn,
       </if>
+      <if test="absorber != null">
+        absorber,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sn != null">
         #{sn,jdbcType=VARCHAR},
       </if>
-      <if test="absorber != null">
-        #{absorber,jdbcType=VARCHAR},
-      </if>
       <if test="recipient != null">
         #{recipient,jdbcType=VARCHAR},
       </if>
-      <if test="personName != null">
-        #{personName,jdbcType=VARCHAR},
-      </if>
       <if test="amount != null">
-        #{amount,jdbcType=BIGINT},
+        #{amount,jdbcType=DECIMAL},
       </if>
       <if test="ctime != null">
         #{ctime,jdbcType=VARCHAR},
       </if>
       <if test="refsn != null">
         #{refsn,jdbcType=VARCHAR},
+      </if>
+      <if test="absorber != null">
+        #{absorber,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -182,23 +175,20 @@
       <if test="record.sn != null">
         sn = #{record.sn,jdbcType=VARCHAR},
       </if>
-      <if test="record.absorber != null">
-        absorber = #{record.absorber,jdbcType=VARCHAR},
-      </if>
       <if test="record.recipient != null">
         recipient = #{record.recipient,jdbcType=VARCHAR},
       </if>
-      <if test="record.personName != null">
-        person_name = #{record.personName,jdbcType=VARCHAR},
-      </if>
       <if test="record.amount != null">
-        amount = #{record.amount,jdbcType=BIGINT},
+        amount = #{record.amount,jdbcType=DECIMAL},
       </if>
       <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
       </if>
       <if test="record.refsn != null">
         refsn = #{record.refsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.absorber != null">
+        absorber = #{record.absorber,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -209,12 +199,11 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update recipients_record
     set sn = #{record.sn,jdbcType=VARCHAR},
-      absorber = #{record.absorber,jdbcType=VARCHAR},
       recipient = #{record.recipient,jdbcType=VARCHAR},
-      person_name = #{record.personName,jdbcType=VARCHAR},
-      amount = #{record.amount,jdbcType=BIGINT},
+      amount = #{record.amount,jdbcType=DECIMAL},
       ctime = #{record.ctime,jdbcType=VARCHAR},
-      refsn = #{record.refsn,jdbcType=VARCHAR}
+      refsn = #{record.refsn,jdbcType=VARCHAR},
+      absorber = #{record.absorber,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -223,17 +212,11 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update recipients_record
     <set>
-      <if test="absorber != null">
-        absorber = #{absorber,jdbcType=VARCHAR},
-      </if>
       <if test="recipient != null">
         recipient = #{recipient,jdbcType=VARCHAR},
       </if>
-      <if test="personName != null">
-        person_name = #{personName,jdbcType=VARCHAR},
-      </if>
       <if test="amount != null">
-        amount = #{amount,jdbcType=BIGINT},
+        amount = #{amount,jdbcType=DECIMAL},
       </if>
       <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
@@ -241,18 +224,20 @@
       <if test="refsn != null">
         refsn = #{refsn,jdbcType=VARCHAR},
       </if>
+      <if test="absorber != null">
+        absorber = #{absorber,jdbcType=VARCHAR},
+      </if>
     </set>
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cj.netos.absorb.robot.model.RecipientsRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update recipients_record
-    set absorber = #{absorber,jdbcType=VARCHAR},
-      recipient = #{recipient,jdbcType=VARCHAR},
-      person_name = #{personName,jdbcType=VARCHAR},
-      amount = #{amount,jdbcType=BIGINT},
+    set recipient = #{recipient,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
       ctime = #{ctime,jdbcType=VARCHAR},
-      refsn = #{refsn,jdbcType=VARCHAR}
+      refsn = #{refsn,jdbcType=VARCHAR},
+      absorber = #{absorber,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
 </mapper>

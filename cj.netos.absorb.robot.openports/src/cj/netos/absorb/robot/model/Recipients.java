@@ -1,5 +1,7 @@
 package cj.netos.absorb.robot.model;
 
+import java.math.BigDecimal;
+
 /**
  * Table: recipients
  */
@@ -35,9 +37,9 @@ public class Recipients {
 
     /**
      * Column: weight
-     * Remark: 权重 派发程序的算法是： 本次发的钱=金额*（个人的权重/（总人数*每个人的权重之和））
+     * Remark: 权重 派发程序的算法是： 本次发的钱=金额*（个人的权重/（每个人的权重之和）） 权重基数是1.00
      */
-    private Integer weight;
+    private BigDecimal weight;
 
     /**
      * Column: encourage_code
@@ -97,11 +99,11 @@ public class Recipients {
         this.ctime = ctime == null ? null : ctime.trim();
     }
 
-    public Integer getWeight() {
+    public BigDecimal getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
 

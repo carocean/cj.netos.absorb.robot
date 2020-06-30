@@ -1,5 +1,6 @@
 package cj.netos.absorb.robot.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -497,52 +498,52 @@ public class RecipientsExample {
             return (Criteria) this;
         }
 
-        public Criteria andWeightEqualTo(Integer value) {
+        public Criteria andWeightEqualTo(BigDecimal value) {
             addCriterion("weight =", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightNotEqualTo(Integer value) {
+        public Criteria andWeightNotEqualTo(BigDecimal value) {
             addCriterion("weight <>", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightGreaterThan(Integer value) {
+        public Criteria andWeightGreaterThan(BigDecimal value) {
             addCriterion("weight >", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightGreaterThanOrEqualTo(Integer value) {
+        public Criteria andWeightGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("weight >=", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightLessThan(Integer value) {
+        public Criteria andWeightLessThan(BigDecimal value) {
             addCriterion("weight <", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightLessThanOrEqualTo(Integer value) {
+        public Criteria andWeightLessThanOrEqualTo(BigDecimal value) {
             addCriterion("weight <=", value, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightIn(List<Integer> values) {
+        public Criteria andWeightIn(List<BigDecimal> values) {
             addCriterion("weight in", values, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightNotIn(List<Integer> values) {
+        public Criteria andWeightNotIn(List<BigDecimal> values) {
             addCriterion("weight not in", values, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightBetween(Integer value1, Integer value2) {
+        public Criteria andWeightBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("weight between", value1, value2, "weight");
             return (Criteria) this;
         }
 
-        public Criteria andWeightNotBetween(Integer value1, Integer value2) {
+        public Criteria andWeightNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("weight not between", value1, value2, "weight");
             return (Criteria) this;
         }

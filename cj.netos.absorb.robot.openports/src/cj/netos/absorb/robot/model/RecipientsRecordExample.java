@@ -1,5 +1,6 @@
 package cj.netos.absorb.robot.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -207,76 +208,6 @@ public class RecipientsRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andAbsorberIsNull() {
-            addCriterion("absorber is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberIsNotNull() {
-            addCriterion("absorber is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberEqualTo(String value) {
-            addCriterion("absorber =", value, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberNotEqualTo(String value) {
-            addCriterion("absorber <>", value, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberGreaterThan(String value) {
-            addCriterion("absorber >", value, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberGreaterThanOrEqualTo(String value) {
-            addCriterion("absorber >=", value, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberLessThan(String value) {
-            addCriterion("absorber <", value, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberLessThanOrEqualTo(String value) {
-            addCriterion("absorber <=", value, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberLike(String value) {
-            addCriterion("absorber like", value, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberNotLike(String value) {
-            addCriterion("absorber not like", value, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberIn(List<String> values) {
-            addCriterion("absorber in", values, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberNotIn(List<String> values) {
-            addCriterion("absorber not in", values, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberBetween(String value1, String value2) {
-            addCriterion("absorber between", value1, value2, "absorber");
-            return (Criteria) this;
-        }
-
-        public Criteria andAbsorberNotBetween(String value1, String value2) {
-            addCriterion("absorber not between", value1, value2, "absorber");
-            return (Criteria) this;
-        }
-
         public Criteria andRecipientIsNull() {
             addCriterion("recipient is null");
             return (Criteria) this;
@@ -347,76 +278,6 @@ public class RecipientsRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andPersonNameIsNull() {
-            addCriterion("person_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameIsNotNull() {
-            addCriterion("person_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameEqualTo(String value) {
-            addCriterion("person_name =", value, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameNotEqualTo(String value) {
-            addCriterion("person_name <>", value, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameGreaterThan(String value) {
-            addCriterion("person_name >", value, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameGreaterThanOrEqualTo(String value) {
-            addCriterion("person_name >=", value, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameLessThan(String value) {
-            addCriterion("person_name <", value, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameLessThanOrEqualTo(String value) {
-            addCriterion("person_name <=", value, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameLike(String value) {
-            addCriterion("person_name like", value, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameNotLike(String value) {
-            addCriterion("person_name not like", value, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameIn(List<String> values) {
-            addCriterion("person_name in", values, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameNotIn(List<String> values) {
-            addCriterion("person_name not in", values, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameBetween(String value1, String value2) {
-            addCriterion("person_name between", value1, value2, "personName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPersonNameNotBetween(String value1, String value2) {
-            addCriterion("person_name not between", value1, value2, "personName");
-            return (Criteria) this;
-        }
-
         public Criteria andAmountIsNull() {
             addCriterion("amount is null");
             return (Criteria) this;
@@ -427,52 +288,52 @@ public class RecipientsRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andAmountEqualTo(Long value) {
+        public Criteria andAmountEqualTo(BigDecimal value) {
             addCriterion("amount =", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountNotEqualTo(Long value) {
+        public Criteria andAmountNotEqualTo(BigDecimal value) {
             addCriterion("amount <>", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountGreaterThan(Long value) {
+        public Criteria andAmountGreaterThan(BigDecimal value) {
             addCriterion("amount >", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountGreaterThanOrEqualTo(Long value) {
+        public Criteria andAmountGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("amount >=", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountLessThan(Long value) {
+        public Criteria andAmountLessThan(BigDecimal value) {
             addCriterion("amount <", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountLessThanOrEqualTo(Long value) {
+        public Criteria andAmountLessThanOrEqualTo(BigDecimal value) {
             addCriterion("amount <=", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountIn(List<Long> values) {
+        public Criteria andAmountIn(List<BigDecimal> values) {
             addCriterion("amount in", values, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountNotIn(List<Long> values) {
+        public Criteria andAmountNotIn(List<BigDecimal> values) {
             addCriterion("amount not in", values, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountBetween(Long value1, Long value2) {
+        public Criteria andAmountBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("amount between", value1, value2, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountNotBetween(Long value1, Long value2) {
+        public Criteria andAmountNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("amount not between", value1, value2, "amount");
             return (Criteria) this;
         }
@@ -614,6 +475,76 @@ public class RecipientsRecordExample {
 
         public Criteria andRefsnNotBetween(String value1, String value2) {
             addCriterion("refsn not between", value1, value2, "refsn");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberIsNull() {
+            addCriterion("absorber is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberIsNotNull() {
+            addCriterion("absorber is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberEqualTo(String value) {
+            addCriterion("absorber =", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberNotEqualTo(String value) {
+            addCriterion("absorber <>", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberGreaterThan(String value) {
+            addCriterion("absorber >", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberGreaterThanOrEqualTo(String value) {
+            addCriterion("absorber >=", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberLessThan(String value) {
+            addCriterion("absorber <", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberLessThanOrEqualTo(String value) {
+            addCriterion("absorber <=", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberLike(String value) {
+            addCriterion("absorber like", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberNotLike(String value) {
+            addCriterion("absorber not like", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberIn(List<String> values) {
+            addCriterion("absorber in", values, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberNotIn(List<String> values) {
+            addCriterion("absorber not in", values, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberBetween(String value1, String value2) {
+            addCriterion("absorber between", value1, value2, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberNotBetween(String value1, String value2) {
+            addCriterion("absorber not between", value1, value2, "absorber");
             return (Criteria) this;
         }
     }

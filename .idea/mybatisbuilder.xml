@@ -130,6 +130,16 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="netos.absorb.robot#hub_tails">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="HubTails" />
+              <option name="tableComment" value="尾金余额" />
+              <option name="tableName" value="hub_tails" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="netos.absorb.robot#recipients">
           <value>
             <TableInfo>
@@ -145,8 +155,18 @@
             <TableInfo>
               <option name="database" value="netos.absorb.robot" />
               <option name="domainName" value="RecipientsRecord" />
-              <option name="tableComment" value="收件人记录流水&#10;派发出去的洇金日志" />
+              <option name="tableComment" value="收件人记录流水&#10;派发出去的洇金日志&#10;同一洇取器的同一个收取人可以多次领取洇金，因此会对应多条收取流水" />
               <option name="tableName" value="recipients_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#tail_bill">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="TailBill" />
+              <option name="tableComment" value="尾金账单" />
+              <option name="tableName" value="tail_bill" />
             </TableInfo>
           </value>
         </entry>

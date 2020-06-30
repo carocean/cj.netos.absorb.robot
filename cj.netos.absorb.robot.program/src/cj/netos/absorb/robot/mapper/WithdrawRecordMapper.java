@@ -66,6 +66,5 @@ public interface WithdrawRecordMapper {
 
     void done(@Param(value = "sn") String sn, @Param(value = "realAmount") long realAmount, @Param(value = "cbtime") String cbtime);
 
-    void updateStatus(@Param(value = "sn") String sn,@Param(value = "status") String status, @Param(value = "message") String message);
-
+    void updateStatus(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message);
 }

@@ -25,7 +25,7 @@ public class TailBill {
 
     /**
      * Column: order
-     * Remark: 0为withdraw_record存入 1为absorber_bill存入 2为取出
+     * Remark: 0为withdraw_record存入 1为invest_record存入 2为取出
      */
     private Integer order;
 

@@ -2,23 +2,36 @@ package cj.netos.absorb.robot.service;
 
 import cj.netos.absorb.robot.BankWithdrawResult;
 import cj.netos.absorb.robot.IAbsorberHubService;
+import cj.netos.absorb.robot.IHubDistribute;
+import cj.netos.absorb.robot.POR;
+import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
+import cj.netos.absorb.robot.distributes.OnInvestHubDistribute;
+import cj.netos.absorb.robot.distributes.OnWithdrawHubDistribute;
 import cj.netos.absorb.robot.mapper.*;
 import cj.netos.absorb.robot.model.*;
 import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
+import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.annotation.CjServiceSite;
 import cj.studio.ecm.net.CircuitException;
+import cj.studio.openport.CheckAccessTokenException;
+import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
+import cj.ultimate.gson2.com.google.gson.Gson;
+import cj.ultimate.gson2.com.google.gson.reflect.TypeToken;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @CjBridge(aspects = "@transaction")
 @CjService(name = "absorberHubService")
@@ -34,8 +47,10 @@ public class AbsorberHubService implements IAbsorberHubService {
     TailBillMapper tailBillMapper;
     @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.RecipientsRecordMapper")
     RecipientsRecordMapper recipientsRecordMapper;
+
     @CjServiceSite
     IServiceSite site;
+
 
     @CjTransaction
     @Override
@@ -127,7 +142,7 @@ public class AbsorberHubService implements IAbsorberHubService {
 
     @CjTransaction
     @Override
-    public void addTailAmount(BigDecimal remainingAmount, BankWithdrawResult result, String cause) {
+    public void addTailAmount(BigDecimal amount, String bankid, String refsn, int order, String cause) {
         HubTailsExample example = new HubTailsExample();
         example.createCriteria();
         List<HubTails> list = hubTailsMapper.selectByExample(example);
@@ -135,19 +150,19 @@ public class AbsorberHubService implements IAbsorberHubService {
         if (list.isEmpty()) {
             hubTails = new HubTails();
             hubTails.setId(UUID.randomUUID().toString());
-            hubTails.setTailAdmount(remainingAmount);
+            hubTails.setTailAdmount(amount);
             hubTailsMapper.insert(hubTails);
         } else {
             hubTails = list.get(0);
-            hubTails.setTailAdmount(hubTails.getTailAdmount().add(remainingAmount));
+            hubTails.setTailAdmount(hubTails.getTailAdmount().add(amount));
             hubTailsMapper.updateByPrimaryKey(hubTails);
         }
         TailBill bill = new TailBill();
-        bill.setAmount(remainingAmount);
+        bill.setAmount(amount);
         bill.setBalance(hubTails.getTailAdmount());
-        bill.setOrder(0);
-        bill.setRefsn(result.getOutTradeSn());
-        bill.setBankid(result.getBankid());
+        bill.setOrder(order);
+        bill.setRefsn(refsn);
+        bill.setBankid(bankid);
         bill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         bill.setSn(new IdWorker().nextId());
         bill.setNote(cause);
@@ -166,13 +181,65 @@ public class AbsorberHubService implements IAbsorberHubService {
             BankWithdrawResult bankWithdrawResult = (BankWithdrawResult) result;
             record.setRefsn(bankWithdrawResult.getOutTradeSn());
         }
-        if (result instanceof AbsorberBill) {
-            AbsorberBill absorberBill = (AbsorberBill) result;
-            record.setRefsn(absorberBill.getSn());
+        if (result instanceof InvestRecord) {
+            InvestRecord investRecord = (InvestRecord) result;
+            record.setRefsn(investRecord.getSn());
         }
         record.setSn(new IdWorker().nextId());
         recipientsRecordMapper.insert(record);
 
         return new RecipientsAbsorbBill(absorber, recipients, money, record.getSn());
+    }
+    @CjTransaction
+    @Override
+    public long getMaxRecipientsCount(Absorber absorber) {
+        return absorber.getMaxRecipients() == null ? Long.valueOf(site.getProperty("hub.absorber.naxRecipients")) : absorber.getMaxRecipients();
+    }
+
+    @CjTransaction
+    @Override
+    public List<POR> searchAroundPerson(String location, Long radius, int limit, long offset) throws CircuitException {
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+
+        String appid = site.getProperty("appid");
+        String appKey = site.getProperty("appKey");
+        String appSecret = site.getProperty("appSecret");
+        String linkPorts = site.getProperty("rhub.ports.link.geo");
+
+        String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
+        String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
+        String url = String.format("%s?location=%s&radius=%s&geoType=mobiles&limit=%s&offset=%s", linkPorts, location, radius, limit, offset);
+        final Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Rest-Command", "searchAroundLocation")
+                .addHeader("app-id", appid)
+                .addHeader("app-key", appKey)
+                .addHeader("app-nonce", nonce)
+                .addHeader("app-sign", sign)
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (Double.parseDouble(map.get("status") + "") >= 400) {
+            throw new CircuitException(map.get("status") + "", map.get("message") + "");
+        }
+        json = (String) map.get("dataText");
+        return new Gson().fromJson(json, new TypeToken<ArrayList<POR>>() {
+        }.getType());
     }
 }

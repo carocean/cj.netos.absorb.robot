@@ -74,7 +74,7 @@ public class WithdrawService implements IWithdrawService {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String portsurl = site.getProperty("ports.wybank.trade");
+        String portsurl = site.getProperty("rhub.ports.wybank.trade");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
@@ -125,16 +125,6 @@ public class WithdrawService implements IWithdrawService {
         }
         json = (String) map.get("dataText");
         return new Gson().fromJson(json, HashMap.class);
-    }
-
-    @CjTransaction
-    @Override
-    public void error(String sn, String status, String message) {
-        String msg = message;
-        if (!StringUtil.isEmpty(msg)) {
-            msg = msg.substring(0, msg.length() > 200 ? 200 : msg.length());
-        }
-        withdrawRecordMapper.updateStatus(sn, status, msg);
     }
 
     @CjTransaction

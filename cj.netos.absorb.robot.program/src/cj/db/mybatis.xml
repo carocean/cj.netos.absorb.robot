@@ -30,13 +30,12 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="cj/db/mappings/AbsorberBillMapper.xml"/>
-        <mapper resource="cj/db/mappings/AbsorberBucketMapper.xml"/>
         <mapper resource="cj/db/mappings/AbsorberMapper.xml"/>
         <mapper resource="cj/db/mappings/RecipientsMapper.xml"/>
         <mapper resource="cj/db/mappings/RecipientsRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/WithdrawRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/HubTailsMapper.xml"/>
         <mapper resource="cj/db/mappings/TailBillMapper.xml"/>
+        <mapper resource="cj/db/mappings/InvestRecordMapper.xml"/>
     </mappers>
 </configuration>

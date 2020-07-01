@@ -78,6 +78,12 @@ public class Absorber {
     private Long exitAmount;
 
     /**
+     * Column: exit_times
+     * Remark: 达到洇取次数就删除，0为不限制
+     */
+    private Long exitTimes;
+
+    /**
      * Column: weight
      * Remark: 洇取器权重。 一般固定洇取器权重高于一般的 权重比的调整只有地商才有权限调 算法：比重=1个洇取器的比重/（每个洇取器权重之和） 权重基数是1.00
      */
@@ -88,6 +94,30 @@ public class Absorber {
      * Remark: 收取人数限制
      */
     private Long maxRecipients;
+
+    /**
+     * Column: current_amount
+     * Remark: 累计已派发的金额
+     */
+    private BigDecimal currentAmount;
+
+    /**
+     * Column: current_times
+     * Remark: 累计派发次数
+     */
+    private Long currentTimes;
+
+    /**
+     * Column: state
+     * Remark: 0为洇取器可用 -1为停用，停用原因有：过期、达到金额、达到次数
+     */
+    private Integer state;
+
+    /**
+     * Column: exit_cause
+     * Remark: 停用原因。 由于洇取器永不删除，当洇取器过期、达到金额、达到次数时会被标记state=-1，此处说明原因，如下： - 过期 - 达到金额 - 达到次数 
+     */
+    private String exitCause;
 
     public String getId() {
         return id;
@@ -185,6 +215,14 @@ public class Absorber {
         this.exitAmount = exitAmount;
     }
 
+    public Long getExitTimes() {
+        return exitTimes;
+    }
+
+    public void setExitTimes(Long exitTimes) {
+        this.exitTimes = exitTimes;
+    }
+
     public BigDecimal getWeight() {
         return weight;
     }
@@ -199,5 +237,37 @@ public class Absorber {
 
     public void setMaxRecipients(Long maxRecipients) {
         this.maxRecipients = maxRecipients;
+    }
+
+    public BigDecimal getCurrentAmount() {
+        return currentAmount;
+    }
+
+    public void setCurrentAmount(BigDecimal currentAmount) {
+        this.currentAmount = currentAmount;
+    }
+
+    public Long getCurrentTimes() {
+        return currentTimes;
+    }
+
+    public void setCurrentTimes(Long currentTimes) {
+        this.currentTimes = currentTimes;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getExitCause() {
+        return exitCause;
+    }
+
+    public void setExitCause(String exitCause) {
+        this.exitCause = exitCause == null ? null : exitCause.trim();
     }
 }

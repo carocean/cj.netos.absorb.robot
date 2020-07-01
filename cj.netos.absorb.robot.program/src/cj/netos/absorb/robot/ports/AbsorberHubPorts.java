@@ -3,6 +3,7 @@ package cj.netos.absorb.robot.ports;
 import cj.netos.absorb.robot.IAbsorberHubService;
 import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.model.Absorber;
+import cj.netos.absorb.robot.model.InvestRecord;
 import cj.netos.absorb.robot.model.Recipients;
 import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
@@ -21,7 +22,7 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
     IAbsorberHubService absorberHubService;
 
     @Override
-    public Absorber createSimpleAbsorber(ISecuritySession securitySession, String bankid, String title, String category, String proxy, long exitExpire, long exitAmount) throws CircuitException {
+    public Absorber createSimpleAbsorber(ISecuritySession securitySession, String bankid, String title, String category, String proxy, long exitExpire, long exitAmount,long exitTimes) throws CircuitException {
         if (StringUtil.isEmpty(bankid) || StringUtil.isEmpty(title) || StringUtil.isEmpty(category) || StringUtil.isEmpty(proxy)) {
             throw new CircuitException("404", "参数为空");
         }
@@ -37,13 +38,14 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
         absorber.setWeight(new BigDecimal("1.00"));//权重由行长进行调整
         absorber.setExitAmount(exitAmount);
         absorber.setExitExpire(exitExpire);
+        absorber.setExitTimes(exitTimes);
         absorberHubService.createSimpleAbsorber(absorber);
 
         return absorber;
     }
 
     @Override
-    public Absorber createGeoAbsorber(ISecuritySession securitySession, String bankid, String title, String category, String proxy, LatLng location, long radius, long exitExpire, long exitAmount) throws CircuitException {
+    public Absorber createGeoAbsorber(ISecuritySession securitySession, String bankid, String title, String category, String proxy, LatLng location, long radius, long exitExpire, long exitAmount,long exitTimes) throws CircuitException {
         if (StringUtil.isEmpty(bankid) || StringUtil.isEmpty(title) || StringUtil.isEmpty(category) || StringUtil.isEmpty(proxy) || location == null) {
             throw new CircuitException("404", "参数为空");
         }
@@ -64,6 +66,7 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
         absorber.setExitExpire(exitExpire);
         absorber.setLocation(location.toJson());
         absorber.setRadius(radius);
+        absorber.setExitTimes(exitTimes);
         absorberHubService.createSimpleAbsorber(absorber);
         return absorber;
     }

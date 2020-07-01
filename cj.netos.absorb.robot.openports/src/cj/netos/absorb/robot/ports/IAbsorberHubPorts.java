@@ -27,7 +27,8 @@ public interface IAbsorberHubPorts extends IOpenportService {
                     "0表示不限期\n" +
                     "当达到过期时间则删除", name = "exitExpire") long exitExpire,
             @CjOpenportParameter(usage = "限制的洇取金额，当达到该金额时删除洇取器\n" +
-                    "0表示洇取器不受限制的洇取资金", name = "exitAmount") long exitAmount
+                    "0表示洇取器不受限制的洇取资金", name = "exitAmount") long exitAmount,
+            @CjOpenportParameter(usage = "达到洇取次数就删除，0为不限制", name = "exitTimes") long exitTimes
     ) throws CircuitException;
 
     @CjOpenport(usage = "创建一个地理洇取器")
@@ -46,7 +47,8 @@ public interface IAbsorberHubPorts extends IOpenportService {
                     "0表示不限期\n" +
                     "当达到过期时间则删除", name = "exitExpire") long exitExpire,
             @CjOpenportParameter(usage = "限制的洇取金额，当达到该金额时删除洇取器\n" +
-                    "0表示洇取器不受限制的洇取资金", name = "exitAmount") long exitAmount
+                    "0表示洇取器不受限制的洇取资金", name = "exitAmount") long exitAmount,
+            @CjOpenportParameter(usage = "达到洇取次数就删除，0为不限制", name = "exitTimes") long exitTimes
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取洇取器")
@@ -83,5 +85,6 @@ public interface IAbsorberHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "期望的激励金，如果达到激励金额则移除\n" +
                     "激励金如果为0表示永远洇取洇金", name = "desireAmount") long desireAmount
     ) throws CircuitException;
+
 
 }

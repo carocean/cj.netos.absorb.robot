@@ -938,6 +938,66 @@ public class AbsorberExample {
             return (Criteria) this;
         }
 
+        public Criteria andExitTimesIsNull() {
+            addCriterion("exit_times is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesIsNotNull() {
+            addCriterion("exit_times is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesEqualTo(Long value) {
+            addCriterion("exit_times =", value, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesNotEqualTo(Long value) {
+            addCriterion("exit_times <>", value, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesGreaterThan(Long value) {
+            addCriterion("exit_times >", value, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesGreaterThanOrEqualTo(Long value) {
+            addCriterion("exit_times >=", value, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesLessThan(Long value) {
+            addCriterion("exit_times <", value, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesLessThanOrEqualTo(Long value) {
+            addCriterion("exit_times <=", value, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesIn(List<Long> values) {
+            addCriterion("exit_times in", values, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesNotIn(List<Long> values) {
+            addCriterion("exit_times not in", values, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesBetween(Long value1, Long value2) {
+            addCriterion("exit_times between", value1, value2, "exitTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitTimesNotBetween(Long value1, Long value2) {
+            addCriterion("exit_times not between", value1, value2, "exitTimes");
+            return (Criteria) this;
+        }
+
         public Criteria andWeightIsNull() {
             addCriterion("weight is null");
             return (Criteria) this;
@@ -1055,6 +1115,256 @@ public class AbsorberExample {
 
         public Criteria andMaxRecipientsNotBetween(Long value1, Long value2) {
             addCriterion("max_recipients not between", value1, value2, "maxRecipients");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountIsNull() {
+            addCriterion("current_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountIsNotNull() {
+            addCriterion("current_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountEqualTo(BigDecimal value) {
+            addCriterion("current_amount =", value, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountNotEqualTo(BigDecimal value) {
+            addCriterion("current_amount <>", value, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountGreaterThan(BigDecimal value) {
+            addCriterion("current_amount >", value, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("current_amount >=", value, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountLessThan(BigDecimal value) {
+            addCriterion("current_amount <", value, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("current_amount <=", value, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountIn(List<BigDecimal> values) {
+            addCriterion("current_amount in", values, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountNotIn(List<BigDecimal> values) {
+            addCriterion("current_amount not in", values, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("current_amount between", value1, value2, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentAmountNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("current_amount not between", value1, value2, "currentAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesIsNull() {
+            addCriterion("current_times is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesIsNotNull() {
+            addCriterion("current_times is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesEqualTo(Long value) {
+            addCriterion("current_times =", value, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesNotEqualTo(Long value) {
+            addCriterion("current_times <>", value, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesGreaterThan(Long value) {
+            addCriterion("current_times >", value, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesGreaterThanOrEqualTo(Long value) {
+            addCriterion("current_times >=", value, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesLessThan(Long value) {
+            addCriterion("current_times <", value, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesLessThanOrEqualTo(Long value) {
+            addCriterion("current_times <=", value, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesIn(List<Long> values) {
+            addCriterion("current_times in", values, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesNotIn(List<Long> values) {
+            addCriterion("current_times not in", values, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesBetween(Long value1, Long value2) {
+            addCriterion("current_times between", value1, value2, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTimesNotBetween(Long value1, Long value2) {
+            addCriterion("current_times not between", value1, value2, "currentTimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateIsNull() {
+            addCriterion("`state` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateIsNotNull() {
+            addCriterion("`state` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateEqualTo(Integer value) {
+            addCriterion("`state` =", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotEqualTo(Integer value) {
+            addCriterion("`state` <>", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateGreaterThan(Integer value) {
+            addCriterion("`state` >", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`state` >=", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLessThan(Integer value) {
+            addCriterion("`state` <", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLessThanOrEqualTo(Integer value) {
+            addCriterion("`state` <=", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateIn(List<Integer> values) {
+            addCriterion("`state` in", values, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotIn(List<Integer> values) {
+            addCriterion("`state` not in", values, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateBetween(Integer value1, Integer value2) {
+            addCriterion("`state` between", value1, value2, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotBetween(Integer value1, Integer value2) {
+            addCriterion("`state` not between", value1, value2, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseIsNull() {
+            addCriterion("exit_cause is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseIsNotNull() {
+            addCriterion("exit_cause is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseEqualTo(String value) {
+            addCriterion("exit_cause =", value, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseNotEqualTo(String value) {
+            addCriterion("exit_cause <>", value, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseGreaterThan(String value) {
+            addCriterion("exit_cause >", value, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseGreaterThanOrEqualTo(String value) {
+            addCriterion("exit_cause >=", value, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseLessThan(String value) {
+            addCriterion("exit_cause <", value, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseLessThanOrEqualTo(String value) {
+            addCriterion("exit_cause <=", value, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseLike(String value) {
+            addCriterion("exit_cause like", value, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseNotLike(String value) {
+            addCriterion("exit_cause not like", value, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseIn(List<String> values) {
+            addCriterion("exit_cause in", values, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseNotIn(List<String> values) {
+            addCriterion("exit_cause not in", values, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseBetween(String value1, String value2) {
+            addCriterion("exit_cause between", value1, value2, "exitCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andExitCauseNotBetween(String value1, String value2) {
+            addCriterion("exit_cause not between", value1, value2, "exitCause");
             return (Criteria) this;
         }
     }

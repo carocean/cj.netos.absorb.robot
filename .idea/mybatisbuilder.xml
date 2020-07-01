@@ -140,6 +140,16 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="netos.absorb.robot#invest_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="InvestRecord" />
+              <option name="tableComment" value="向洇取器投资的记录流水&#10;现投现发" />
+              <option name="tableName" value="invest_record" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="netos.absorb.robot#recipients">
           <value>
             <TableInfo>

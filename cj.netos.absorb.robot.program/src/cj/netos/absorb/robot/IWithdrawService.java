@@ -7,6 +7,5 @@ public interface IWithdrawService {
 
     void doResponse(BankWithdrawResult result)throws CircuitException;
 
-    void error(String sn,String status, String message);
 
 }

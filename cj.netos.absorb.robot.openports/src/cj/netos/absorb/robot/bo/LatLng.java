@@ -1,8 +1,6 @@
 package cj.netos.absorb.robot.bo;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LatLng {
     BigDecimal latitude;

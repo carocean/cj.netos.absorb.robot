@@ -5,6 +5,7 @@ import cj.netos.rabbitmq.CjConsumer;
 import cj.netos.rabbitmq.RabbitMQException;
 import cj.netos.rabbitmq.RetryCommandException;
 import cj.netos.rabbitmq.consumer.IConsumerCommand;
+import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
@@ -29,6 +30,7 @@ public class OnUpdateCommand implements IConsumerCommand {
         try {
             withdrawService.doRequest(bankid, shunter, alias, amount);
         } catch (Exception e) {
+            CJSystem.logging().error(getClass(),e);
             CircuitException ce = CircuitException.search(e);
             if (ce == null) {
                 throw new RabbitMQException(ce.getStatus(), ce);

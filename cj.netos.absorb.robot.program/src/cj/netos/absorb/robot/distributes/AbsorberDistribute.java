@@ -37,15 +37,33 @@ public class AbsorberDistribute implements IAbsorberDistribute {
     //返回实际分出去的钱数
     @Override
     public BigDecimal distribute(Absorber absorber, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException {
+        if (absorber.getExitTimes() > 0 && absorber.getCurrentTimes() > absorber.getExitTimes() - 1) {
+            absorberHubService.stopAbsorber(absorber.getId(), "达到次数限制");
+            return new BigDecimal("0.00");
+        }
+        if (absorber.getExitAmount() > 0 && absorber.getCurrentAmount().compareTo(new BigDecimal(absorber.getExitAmount() + "")) >= 0) {
+            absorberHubService.stopAbsorber(absorber.getId(), "达到金额限制");
+            return new BigDecimal("0.00");
+        }
+        if (absorber.getExitExpire() > 0 && (System.currentTimeMillis() - Long.valueOf(absorber.getCtime())) >= absorber.getExitExpire()) {
+            absorberHubService.stopAbsorber(absorber.getId(), "已过期");
+            return new BigDecimal("0.00");
+        }
+        BigDecimal realDistribute = null;
         switch (absorber.getType()) {
             case 0://简单洇取器
-                return distributeSimpleAbsorber(absorberHubService, absorber, weightPricePerAbsorber, result);
+                realDistribute = distributeSimpleAbsorber(absorberHubService, absorber, weightPricePerAbsorber, result);
+                break;
             case 1://地理洇取器
-                return distributeGeoAbsorber(absorberHubService, absorber, weightPricePerAbsorber, result);
+                realDistribute = distributeGeoAbsorber(absorberHubService, absorber, weightPricePerAbsorber, result);
+                break;
             default:
                 throw new EcmException("不支持的洇取器类型:" + absorber.getType());
         }
-
+        long times = absorber.getCurrentTimes() == null ? 0L : absorber.getCurrentTimes();
+        BigDecimal amount = absorber.getCurrentAmount() == null ? new BigDecimal("0.00") : absorber.getCurrentAmount();
+        absorberHubService.updateAbsorberCurrent(absorber.getId(), times++, amount.add(realDistribute));
+        return realDistribute;
     }
 
     private BigDecimal distributeGeoAbsorber(IAbsorberHubService absorberHubService, Absorber absorber, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException {
@@ -59,10 +77,10 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             return realDistributeAmount;
         }
         //求权和，把半径-离中心的距离加起来作为权和
-        List<Recipients> recipientsList=new ArrayList<>();
+        List<Recipients> recipientsList = new ArrayList<>();
         BigDecimal totalWeightsOfRecipients = new BigDecimal("0.00");
         for (POR por : porList) {
-            BigDecimal weight=new BigDecimal(absorber.getRadius() + "").subtract(por.getDistance());//离中心越近权重越大，故而半径减之
+            BigDecimal weight = new BigDecimal(absorber.getRadius() + "").subtract(por.getDistance());//离中心越近权重越大，故而半径减之
             //越近权重越高,当离圈后就取消洇金了
             GeoReceptorBO bo = por.getReceptor();
             Recipients recipients = new Recipients();
@@ -96,6 +114,10 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             //生成并存储收取记录单并生成收取账单并将其提交给mhub，钱包会侦听收取单，并存入到收取人的洇金账户
             transToWallet(absorber, recipients, result, money);
         }
+        //基数+实际人数=新权重
+        BigDecimal baseWeight = absorberHubService.getAbsorberTemplate().getCategoryWeight(absorber.getCategory());
+        BigDecimal newWeight = baseWeight.add(new BigDecimal(recipientsList.size()+""));
+        absorberHubService.updateAbsorberWeight(absorber.getId(), newWeight);
         return realDistributeAmount;
     }
 
@@ -129,6 +151,10 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             }
             _offset_simple += recipientsList.size();
         }
+        //基数+实际人数=新权重
+        BigDecimal baseWeight = absorberHubService.getAbsorberTemplate().getCategoryWeight(absorber.getCategory());
+        BigDecimal newWeight = baseWeight.add(new BigDecimal(_offset_simple + ""));
+        absorberHubService.updateAbsorberWeight(absorber.getId(), newWeight);
         return realDistributeAmount;
     }
 

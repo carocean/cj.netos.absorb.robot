@@ -21,6 +21,12 @@
 					checkAppSignStrategy: 'cj.netos.absorb.robot.program.AppSignStrategy',
 					checkAccessTokenStrategy: 'cj.netos.absorb.robot.program.CheckAccessTokenStrategy'
 				}
+			},
+			{
+				name: '加载洇取器模板',
+				class: 'cj.netos.absorb.robot.RobotEntrypointActivator',
+				parameters: {
+				}
 			}
 		]
 	},

@@ -2,24 +2,20 @@ package cj.netos.absorb.robot.service;
 
 import cj.netos.absorb.robot.BankWithdrawResult;
 import cj.netos.absorb.robot.IAbsorberHubService;
-import cj.netos.absorb.robot.IHubDistribute;
+import cj.netos.absorb.robot.IAbsorberTemplateService;
 import cj.netos.absorb.robot.POR;
-import cj.netos.absorb.robot.bo.LatLng;
+import cj.netos.absorb.robot.bo.AbsorberTemplate;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
-import cj.netos.absorb.robot.distributes.OnInvestHubDistribute;
-import cj.netos.absorb.robot.distributes.OnWithdrawHubDistribute;
 import cj.netos.absorb.robot.mapper.*;
 import cj.netos.absorb.robot.model.*;
 import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
-import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.annotation.CjServiceSite;
 import cj.studio.ecm.net.CircuitException;
-import cj.studio.openport.CheckAccessTokenException;
 import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 import cj.ultimate.gson2.com.google.gson.Gson;
@@ -47,10 +43,16 @@ public class AbsorberHubService implements IAbsorberHubService {
     TailBillMapper tailBillMapper;
     @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.RecipientsRecordMapper")
     RecipientsRecordMapper recipientsRecordMapper;
-
+    @CjServiceRef
+    IAbsorberTemplateService absorberTemplateService;
     @CjServiceSite
     IServiceSite site;
 
+    @CjTransaction
+    @Override
+    public AbsorberTemplate getAbsorberTemplate() {
+        return absorberTemplateService.getTemplate();
+    }
 
     @CjTransaction
     @Override
@@ -190,6 +192,7 @@ public class AbsorberHubService implements IAbsorberHubService {
 
         return new RecipientsAbsorbBill(absorber, recipients, money, record.getSn());
     }
+
     @CjTransaction
     @Override
     public long getMaxRecipientsCount(Absorber absorber) {
@@ -241,5 +244,23 @@ public class AbsorberHubService implements IAbsorberHubService {
         json = (String) map.get("dataText");
         return new Gson().fromJson(json, new TypeToken<ArrayList<POR>>() {
         }.getType());
+    }
+
+    @CjTransaction
+    @Override
+    public void updateAbsorberCurrent(String absorber, long currentTimes, BigDecimal currentAmount) {
+        absorberMapper.updateCurrent(absorber, currentTimes, currentAmount);
+    }
+
+    @CjTransaction
+    @Override
+    public void stopAbsorber(String absorber, String exitCause) {
+        absorberMapper.stop(absorber, exitCause);
+    }
+
+    @CjTransaction
+    @Override
+    public void updateAbsorberWeight(String absorberid, BigDecimal weight) {
+        absorberMapper.updateWeight(absorberid, weight);
     }
 }

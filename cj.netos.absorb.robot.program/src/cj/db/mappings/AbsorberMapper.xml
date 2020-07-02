@@ -458,6 +458,7 @@
     from absorber
     where bankid = #{bankid,jdbcType=VARCHAR}
     and `type` = #{type,jdbcType=INTEGER}
+    and `state` =0
     limit #{offset},#{limit}
   </select>
   <select id="totalWeightsOfAbsorber" parameterType="cj.netos.absorb.robot.model.Absorber" resultType="java.math.BigDecimal">
@@ -466,4 +467,24 @@
     from absorber
     where bankid = #{bankid,jdbcType=VARCHAR}
   </select>
+  <update id="updateCurrent" parameterType="cj.netos.absorb.robot.model.Absorber">
+    update absorber
+    set
+    current_amount = #{currentAmount,jdbcType=DECIMAL},
+    current_times = #{currentTimes,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="stop" parameterType="cj.netos.absorb.robot.model.Absorber">
+    update absorber
+    set
+      `state` = -1,
+      exit_cause = #{exitCause,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateWeight" parameterType="cj.netos.absorb.robot.model.Absorber">
+    update absorber
+    set
+      weight = #{weight,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

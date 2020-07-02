@@ -1,5 +1,6 @@
 package cj.netos.absorb.robot;
 
+import cj.netos.absorb.robot.bo.AbsorberTemplate;
 import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
 import cj.netos.absorb.robot.model.Absorber;
@@ -12,6 +13,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface IAbsorberHubService {
+    AbsorberTemplate getAbsorberTemplate();
+
     void createSimpleAbsorber(Absorber absorber);
 
     Absorber getAbsorber(String absorberid);
@@ -41,4 +44,11 @@ public interface IAbsorberHubService {
     List<POR> searchAroundPerson(String latLng, Long radius, int limit, long offset) throws CircuitException;
 
     long getMaxRecipientsCount(Absorber absorber);
+
+    void updateAbsorberCurrent(String absorber, long currentTimes, BigDecimal currentAmount);
+
+    void stopAbsorber(String absorber, String exitCause);
+
+    void updateAbsorberWeight(String id, BigDecimal newWeight);
+
 }

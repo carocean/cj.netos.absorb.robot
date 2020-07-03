@@ -57,4 +57,6 @@ public interface IAbsorberHubService {
 
     void addWeightToRecipients(String principal, String absorberid);
 
+    List<Recipients> pageGeoRecipients(Absorber absorberid, int limit, long offset) throws CircuitException;
+
 }

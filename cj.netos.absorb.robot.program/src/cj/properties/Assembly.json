@@ -33,7 +33,7 @@
 	assemblyInfo : {
 		assemblyTitle : "absorb.robot",
 		assemblyResource:"site=/site;http.root=$(site)/web;http.jss=$(site)/jss/http;ws.jss=$(site)/jss/ws",
-		assemblyDescription : "洇金吸收机器人",
+		assemblyDescription : "洇取机器。即洇金派发中心",
 		assemblyConfiguration : "",
 		assemblyCompany : "cj工作室出品，lns平台制造",
 		assemblyProduct : "cj.netos.absorb.robot",

@@ -2,6 +2,7 @@ package cj.netos.absorb.robot.ports;
 
 import cj.netos.absorb.robot.IAbsorberHubService;
 import cj.netos.absorb.robot.IAbsorberTemplateService;
+import cj.netos.absorb.robot.bo.AbsorberRule;
 import cj.netos.absorb.robot.bo.AbsorberTemplate;
 import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.model.*;
@@ -184,6 +185,16 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
     }
 
     @Override
+    public void stopAbsorber(ISecuritySession securitySession, String absorberid, String exitCause) throws CircuitException {
+        Absorber absorber = getAbsorber(securitySession, absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器不存在");
+        }
+        checkWithdrawRights(securitySession, absorber.getBankid());
+        absorberHubService.stopAbsorber(absorberid, exitCause);
+    }
+
+    @Override
     public HubTails getHubTails(ISecuritySession securitySession, String bankid) throws CircuitException {
         checkWithdrawRights(securitySession, bankid);
         return absorberHubService.getAndInitHubTails(bankid);
@@ -230,5 +241,45 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
         }
         json = (String) map.get("dataText");
         return new Gson().fromJson(json, HashMap.class);
+    }
+
+    @Override
+    public void adjustWeightOfCategory(ISecuritySession securitySession, String category, BigDecimal weight) throws CircuitException {
+        if (!securitySession.roleIn("platform:administrators")) {
+            throw new CircuitException("800", "拒绝访问");
+        }
+        AbsorberRule rule = absorberTemplateService.getTemplate().getCategories().get(category);
+        if (rule == null) {
+            throw new CircuitException("404", "分类不存在");
+        }
+        rule.setWeight(weight);
+    }
+
+    @Override
+    public void adjustBaseWeightOfRecipients(ISecuritySession securitySession, String category, String encourage, BigDecimal weight) throws CircuitException {
+        if (!securitySession.roleIn("platform:administrators")) {
+            throw new CircuitException("800", "拒绝访问");
+        }
+        AbsorberRule rule = absorberTemplateService.getTemplate().getCategories().get(category);
+        if (rule == null) {
+            throw new CircuitException("404", "分类不存在");
+        }
+        if (!rule.getEncourage().containsKey(encourage)) {
+            throw new CircuitException("404", "激励代码不存在：" + encourage);
+        }
+        rule.getEncourage().put(encourage, weight);
+    }
+
+    @Override
+    public List<Recipients> pageRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
+        Absorber absorber = getAbsorber(securitySession, absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器不存在");
+        }
+        checkWithdrawRights(securitySession, absorber.getBankid());
+        if (absorber.getType() == 0) {
+            return absorberHubService.pageRecipients(absorberid, limit, offset);
+        }
+        return absorberHubService.pageGeoRecipients(absorber, limit, offset);
     }
 }

@@ -3,6 +3,7 @@ package cj.netos.absorb.robot.ports;
 import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.model.Absorber;
 import cj.netos.absorb.robot.model.HubTails;
+import cj.netos.absorb.robot.model.Recipients;
 import cj.netos.absorb.robot.model.TailBill;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.IOpenportService;
@@ -11,10 +12,12 @@ import cj.studio.openport.annotations.CjOpenport;
 import cj.studio.openport.annotations.CjOpenportParameter;
 import cj.studio.openport.annotations.CjOpenports;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @CjOpenports(usage = "洇取器集成器")
 public interface IAbsorberHubPorts extends IOpenportService {
+
     @CjOpenport(usage = "创建一个简单的洇取器")
     Absorber createSimpleAbsorber(
             ISecuritySession securitySession,
@@ -81,9 +84,38 @@ public interface IAbsorberHubPorts extends IOpenportService {
 
     @CjOpenport(usage = "提取尾金到我的钱包零钱，只有行主的主权账号具有提现权现")
     TailBill withdrawHubTails(ISecuritySession securitySession,
-                          @CjOpenportParameter(usage = "行号", name = "bankid") String bankid
+                              @CjOpenportParameter(usage = "行号", name = "bankid") String bankid
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取尾金账户，只有行主有权限")
     HubTails getHubTails(ISecuritySession securitySession, @CjOpenportParameter(usage = "行号", name = "bankid") String bankid) throws CircuitException;
+
+    @CjOpenport(usage = "停用洇取器,仅行主有权限")
+    void stopAbsorber(ISecuritySession securitySession,
+                      @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+                      @CjOpenportParameter(usage = "退出原因", name = "exitCause") String exitCause
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "调整洇取器分类的权重基数,需要平台管理员权限")
+    void adjustWeightOfCategory(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "洇取器分类代码", name = "category") String category,
+                                @CjOpenportParameter(usage = "权重", name = "weight") BigDecimal weight
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "调整洇取器分类下洇取人激励类别的权重,需要平台管理员权限")
+    void adjustBaseWeightOfRecipients(ISecuritySession securitySession,
+                                      @CjOpenportParameter(usage = "洇取器分类代码", name = "category") String category,
+                                      @CjOpenportParameter(usage = "激励代码，如：like,comment等等", name = "encourage") String encourage,
+                                      @CjOpenportParameter(usage = "权重", name = "weight") BigDecimal weight
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页洇取器，支持地理洇取器")
+    List<Recipients> pageRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    )throws CircuitException;
+
+
 }

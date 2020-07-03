@@ -1,9 +1,6 @@
 package cj.netos.absorb.robot.service;
 
-import cj.netos.absorb.robot.BankWithdrawResult;
-import cj.netos.absorb.robot.IAbsorberHubService;
-import cj.netos.absorb.robot.IAbsorberTemplateService;
-import cj.netos.absorb.robot.POR;
+import cj.netos.absorb.robot.*;
 import cj.netos.absorb.robot.bo.AbsorberTemplate;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
 import cj.netos.absorb.robot.mapper.*;
@@ -164,6 +161,37 @@ public class AbsorberHubService implements IAbsorberHubService {
     @Override
     public List<Recipients> pageRecipients(String absorber, int limit, long offset) {
         return recipientsMapper.page(absorber, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<Recipients> pageGeoRecipients(Absorber absorber, int limit, long offset) throws CircuitException {
+        List<POR> porList = searchAroundPerson(absorber.getLocation(), absorber.getRadius(), limit, offset);
+        if (porList.isEmpty()) {
+            return new ArrayList<>();
+        }
+        //求权和，把半径-离中心的距离加起来作为权和
+        List<Recipients> recipientsList = new ArrayList<>();
+        BigDecimal totalWeightsOfRecipients = new BigDecimal("0.00");
+        for (POR por : porList) {
+            BigDecimal weight = new BigDecimal(absorber.getRadius() + "").subtract(por.getDistance());//离中心越近权重越大，故而半径减之
+            //越近权重越高,当离圈后就取消洇金了
+            GeoReceptorBO bo = por.getReceptor();
+            Recipients recipients = new Recipients();
+            recipients.setId(bo.getId());
+            recipients.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+            recipients.setPerson(bo.getCreator());
+            recipients.setPersonName(bo.getTitle());
+            recipients.setEncourageCode("enter");
+            recipients.setEncourageCause("进圈");
+            recipients.setDesireAmount(0L);
+            recipients.setAbsorber(absorber.getId());
+            recipients.setWeight(weight);//距中心位置作为权重
+            recipientsList.add(recipients);
+
+            totalWeightsOfRecipients = totalWeightsOfRecipients.add(weight);
+        }
+        return recipientsList;
     }
 
     @CjTransaction

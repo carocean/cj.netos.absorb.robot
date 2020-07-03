@@ -67,8 +67,8 @@ public class AbsorberDistribute implements IAbsorberDistribute {
     }
 
     private BigDecimal distributeGeoAbsorber(IAbsorberHubService absorberHubService, Absorber absorber, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException {
-        //这个洇取器可发的钱
-        BigDecimal absorberAmount = weightPricePerAbsorber.multiply(absorber.getWeight());
+        //这个洇取器可发的钱，乘数尽量小，绝不能舍入加1的情况
+        BigDecimal absorberAmount = weightPricePerAbsorber.multiply(absorber.getWeight()).setScale(8,RoundingMode.DOWN);
         BigDecimal realDistributeAmount = new BigDecimal("0.00");
         //地理洇取器由于是动态取收取人的，所以应根据洇取器设定的人数上限获取，否则人数太多
         long maxRecipientCount = absorberHubService.getMaxRecipientsCount(absorber);
@@ -100,17 +100,17 @@ public class AbsorberDistribute implements IAbsorberDistribute {
         if (totalWeightsOfRecipients.compareTo(realDistributeAmount) == 0) {//如果权重和为0则退出处理
             return realDistributeAmount;
         }
-        //求每权的价格
-        BigDecimal weightPricePerRecipients = absorberAmount.divide(totalWeightsOfRecipients, 8, RoundingMode.HALF_DOWN);
+        //求每权的价格,每权价必须小，不然每个收取人一乘就多了，尾金会起出实际要发的金额
+        BigDecimal weightPricePerRecipients = absorberAmount.divide(totalWeightsOfRecipients, 8, RoundingMode.DOWN);
         //每个收取人权重*价格即是要发的钱
 
         for (Recipients recipients : recipientsList) {
-            BigDecimal money = weightPricePerRecipients.multiply(recipients.getWeight());
+            BigDecimal money = weightPricePerRecipients.multiply(recipients.getWeight()).setScale(8,RoundingMode.DOWN);
             //如果为0则跳过
             if (new BigDecimal("0.00").compareTo(money) == 0) {
                 continue;
             }
-            realDistributeAmount.add(money);
+            realDistributeAmount=realDistributeAmount.add(money);
             //生成并存储收取记录单并生成收取账单并将其提交给mhub，钱包会侦听收取单，并存入到收取人的洇金账户
             transToWallet(absorber, recipients, result, money);
         }
@@ -123,15 +123,15 @@ public class AbsorberDistribute implements IAbsorberDistribute {
 
     private BigDecimal distributeSimpleAbsorber(IAbsorberHubService absorberHubService, Absorber absorber, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException {
 
-        //这个洇取器可发的钱
-        BigDecimal absorberAmount = weightPricePerAbsorber.multiply(absorber.getWeight());
+        //这个洇取器可发的钱，乘数尽量小，绝不能舍入加1的情况
+        BigDecimal absorberAmount = weightPricePerAbsorber.multiply(absorber.getWeight()).setScale(8,RoundingMode.DOWN);
         BigDecimal totalWeightsOfRecipients = absorberHubService.totalWeightsOfRecipients(absorber.getId());
         BigDecimal realDistributeAmount = new BigDecimal("0.00");
         if (totalWeightsOfRecipients.compareTo(realDistributeAmount) == 0) {//如果权重和为0则退出处理
             return realDistributeAmount;
         }
-        //求每权的价格
-        BigDecimal weightPricePerRecipients = absorberAmount.divide(totalWeightsOfRecipients, 8, RoundingMode.HALF_DOWN);
+        //求每权的价格,每权价必须小，不然每个收取人一乘就多了，尾金会起出实际要发的金额
+        BigDecimal weightPricePerRecipients = absorberAmount.divide(totalWeightsOfRecipients, 8, RoundingMode.DOWN);
         //每个收取人权重*价格即是要发的钱
         while (true) {
             List<Recipients> recipientsList = absorberHubService.pageRecipients(absorber.getId(), _limit_simple, _offset_simple);
@@ -140,12 +140,12 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             }
             for (Recipients recipients : recipientsList) {
                 //收取人可以得到的钱
-                BigDecimal money = weightPricePerRecipients.multiply(recipients.getWeight());
+                BigDecimal money = weightPricePerRecipients.multiply(recipients.getWeight()).setScale(8,RoundingMode.DOWN);
                 //如果为0则跳过
                 if (new BigDecimal("0.00").compareTo(money) == 0) {
                     continue;
                 }
-                realDistributeAmount.add(money);
+                realDistributeAmount= realDistributeAmount.add(money);
                 //生成并存储收取记录单并生成收取账单并将其提交给mhub，钱包会侦听收取单，并存入到收取人的洇金账户
                 transToWallet(absorber, recipients, result, money);
             }

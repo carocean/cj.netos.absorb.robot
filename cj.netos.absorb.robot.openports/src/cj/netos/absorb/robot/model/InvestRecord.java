@@ -41,15 +41,27 @@ public class InvestRecord {
     private String ctime;
 
     /**
-     * Column: note
-     */
-    private String note;
-
-    /**
      * Column: out_trade_sn
      * Remark: 关联钱包中心支付订单号
      */
     private String outTradeSn;
+
+    /**
+     * Column: invest_order_no
+     * Remark: 关联支付目标订单号，对洇取程序用处不大，但记录起来将来或可用
+     */
+    private String investOrderNo;
+
+    /**
+     * Column: invest_order_title
+     * Remark: 关联支付目标订单标题
+     */
+    private String investOrderTitle;
+
+    /**
+     * Column: note
+     */
+    private String note;
 
     public String getSn() {
         return sn;
@@ -99,19 +111,35 @@ public class InvestRecord {
         this.ctime = ctime == null ? null : ctime.trim();
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note == null ? null : note.trim();
-    }
-
     public String getOutTradeSn() {
         return outTradeSn;
     }
 
     public void setOutTradeSn(String outTradeSn) {
         this.outTradeSn = outTradeSn == null ? null : outTradeSn.trim();
+    }
+
+    public String getInvestOrderNo() {
+        return investOrderNo;
+    }
+
+    public void setInvestOrderNo(String investOrderNo) {
+        this.investOrderNo = investOrderNo == null ? null : investOrderNo.trim();
+    }
+
+    public String getInvestOrderTitle() {
+        return investOrderTitle;
+    }
+
+    public void setInvestOrderTitle(String investOrderTitle) {
+        this.investOrderTitle = investOrderTitle == null ? null : investOrderTitle.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
     }
 }

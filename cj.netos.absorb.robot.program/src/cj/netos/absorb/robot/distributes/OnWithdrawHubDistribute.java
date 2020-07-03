@@ -41,7 +41,7 @@ public class OnWithdrawHubDistribute implements IHubDistribute<BankWithdrawResul
         for (Absorber absorber : geoAbsorbers) {
             IAbsorberDistribute absorberDistribute = new AbsorberDistribute(this.absorberHubService, rabbitMQProducer);
             BigDecimal distributedAmount = absorberDistribute.distribute(absorber, weightPricePerAbsorber, result);
-            realDistributeAmount.add(distributedAmount);
+            realDistributeAmount=realDistributeAmount.add(distributedAmount);
         }
         while (true) {
             List<Absorber> simpleAbsorbers = absorberHubService.pageAbsorber(result.getBankid(), 1, _limit, _offset);
@@ -51,7 +51,7 @@ public class OnWithdrawHubDistribute implements IHubDistribute<BankWithdrawResul
             for (Absorber absorber : simpleAbsorbers) {
                 IAbsorberDistribute absorberDistribute = new AbsorberDistribute(this.absorberHubService, rabbitMQProducer);
                 BigDecimal distributedAmount = absorberDistribute.distribute(absorber, weightPricePerAbsorber, result);
-                realDistributeAmount.add(distributedAmount);
+                realDistributeAmount= realDistributeAmount.add(distributedAmount);
             }
             _offset += simpleAbsorbers.size();
         }

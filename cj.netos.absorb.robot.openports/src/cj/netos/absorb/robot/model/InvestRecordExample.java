@@ -547,76 +547,6 @@ public class InvestRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andNoteIsNull() {
-            addCriterion("note is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteIsNotNull() {
-            addCriterion("note is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteEqualTo(String value) {
-            addCriterion("note =", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteNotEqualTo(String value) {
-            addCriterion("note <>", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteGreaterThan(String value) {
-            addCriterion("note >", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteGreaterThanOrEqualTo(String value) {
-            addCriterion("note >=", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteLessThan(String value) {
-            addCriterion("note <", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteLessThanOrEqualTo(String value) {
-            addCriterion("note <=", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteLike(String value) {
-            addCriterion("note like", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteNotLike(String value) {
-            addCriterion("note not like", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteIn(List<String> values) {
-            addCriterion("note in", values, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteNotIn(List<String> values) {
-            addCriterion("note not in", values, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteBetween(String value1, String value2) {
-            addCriterion("note between", value1, value2, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteNotBetween(String value1, String value2) {
-            addCriterion("note not between", value1, value2, "note");
-            return (Criteria) this;
-        }
-
         public Criteria andOutTradeSnIsNull() {
             addCriterion("out_trade_sn is null");
             return (Criteria) this;
@@ -684,6 +614,216 @@ public class InvestRecordExample {
 
         public Criteria andOutTradeSnNotBetween(String value1, String value2) {
             addCriterion("out_trade_sn not between", value1, value2, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoIsNull() {
+            addCriterion("invest_order_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoIsNotNull() {
+            addCriterion("invest_order_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoEqualTo(String value) {
+            addCriterion("invest_order_no =", value, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoNotEqualTo(String value) {
+            addCriterion("invest_order_no <>", value, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoGreaterThan(String value) {
+            addCriterion("invest_order_no >", value, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoGreaterThanOrEqualTo(String value) {
+            addCriterion("invest_order_no >=", value, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoLessThan(String value) {
+            addCriterion("invest_order_no <", value, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoLessThanOrEqualTo(String value) {
+            addCriterion("invest_order_no <=", value, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoLike(String value) {
+            addCriterion("invest_order_no like", value, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoNotLike(String value) {
+            addCriterion("invest_order_no not like", value, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoIn(List<String> values) {
+            addCriterion("invest_order_no in", values, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoNotIn(List<String> values) {
+            addCriterion("invest_order_no not in", values, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoBetween(String value1, String value2) {
+            addCriterion("invest_order_no between", value1, value2, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderNoNotBetween(String value1, String value2) {
+            addCriterion("invest_order_no not between", value1, value2, "investOrderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleIsNull() {
+            addCriterion("invest_order_title is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleIsNotNull() {
+            addCriterion("invest_order_title is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleEqualTo(String value) {
+            addCriterion("invest_order_title =", value, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleNotEqualTo(String value) {
+            addCriterion("invest_order_title <>", value, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleGreaterThan(String value) {
+            addCriterion("invest_order_title >", value, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("invest_order_title >=", value, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleLessThan(String value) {
+            addCriterion("invest_order_title <", value, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleLessThanOrEqualTo(String value) {
+            addCriterion("invest_order_title <=", value, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleLike(String value) {
+            addCriterion("invest_order_title like", value, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleNotLike(String value) {
+            addCriterion("invest_order_title not like", value, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleIn(List<String> values) {
+            addCriterion("invest_order_title in", values, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleNotIn(List<String> values) {
+            addCriterion("invest_order_title not in", values, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleBetween(String value1, String value2) {
+            addCriterion("invest_order_title between", value1, value2, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestOrderTitleNotBetween(String value1, String value2) {
+            addCriterion("invest_order_title not between", value1, value2, "investOrderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIsNull() {
+            addCriterion("note is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIsNotNull() {
+            addCriterion("note is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteEqualTo(String value) {
+            addCriterion("note =", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotEqualTo(String value) {
+            addCriterion("note <>", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteGreaterThan(String value) {
+            addCriterion("note >", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteGreaterThanOrEqualTo(String value) {
+            addCriterion("note >=", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLessThan(String value) {
+            addCriterion("note <", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLessThanOrEqualTo(String value) {
+            addCriterion("note <=", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLike(String value) {
+            addCriterion("note like", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotLike(String value) {
+            addCriterion("note not like", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIn(List<String> values) {
+            addCriterion("note in", values, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotIn(List<String> values) {
+            addCriterion("note not in", values, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteBetween(String value1, String value2) {
+            addCriterion("note between", value1, value2, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotBetween(String value1, String value2) {
+            addCriterion("note not between", value1, value2, "note");
             return (Criteria) this;
         }
     }

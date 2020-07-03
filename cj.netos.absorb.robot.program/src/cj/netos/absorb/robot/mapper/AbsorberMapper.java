@@ -3,7 +3,6 @@ package cj.netos.absorb.robot.mapper;
 import cj.netos.absorb.robot.model.Absorber;
 import cj.netos.absorb.robot.model.AbsorberExample;
 import org.apache.ibatis.annotations.Param;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -75,5 +74,4 @@ public interface AbsorberMapper {
     void stop(@Param(value = "id") String id, @Param(value = "exitCause") String exitCause);
 
     void updateWeight(@Param(value = "id") String id, @Param(value = "weight") BigDecimal weight);
-
 }

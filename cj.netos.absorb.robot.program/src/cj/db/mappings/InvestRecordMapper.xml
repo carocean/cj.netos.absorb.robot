@@ -9,8 +9,10 @@
     <result column="invester" jdbcType="VARCHAR" property="invester" />
     <result column="person_name" jdbcType="VARCHAR" property="personName" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
     <result column="out_trade_sn" jdbcType="VARCHAR" property="outTradeSn" />
+    <result column="invest_order_no" jdbcType="VARCHAR" property="investOrderNo" />
+    <result column="invest_order_title" jdbcType="VARCHAR" property="investOrderTitle" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -74,7 +76,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, absorber, amount, invester, person_name, ctime, note, out_trade_sn
+    sn, absorber, amount, invester, person_name, ctime, out_trade_sn, invest_order_no, 
+    invest_order_title, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.InvestRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -114,10 +117,12 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into invest_record (sn, absorber, amount, 
       invester, person_name, ctime, 
-      note, out_trade_sn)
+      out_trade_sn, invest_order_no, invest_order_title, 
+      note)
     values (#{sn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, 
       #{invester,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
-      #{note,jdbcType=VARCHAR}, #{outTradeSn,jdbcType=VARCHAR})
+      #{outTradeSn,jdbcType=VARCHAR}, #{investOrderNo,jdbcType=VARCHAR}, #{investOrderTitle,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.InvestRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -141,11 +146,17 @@
       <if test="ctime != null">
         ctime,
       </if>
-      <if test="note != null">
-        note,
-      </if>
       <if test="outTradeSn != null">
         out_trade_sn,
+      </if>
+      <if test="investOrderNo != null">
+        invest_order_no,
+      </if>
+      <if test="investOrderTitle != null">
+        invest_order_title,
+      </if>
+      <if test="note != null">
+        note,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -167,11 +178,17 @@
       <if test="ctime != null">
         #{ctime,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
-        #{note,jdbcType=VARCHAR},
-      </if>
       <if test="outTradeSn != null">
         #{outTradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="investOrderNo != null">
+        #{investOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="investOrderTitle != null">
+        #{investOrderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -204,11 +221,17 @@
       <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
       </if>
-      <if test="record.note != null">
-        note = #{record.note,jdbcType=VARCHAR},
-      </if>
       <if test="record.outTradeSn != null">
         out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investOrderNo != null">
+        invest_order_no = #{record.investOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investOrderTitle != null">
+        invest_order_title = #{record.investOrderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -224,8 +247,10 @@
       invester = #{record.invester,jdbcType=VARCHAR},
       person_name = #{record.personName,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=VARCHAR},
-      note = #{record.note,jdbcType=VARCHAR},
-      out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR}
+      out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
+      invest_order_no = #{record.investOrderNo,jdbcType=VARCHAR},
+      invest_order_title = #{record.investOrderTitle,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -249,11 +274,17 @@
       <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
-        note = #{note,jdbcType=VARCHAR},
-      </if>
       <if test="outTradeSn != null">
         out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="investOrderNo != null">
+        invest_order_no = #{investOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="investOrderTitle != null">
+        invest_order_title = #{investOrderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
       </if>
     </set>
     where sn = #{sn,jdbcType=VARCHAR}
@@ -266,8 +297,10 @@
       invester = #{invester,jdbcType=VARCHAR},
       person_name = #{personName,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=VARCHAR},
-      note = #{note,jdbcType=VARCHAR},
-      out_trade_sn = #{outTradeSn,jdbcType=VARCHAR}
+      out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
+      invest_order_no = #{investOrderNo,jdbcType=VARCHAR},
+      invest_order_title = #{investOrderTitle,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
 </mapper>

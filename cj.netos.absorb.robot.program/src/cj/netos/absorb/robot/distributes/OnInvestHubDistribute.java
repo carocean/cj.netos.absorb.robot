@@ -15,8 +15,6 @@ import java.util.List;
 public class OnInvestHubDistribute implements IHubDistribute<InvestRecord> {
     IAbsorberHubService absorberHubService;
     IRabbitMQProducer rabbitMQProducer;
-    int _limit = 500;
-    long _offset = 0;
 
     public OnInvestHubDistribute(IAbsorberHubService absorberHubService, IRabbitMQProducer rabbitMQProducer) {
         this.absorberHubService = absorberHubService;
@@ -29,9 +27,10 @@ public class OnInvestHubDistribute implements IHubDistribute<InvestRecord> {
         IAbsorberDistribute absorberDistribute = new AbsorberDistribute(this.absorberHubService, rabbitMQProducer);
 
         BigDecimal realDistributeAmount = new BigDecimal("0.00");
-
-        BigDecimal distributedAmount = absorberDistribute.distribute(absorber, new BigDecimal(result.getAmount() + ""), result);
-        realDistributeAmount.add(distributedAmount);
+        //每权的价格
+        BigDecimal weightPricePerAbsorber=new BigDecimal(result.getAmount()+"").divide(absorber.getWeight(),8,RoundingMode.HALF_DOWN);
+        BigDecimal distributedAmount = absorberDistribute.distribute(absorber, weightPricePerAbsorber, result);
+        realDistributeAmount=realDistributeAmount.add(distributedAmount);
 
         BigDecimal remainingAmount = new BigDecimal(result.getAmount() + "").subtract(realDistributeAmount);
         if (remainingAmount.compareTo(new BigDecimal("0.00")) > 0) {

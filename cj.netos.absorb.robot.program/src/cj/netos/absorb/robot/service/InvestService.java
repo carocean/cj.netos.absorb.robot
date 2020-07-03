@@ -3,7 +3,7 @@ package cj.netos.absorb.robot.service;
 import cj.netos.absorb.robot.IAbsorberHubService;
 import cj.netos.absorb.robot.IHubDistribute;
 import cj.netos.absorb.robot.IInvestService;
-import cj.netos.absorb.robot.WalletPayRecord;
+import cj.netos.absorb.robot.PaymentResult;
 import cj.netos.absorb.robot.distributes.OnInvestHubDistribute;
 import cj.netos.absorb.robot.mapper.InvestRecordMapper;
 import cj.netos.absorb.robot.model.Absorber;
@@ -31,19 +31,21 @@ public class InvestService implements IInvestService {
 
     @CjTransaction
     @Override
-    public void doResponse(Absorber absorber, WalletPayRecord result) throws CircuitException {
+    public void doResponse(Absorber absorber, PaymentResult result) throws CircuitException {
         if (result.getAmount() <= 0) {
             throw new CircuitException("500", String.format("投单金额小于等于0"));
         }
         InvestRecord record = new InvestRecord();
         record.setAbsorber(absorber.getId());
-        record.setAmount(record.getAmount());
+        record.setAmount(result.getAmount());
         record.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
-        record.setInvester(record.getInvester());
-        record.setPersonName(result.getPerson());
+        record.setInvester(result.getPerson());
+        record.setPersonName(result.getPersonName());
         record.setOutTradeSn(result.getSn());
         record.setSn(new IdWorker().nextId());
         record.setNote(result.getNote());
+        record.setInvestOrderNo(result.getDetails().getOrderNo());
+        record.setInvestOrderTitle(result.getDetails().getOrderTitle());
         investRecordMapper.insert(record);
         IHubDistribute<InvestRecord> onInvestHubDistribute = new OnInvestHubDistribute(absorberHubService, rabbitMQProducer);
         onInvestHubDistribute.distribute(record);

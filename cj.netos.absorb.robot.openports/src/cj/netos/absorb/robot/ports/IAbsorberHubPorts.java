@@ -2,6 +2,8 @@ package cj.netos.absorb.robot.ports;
 
 import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.model.Absorber;
+import cj.netos.absorb.robot.model.HubTails;
+import cj.netos.absorb.robot.model.TailBill;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.IOpenportService;
 import cj.studio.openport.ISecuritySession;
@@ -76,4 +78,12 @@ public interface IAbsorberHubPorts extends IOpenportService {
 
     @CjOpenport(usage = "重新加载洇取器模板，必须平台管理员权限")
     void reloadAbsorberTemplate(ISecuritySession securitySession) throws CircuitException;
+
+    @CjOpenport(usage = "提取尾金到我的钱包零钱，只有行主的主权账号具有提现权现")
+    TailBill withdrawHubTails(ISecuritySession securitySession,
+                          @CjOpenportParameter(usage = "行号", name = "bankid") String bankid
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取尾金账户，只有行主有权限")
+    HubTails getHubTails(ISecuritySession securitySession, @CjOpenportParameter(usage = "行号", name = "bankid") String bankid) throws CircuitException;
 }

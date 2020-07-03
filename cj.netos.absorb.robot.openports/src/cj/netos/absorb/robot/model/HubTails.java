@@ -17,6 +17,12 @@ public class HubTails {
      */
     private BigDecimal tailAdmount;
 
+    /**
+     * Column: bankid
+     * Remark: 哪个银行产生的
+     */
+    private String bankid;
+
     public String getId() {
         return id;
     }
@@ -31,5 +37,13 @@ public class HubTails {
 
     public void setTailAdmount(BigDecimal tailAdmount) {
         this.tailAdmount = tailAdmount;
+    }
+
+    public String getBankid() {
+        return bankid;
+    }
+
+    public void setBankid(String bankid) {
+        this.bankid = bankid == null ? null : bankid.trim();
     }
 }

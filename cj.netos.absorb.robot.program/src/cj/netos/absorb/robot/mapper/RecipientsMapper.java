@@ -66,4 +66,6 @@ public interface RecipientsMapper {
     BigDecimal totalWeightsOfRecipients(@Param(value = "absorber") String absorber);
 
     List<Recipients> page(@Param(value = "absorber") String absorber, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    void updateWeight(@Param(value = "id") String id, @Param(value = "weight") BigDecimal weight);
 }

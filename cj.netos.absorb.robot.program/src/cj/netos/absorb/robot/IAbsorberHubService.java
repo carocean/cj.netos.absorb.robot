@@ -1,11 +1,8 @@
 package cj.netos.absorb.robot;
 
 import cj.netos.absorb.robot.bo.AbsorberTemplate;
-import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
-import cj.netos.absorb.robot.model.Absorber;
-import cj.netos.absorb.robot.model.InvestRecord;
-import cj.netos.absorb.robot.model.Recipients;
+import cj.netos.absorb.robot.model.*;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 
@@ -36,7 +33,7 @@ public interface IAbsorberHubService {
 
     List<Recipients> pageRecipients(String id, int limit, long offset);
 
-    void addTailAmount(BigDecimal amount, String bankid, String refsn, int order, String cause);
+    void addTailAmount(BigDecimal amount,String person, String bankid, String refsn, int order, String cause);
 
     RecipientsAbsorbBill addRecipientsRecord(Absorber absorber, Recipients recipients, Object result, BigDecimal money);
 
@@ -50,5 +47,14 @@ public interface IAbsorberHubService {
     void stopAbsorber(String absorber, String exitCause);
 
     void updateAbsorberWeight(String id, BigDecimal newWeight);
+
+    @CjTransaction
+    HubTails getAndInitHubTails(String bankid);
+
+    TailBill withdrawHubTails(String principal, String bankid);
+
+    boolean existsRecipientsEncourageCode(String principal, String absorberid, String encourageCode);
+
+    void addWeightToRecipients(String principal, String absorberid);
 
 }

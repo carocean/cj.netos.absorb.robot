@@ -4,18 +4,28 @@ import cj.netos.absorb.robot.IAbsorberHubService;
 import cj.netos.absorb.robot.IAbsorberTemplateService;
 import cj.netos.absorb.robot.bo.AbsorberTemplate;
 import cj.netos.absorb.robot.bo.LatLng;
-import cj.netos.absorb.robot.model.Absorber;
-import cj.netos.absorb.robot.model.Recipients;
+import cj.netos.absorb.robot.model.*;
+import cj.netos.absorb.robot.result.AbsorberHubTailsResult;
 import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
+import cj.netos.rabbitmq.IRabbitMQProducer;
+import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
+import cj.studio.ecm.annotation.CjServiceSite;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
+import cj.ultimate.gson2.com.google.gson.Gson;
 import cj.ultimate.util.StringUtil;
+import com.rabbitmq.client.AMQP;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
 
 @CjService(name = "/hub.ports")
 public class AbsorberHubPorts implements IAbsorberHubPorts {
@@ -23,6 +33,11 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
     IAbsorberHubService absorberHubService;
     @CjServiceRef
     IAbsorberTemplateService absorberTemplateService;
+    @CjServiceSite
+    IServiceSite site;
+
+    @CjServiceRef(refByName = "@.rabbitmq.producer.withdrawHubTailsToWallet")
+    IRabbitMQProducer rabbitMQProducer;
 
     @Override
     public Absorber createSimpleAbsorber(ISecuritySession securitySession, String bankid, String title, String category, String proxy) throws CircuitException {
@@ -112,8 +127,8 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
         if (absorber == null) {
             throw new CircuitException("404", "洇取器已不存在。" + absorberid);
         }
-        if (absorberHubService.existsRecipients(securitySession.principal(), absorberid)) {
-            throw new CircuitException("500", String.format("洇取器:%s (%s)中已存在收取人:%s。", absorber.getTitle(), absorber.getId(), securitySession.principal()));
+        if (absorberHubService.existsRecipientsEncourageCode(securitySession.principal(), absorberid, encourageCode)) {
+            throw new CircuitException("2000", String.format("洇取器:%s (%s)中已存在收取人及期激励方式:%s。", absorber.getTitle(), absorber.getId(), securitySession.principal()));
         }
         AbsorberTemplate template = absorberHubService.getAbsorberTemplate();
         Recipients recipients = new Recipients();
@@ -136,5 +151,84 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
             throw new CircuitException("800", "拒绝访问");
         }
         absorberTemplateService.refresh();
+    }
+
+    @Override
+    public TailBill withdrawHubTails(ISecuritySession securitySession, String bankid) throws CircuitException {
+        //检查银行的创建者是否有securitySession当事人
+        checkWithdrawRights(securitySession, bankid);
+        TailBill bill = absorberHubService.withdrawHubTails(securitySession.principal(), bankid);
+        if (bill == null) {
+            throw new CircuitException("500", "金额不足1分");
+        }
+        AbsorberHubTailsResult result = new AbsorberHubTailsResult();
+        result.setAmount(bill.getAmount().longValue());
+        result.setBankid(bill.getBankid());
+        result.setCtime(bill.getCtime());
+        result.setNote(bill.getNote());
+        result.setOrder(bill.getOrder());
+        result.setPerson(bill.getPerson());
+        result.setSn(bill.getSn());
+        result.setPersonName((String) securitySession.property("nickName"));
+
+        AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
+                .type("/robot/hub.ports")
+                .headers(new HashMap() {
+                    {
+                        put("command", "withrawHubTails");
+                    }
+                }).build();
+        byte[] body = new Gson().toJson(result).getBytes();
+        rabbitMQProducer.publish("wallet", properties, body);
+        return bill;
+    }
+
+    @Override
+    public HubTails getHubTails(ISecuritySession securitySession, String bankid) throws CircuitException {
+        checkWithdrawRights(securitySession, bankid);
+        return absorberHubService.getAndInitHubTails(bankid);
+    }
+
+    private void checkWithdrawRights(ISecuritySession securitySession, String bankid) throws CircuitException {
+        Map<String, Object> bankInfo = _call_get_bank(bankid, (String) securitySession.property("accessToken"));
+        String creator = (String) bankInfo.get("creator");
+        if (!securitySession.principal().equals(creator)) {
+            throw new CircuitException("801", "拒绝访问");
+        }
+    }
+
+
+    private Map<String, Object> _call_get_bank(String bankid, String accessToken) throws CircuitException {
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+        String portsurl = site.getProperty("rhub.ports.wybank.info");
+        String url = String.format("%s?banksn=%s", portsurl, bankid);
+        final Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Rest-Command", "getWenyBankInfo")
+                .addHeader("cjtoken", accessToken)
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (Double.parseDouble(map.get("status") + "") >= 400) {
+            throw new CircuitException(map.get("status") + "", map.get("message") + "");
+        }
+        json = (String) map.get("dataText");
+        return new Gson().fromJson(json, HashMap.class);
     }
 }

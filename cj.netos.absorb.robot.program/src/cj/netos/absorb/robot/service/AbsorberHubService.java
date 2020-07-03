@@ -27,6 +27,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @CjBridge(aspects = "@transaction")
@@ -118,6 +119,29 @@ public class AbsorberHubService implements IAbsorberHubService {
 
     @CjTransaction
     @Override
+    public boolean existsRecipientsEncourageCode(String principal, String absorberid, String encourageCode) {
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(principal).andEncourageCodeEqualTo(encourageCode);
+        return recipientsMapper.countByExample(example) > 0;
+    }
+
+    @CjTransaction
+    @Override
+    public void addWeightToRecipients(String principal, String absorberid) {
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(principal).andAbsorberEqualTo(absorberid);
+        List<Recipients> list = recipientsMapper.selectByExample(example);
+        if (list.isEmpty()) {
+            return;
+        }
+        Recipients recipients = list.get(0);
+        BigDecimal weight = recipients.getWeight();
+        weight = weight.add(new BigDecimal("0.5"));
+        recipientsMapper.updateWeight(recipients.getId(), weight);
+    }
+
+    @CjTransaction
+    @Override
     public BigDecimal totalWeightsOfAbsorber(String bankid) {
         BigDecimal v = absorberMapper.totalWeightsOfAbsorber(bankid);
         if (v == null) {
@@ -144,31 +168,82 @@ public class AbsorberHubService implements IAbsorberHubService {
 
     @CjTransaction
     @Override
-    public void addTailAmount(BigDecimal amount, String bankid, String refsn, int order, String cause) {
+    public HubTails getAndInitHubTails(String bankid) {
         HubTailsExample example = new HubTailsExample();
-        example.createCriteria();
+        example.createCriteria().andBankidEqualTo(bankid);
         List<HubTails> list = hubTailsMapper.selectByExample(example);
-        HubTails hubTails = null;
-        if (list.isEmpty()) {
-            hubTails = new HubTails();
-            hubTails.setId(UUID.randomUUID().toString());
-            hubTails.setTailAdmount(amount);
-            hubTailsMapper.insert(hubTails);
-        } else {
-            hubTails = list.get(0);
-            hubTails.setTailAdmount(hubTails.getTailAdmount().add(amount));
-            hubTailsMapper.updateByPrimaryKey(hubTails);
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
+        HubTails hubTails = new HubTails();
+        hubTails.setId(new IdWorker().nextId());
+        hubTails.setTailAdmount(new BigDecimal("0.00"));
+        hubTails.setBankid(bankid);
+        hubTailsMapper.insert(hubTails);
+        return hubTails;
+    }
+
+    @CjTransaction
+    @Override
+    public TailBill withdrawHubTails(String principal, String bankid) {
+        HubTails hubTails = getAndInitHubTails(bankid);
+        BigDecimal tails = hubTails.getTailAdmount();
+        BigDecimal amount = tails.setScale(0, RoundingMode.DOWN);//舍掉尾数即可提金额
+        if (amount.compareTo(new BigDecimal("0.0")) <= 0) {
+            return null;
         }
         TailBill bill = new TailBill();
+        bill.setPerson(principal);
         bill.setAmount(amount);
-        bill.setBalance(hubTails.getTailAdmount());
+        bill.setBalance(tails.subtract(amount));
+        bill.setOrder(2);
+        bill.setRefsn(null);
+        bill.setBankid(bankid);
+        bill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        bill.setSn(new IdWorker().nextId());
+        bill.setNote("洇取器尾金存入");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        bill.setYear(calendar.get(Calendar.YEAR));
+        bill.setMonth(calendar.get(Calendar.MONTH));
+        bill.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+        int season = calendar.get(Calendar.MONTH) % 4;
+        bill.setSeason(season);
+
+        tailBillMapper.insert(bill);
+
+        hubTailsMapper.updateAmount(hubTails.getId(), bill.getBalance());
+        return bill;
+    }
+
+    @CjTransaction
+    @Override
+    public void addTailAmount(BigDecimal amount, String person, String bankid, String refsn, int order, String cause) {
+        HubTails hubTails = getAndInitHubTails(bankid);
+
+        TailBill bill = new TailBill();
+        bill.setPerson(person);
+        bill.setAmount(amount);
+        bill.setBalance(hubTails.getTailAdmount().add(amount));
         bill.setOrder(order);
         bill.setRefsn(refsn);
         bill.setBankid(bankid);
         bill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         bill.setSn(new IdWorker().nextId());
         bill.setNote(cause);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        bill.setYear(calendar.get(Calendar.YEAR));
+        bill.setMonth(calendar.get(Calendar.MONTH));
+        bill.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+        int season = calendar.get(Calendar.MONTH) % 4;
+        bill.setSeason(season);
+
         tailBillMapper.insert(bill);
+
+        hubTailsMapper.updateAmount(hubTails.getId(), bill.getBalance());
     }
 
     @CjTransaction
@@ -263,4 +338,5 @@ public class AbsorberHubService implements IAbsorberHubService {
     public void updateAbsorberWeight(String absorberid, BigDecimal weight) {
         absorberMapper.updateWeight(absorberid, weight);
     }
+
 }

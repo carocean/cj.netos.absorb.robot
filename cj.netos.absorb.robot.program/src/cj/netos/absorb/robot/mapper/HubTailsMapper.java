@@ -2,8 +2,9 @@ package cj.netos.absorb.robot.mapper;
 
 import cj.netos.absorb.robot.model.HubTails;
 import cj.netos.absorb.robot.model.HubTailsExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface HubTailsMapper {
 
@@ -61,4 +62,6 @@ public interface HubTailsMapper {
      * @mbg.generated generated automatically, do not modify!
      */
     int updateByPrimaryKey(HubTails record);
+
+    void updateAmount(@Param(value = "id") String id, @Param(value = "tailAdmount") BigDecimal tailAdmount);
 }

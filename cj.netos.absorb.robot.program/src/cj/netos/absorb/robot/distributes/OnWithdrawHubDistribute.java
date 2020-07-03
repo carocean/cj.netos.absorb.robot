@@ -5,6 +5,7 @@ import cj.netos.absorb.robot.IAbsorberDistribute;
 import cj.netos.absorb.robot.IAbsorberHubService;
 import cj.netos.absorb.robot.IHubDistribute;
 import cj.netos.absorb.robot.model.Absorber;
+import cj.netos.absorb.robot.util.RobotUtils;
 import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.net.CircuitException;
 
@@ -30,11 +31,11 @@ public class OnWithdrawHubDistribute implements IHubDistribute<BankWithdrawResul
         BigDecimal totalWeightsOfAbsorber = absorberHubService.totalWeightsOfAbsorber(result.getBankid());
         if (totalWeightsOfAbsorber.compareTo(new BigDecimal("0.00")) == 0) {//如果权重和为0则退出处理
             //尾金存入hub的余额上，将来平台可以提出来
-            absorberHubService.addTailAmount(new BigDecimal(result.getRealAmount() + ""), result.getBankid(), result.getOutTradeSn(), 0, "Hub为空");
+            absorberHubService.addTailAmount(new BigDecimal(result.getRealAmount() + ""),result.getWithdrawer(), result.getBankid(), result.getOutTradeSn(), 0, "Hub为空");
             return;
         }
         //求每权的价格
-        BigDecimal weightPricePerAbsorber = new BigDecimal(result.getRealAmount() + "").divide(totalWeightsOfAbsorber, 8, RoundingMode.HALF_DOWN);
+        BigDecimal weightPricePerAbsorber = new BigDecimal(result.getRealAmount() + "").divide(totalWeightsOfAbsorber, RobotUtils.BIGDECIMAL_SCALE, RoundingMode.HALF_DOWN);
         //地理洇取器全部优先
         BigDecimal realDistributeAmount = new BigDecimal("0.00");
         List<Absorber> geoAbsorbers = absorberHubService.pageAbsorber(result.getBankid(), 2, Integer.MAX_VALUE, 0);
@@ -58,7 +59,7 @@ public class OnWithdrawHubDistribute implements IHubDistribute<BankWithdrawResul
         BigDecimal remainingAmount = new BigDecimal(result.getRealAmount() + "").subtract(realDistributeAmount);
         if (remainingAmount.compareTo(new BigDecimal("0.00")) > 0) {
             //尾金存入hub的余额上，将来平台可以提出来
-            absorberHubService.addTailAmount(remainingAmount, result.getBankid(), result.getOutTradeSn(), 0, "尾金");
+            absorberHubService.addTailAmount(remainingAmount,result.getWithdrawer(), result.getBankid(), result.getOutTradeSn(), 0, "尾金");
         }
     }
 }

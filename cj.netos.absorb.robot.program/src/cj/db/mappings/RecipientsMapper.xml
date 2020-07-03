@@ -301,4 +301,10 @@
         order by weight desc
         limit #{offset},#{limit}
     </select>
+  <update id="updateWeight" parameterType="cj.netos.absorb.robot.model.Recipients">
+    update recipients
+    set
+    weight = #{weight,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

@@ -39,7 +39,7 @@ public class WithdrawService implements IWithdrawService {
     @CjServiceRef
     IAbsorberHubService absorberHubService;
 
-    @CjServiceRef(refByName = "@.rabbitmq.producer.wallet")
+    @CjServiceRef(refByName = "@.rabbitmq.producer.distributeAbsorbsToWallet")
     IRabbitMQProducer rabbitMQProducer;
 
     @CjTransaction

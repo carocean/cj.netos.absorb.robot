@@ -20,7 +20,7 @@ public class RecipientsRecord {
 
     /**
      * Column: amount
-     * Remark: 派出的金额 单位为分，充许8位小数
+     * Remark: 派出的金额 单位为分，充许14位小数
      */
     private BigDecimal amount;
 

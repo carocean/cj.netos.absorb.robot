@@ -26,7 +26,7 @@ public class InvestService implements IInvestService {
     @CjServiceRef
     IAbsorberHubService absorberHubService;
 
-    @CjServiceRef(refByName = "@.rabbitmq.producer.wallet")
+    @CjServiceRef(refByName = "@.rabbitmq.producer.distributeAbsorbsToWallet")
     IRabbitMQProducer rabbitMQProducer;
 
     @CjTransaction

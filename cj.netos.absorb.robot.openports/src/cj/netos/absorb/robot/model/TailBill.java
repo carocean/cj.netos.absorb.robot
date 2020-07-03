@@ -12,6 +12,12 @@ public class TailBill {
     private String sn;
 
     /**
+     * Column: person
+     * Remark: 操作人
+     */
+    private String person;
+
+    /**
      * Column: refsn
      * Remark: 关联原始派发单号，或是提现单，或是投单
      */
@@ -50,12 +56,45 @@ public class TailBill {
      */
     private String note;
 
+    /**
+     * Column: workday
+     */
+    private String workday;
+
+    /**
+     * Column: day
+     */
+    private Integer day;
+
+    /**
+     * Column: month
+     */
+    private Integer month;
+
+    /**
+     * Column: season
+     */
+    private Integer season;
+
+    /**
+     * Column: year
+     */
+    private Integer year;
+
     public String getSn() {
         return sn;
     }
 
     public void setSn(String sn) {
         this.sn = sn == null ? null : sn.trim();
+    }
+
+    public String getPerson() {
+        return person;
+    }
+
+    public void setPerson(String person) {
+        this.person = person == null ? null : person.trim();
     }
 
     public String getRefsn() {
@@ -112,5 +151,45 @@ public class TailBill {
 
     public void setNote(String note) {
         this.note = note == null ? null : note.trim();
+    }
+
+    public String getWorkday() {
+        return workday;
+    }
+
+    public void setWorkday(String workday) {
+        this.workday = workday == null ? null : workday.trim();
+    }
+
+    public Integer getDay() {
+        return day;
+    }
+
+    public void setDay(Integer day) {
+        this.day = day;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public Integer getSeason() {
+        return season;
+    }
+
+    public void setSeason(Integer season) {
+        this.season = season;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }

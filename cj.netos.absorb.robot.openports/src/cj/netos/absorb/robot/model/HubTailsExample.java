@@ -267,6 +267,76 @@ public class HubTailsExample {
             addCriterion("tail_admount not between", value1, value2, "tailAdmount");
             return (Criteria) this;
         }
+
+        public Criteria andBankidIsNull() {
+            addCriterion("bankid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidIsNotNull() {
+            addCriterion("bankid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidEqualTo(String value) {
+            addCriterion("bankid =", value, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidNotEqualTo(String value) {
+            addCriterion("bankid <>", value, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidGreaterThan(String value) {
+            addCriterion("bankid >", value, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidGreaterThanOrEqualTo(String value) {
+            addCriterion("bankid >=", value, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidLessThan(String value) {
+            addCriterion("bankid <", value, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidLessThanOrEqualTo(String value) {
+            addCriterion("bankid <=", value, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidLike(String value) {
+            addCriterion("bankid like", value, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidNotLike(String value) {
+            addCriterion("bankid not like", value, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidIn(List<String> values) {
+            addCriterion("bankid in", values, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidNotIn(List<String> values) {
+            addCriterion("bankid not in", values, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidBetween(String value1, String value2) {
+            addCriterion("bankid between", value1, value2, "bankid");
+            return (Criteria) this;
+        }
+
+        public Criteria andBankidNotBetween(String value1, String value2) {
+            addCriterion("bankid not between", value1, value2, "bankid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

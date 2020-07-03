@@ -40,7 +40,7 @@ public class OnWithdrawCommand implements IConsumerCommand {
             if (!StringUtil.isEmpty(msg)) {
                 msg = msg.substring(0, msg.length() > 200 ? 200 : msg.length());
             }
-            absorberHubService.addTailAmount(new BigDecimal(result.getRealAmount() + ""), result.getBankid(), result.getOutTradeSn(), 0, String.format("派发过程出错:%s", msg));
+            absorberHubService.addTailAmount(new BigDecimal(result.getRealAmount() + ""),result.getWithdrawer(), result.getBankid(), result.getOutTradeSn(), 0, String.format("派发过程出错:%s", msg));
             CJSystem.logging().error(getClass(),e);
             CircuitException ce = CircuitException.search(e);
             if (ce == null) {

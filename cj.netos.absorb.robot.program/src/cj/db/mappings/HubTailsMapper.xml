@@ -5,6 +5,7 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="tail_admount" jdbcType="DECIMAL" property="tailAdmount" />
+    <result column="bankid" jdbcType="VARCHAR" property="bankid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -68,7 +69,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, tail_admount
+    id, tail_admount, bankid
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.HubTailsExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -106,8 +107,10 @@
   </delete>
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.HubTails">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    insert into hub_tails (id, tail_admount)
-    values (#{id,jdbcType=VARCHAR}, #{tailAdmount,jdbcType=DECIMAL})
+    insert into hub_tails (id, tail_admount, bankid
+      )
+    values (#{id,jdbcType=VARCHAR}, #{tailAdmount,jdbcType=DECIMAL}, #{bankid,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.HubTails">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -119,6 +122,9 @@
       <if test="tailAdmount != null">
         tail_admount,
       </if>
+      <if test="bankid != null">
+        bankid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -126,6 +132,9 @@
       </if>
       <if test="tailAdmount != null">
         #{tailAdmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankid != null">
+        #{bankid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -146,6 +155,9 @@
       <if test="record.tailAdmount != null">
         tail_admount = #{record.tailAdmount,jdbcType=DECIMAL},
       </if>
+      <if test="record.bankid != null">
+        bankid = #{record.bankid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -155,7 +167,8 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update hub_tails
     set id = #{record.id,jdbcType=VARCHAR},
-      tail_admount = #{record.tailAdmount,jdbcType=DECIMAL}
+      tail_admount = #{record.tailAdmount,jdbcType=DECIMAL},
+      bankid = #{record.bankid,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -167,11 +180,20 @@
       <if test="tailAdmount != null">
         tail_admount = #{tailAdmount,jdbcType=DECIMAL},
       </if>
+      <if test="bankid != null">
+        bankid = #{bankid,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cj.netos.absorb.robot.model.HubTails">
     <!-- @mbg.generated: generated automatically, do not modify! -->
+    update hub_tails
+    set tail_admount = #{tailAdmount,jdbcType=DECIMAL},
+      bankid = #{bankid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateAmount" parameterType="cj.netos.absorb.robot.model.HubTails">
     update hub_tails
     set tail_admount = #{tailAdmount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=VARCHAR}

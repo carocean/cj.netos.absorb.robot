@@ -7,6 +7,7 @@ import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @CjService(name = "/bill/hubTails.ports")
@@ -30,22 +31,26 @@ public class HubTailBillPorts implements IHubTailBillPorts {
     }
 
     @Override
-    public long totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
-        return hubTailBillService.totalInBillOfMonth(wenyBankID,year,month);
+    public String totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
+        BigDecimal v= hubTailBillService.totalInBillOfMonth(wenyBankID,year,month);
+        return v.stripTrailingZeros().toPlainString();
     }
 
     @Override
-    public long totalInBillOfYear(ISecuritySession securitySession, String wenyBankID, int year) throws CircuitException {
-        return hubTailBillService.totalInBillOfYear(wenyBankID,year);
+    public String totalInBillOfYear(ISecuritySession securitySession, String wenyBankID, int year) throws CircuitException {
+        BigDecimal v= hubTailBillService.totalInBillOfYear(wenyBankID,year);
+        return v.stripTrailingZeros().toPlainString();
     }
 
     @Override
-    public long totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
-        return hubTailBillService.totalOutBillOfMonth(wenyBankID, year, month);
+    public String totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
+        BigDecimal v= hubTailBillService.totalOutBillOfMonth(wenyBankID, year, month);
+        return v.stripTrailingZeros().toPlainString();
     }
 
     @Override
-    public long totalOutBillOfYear(ISecuritySession securitySession, String wenyBankID, int year) throws CircuitException {
-        return hubTailBillService.totalOutBillOfYear(wenyBankID,year);
+    public String totalOutBillOfYear(ISecuritySession securitySession, String wenyBankID, int year) throws CircuitException {
+        BigDecimal v= hubTailBillService.totalOutBillOfYear(wenyBankID,year);
+        return v.stripTrailingZeros().toPlainString();
     }
 }

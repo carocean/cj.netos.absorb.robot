@@ -19,7 +19,7 @@ import com.rabbitmq.client.LongString;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-@CjConsumer(name = "onPayment")
+@CjConsumer(name = "fromWallet_onPayTrade")
 @CjService(name = "/wallet/trade.mhub#payTrade")
 public class OnInvestCommand implements IConsumerCommand {
     @CjServiceRef

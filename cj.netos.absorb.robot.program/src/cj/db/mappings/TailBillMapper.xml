@@ -391,4 +391,38 @@
     and `order` = #{order,jdbcType=INTEGER}
     limit #{offset},#{limit}
   </select>
+  <select id="totalInBillOfMonth" parameterType="cj.netos.absorb.robot.model.TailBill" resultType="java.math.BigDecimal">
+    select
+    sum(amount)
+    from tail_bill
+    where bankid = #{bankid,jdbcType=VARCHAR}
+    and `month` = #{month,jdbcType=INTEGER}
+    and `year` = #{year,jdbcType=INTEGER}
+    and (`order` = 0 or `order` = 1)
+  </select>
+  <select id="totalInBillOfYear" parameterType="cj.netos.absorb.robot.model.TailBill" resultType="java.math.BigDecimal">
+    select
+      sum(amount)
+    from tail_bill
+    where bankid = #{bankid,jdbcType=VARCHAR}
+      and `year` = #{year,jdbcType=INTEGER}
+      and (`order` = 0 or `order` = 1)
+  </select>
+  <select id="totalOutBillOfMonth" parameterType="cj.netos.absorb.robot.model.TailBill" resultType="java.math.BigDecimal">
+    select
+      sum(amount)
+    from tail_bill
+    where bankid = #{bankid,jdbcType=VARCHAR}
+      and `month` = #{month,jdbcType=INTEGER}
+      and `year` = #{year,jdbcType=INTEGER}
+      and `order` = 2
+  </select>
+  <select id="totalOutBillOfYear" parameterType="cj.netos.absorb.robot.model.TailBill" resultType="java.math.BigDecimal">
+    select
+      sum(amount)
+    from tail_bill
+    where bankid = #{bankid,jdbcType=VARCHAR}
+      and `year` = #{year,jdbcType=INTEGER}
+      and `order` = 2
+  </select>
 </mapper>

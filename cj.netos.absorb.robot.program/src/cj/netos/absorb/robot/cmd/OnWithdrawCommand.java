@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-@CjConsumer(name = "onWithdraw")
+@CjConsumer(name = "fromWyBank_onWithdraw")
 @CjService(name = "/wybank/trade/settle.mq#withdraw")
 public class OnWithdrawCommand implements IConsumerCommand {
     @CjServiceRef

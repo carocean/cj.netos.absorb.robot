@@ -31,7 +31,9 @@ public interface IHubTailBillPorts extends IOpenportService {
     @CjOpenport(usage = "获取指定月份账单")
     List<HubTails> pageBillOfMonth(ISecuritySession securitySession,
                                    @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
-                                   @CjOpenportParameter(usage = "指令：0申购；1承兑;2分账", name = "order") int order,
+                                   @CjOpenportParameter(usage = "指令：0为withdraw_record存入\n" +
+                                           "1为invest_record存入\n" +
+                                           "2为取出", name = "order") int order,
                                    @CjOpenportParameter(usage = "年份", name = "year") int year,
                                    @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month,
                                    @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
@@ -39,7 +41,7 @@ public interface IHubTailBillPorts extends IOpenportService {
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取指定月份账单入账总金额")
-    long totalInBillOfMonth(
+    String totalInBillOfMonth(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
             @CjOpenportParameter(usage = "年份", name = "year") int year,
@@ -47,14 +49,14 @@ public interface IHubTailBillPorts extends IOpenportService {
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取当年账单入账总金额")
-    long totalInBillOfYear(
+    String totalInBillOfYear(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
             @CjOpenportParameter(usage = "年份", name = "year") int year
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取指定月份账单出账总金额")
-    long totalOutBillOfMonth(
+    String totalOutBillOfMonth(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
             @CjOpenportParameter(usage = "年份", name = "year") int year,
@@ -62,7 +64,7 @@ public interface IHubTailBillPorts extends IOpenportService {
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取当周账单出账总金额")
-    long totalOutBillOfYear(
+    String totalOutBillOfYear(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
             @CjOpenportParameter(usage = "年份", name = "year") int year

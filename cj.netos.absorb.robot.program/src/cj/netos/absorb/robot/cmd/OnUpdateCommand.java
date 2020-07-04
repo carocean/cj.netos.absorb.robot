@@ -14,7 +14,7 @@ import com.rabbitmq.client.Envelope;
 
 import java.io.IOException;
 
-@CjConsumer(name = "onUpdateAbsorbs")
+@CjConsumer(name = "fromWyBank_onUpdateAbsorbs")
 @CjService(name = "/notify.ports#updateAbsorbs")
 public class OnUpdateCommand implements IConsumerCommand {
     @CjServiceRef

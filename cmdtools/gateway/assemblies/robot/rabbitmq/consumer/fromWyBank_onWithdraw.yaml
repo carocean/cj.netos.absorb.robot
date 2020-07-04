@@ -15,7 +15,7 @@ connectionTimeout: 0
 workPoolTimeout: 0
 queue:
   #队列名。该队列会自动在rabbitmq上创建，如果存在则可直接使用
-  name: absorb.robot-1.onWithdraw
+  name: robot.onWithdraw.1
   #设置是否持久化。为 true 则设置队列为持久化。持久化的队列会存盘，在 服务器重启的时候可以保证不丢失相关信息。
   #默认为false
   durable: true

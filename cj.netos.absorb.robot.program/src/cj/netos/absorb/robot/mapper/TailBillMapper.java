@@ -3,6 +3,8 @@ package cj.netos.absorb.robot.mapper;
 import cj.netos.absorb.robot.model.HubTails;
 import cj.netos.absorb.robot.model.TailBill;
 import cj.netos.absorb.robot.model.TailBillExample;
+
+import java.math.BigDecimal;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -63,10 +65,17 @@ public interface TailBillMapper {
      */
     int updateByPrimaryKey(TailBill record);
 
-    List<HubTails> page(@Param(value = "bankid") String bankid, int limit, long offset);
+    List<HubTails> page(@Param(value = "bankid") String bankid, @Param(value = "limit")int limit, @Param(value = "offset")long offset);
 
-    List<HubTails> getBillOfMonth(@Param(value = "bankid")String bankid, int year, int month, int limit, long offset);
+    List<HubTails> getBillOfMonth(@Param(value = "bankid")String bankid, @Param(value = "year")int year, @Param(value = "month")int month, @Param(value = "limit")int limit, @Param(value = "offset")long offset);
 
-    List<HubTails> pageBillOfMonth(@Param(value = "bankid")String bankid, int order, int year, int month, int limit, long offset);
+    List<HubTails> pageBillOfMonth(@Param(value = "bankid")String bankid,@Param(value = "order") int order, @Param(value = "year")int year, @Param(value = "month")int month, @Param(value = "limit")int limit, @Param(value = "offset")long offset);
 
+    BigDecimal totalInBillOfMonth(@Param(value = "bankid")String bankid, @Param(value = "year")int year, @Param(value = "month")int month);
+
+    BigDecimal totalInBillOfYear(@Param(value = "bankid")String bankid, @Param(value = "year")int year);
+
+    BigDecimal totalOutBillOfMonth(@Param(value = "bankid")String bankid, @Param(value = "year")int year, @Param(value = "month")int month);
+
+    BigDecimal totalOutBillOfYear(@Param(value = "bankid")String bankid, @Param(value = "year")int year);
 }

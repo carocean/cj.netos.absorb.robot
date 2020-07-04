@@ -365,4 +365,30 @@
       `year` = #{year,jdbcType=INTEGER}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
+  <select id="page" parameterType="cj.netos.absorb.robot.model.TailBill" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tail_bill
+    where bankid = #{bankid,jdbcType=VARCHAR}
+    limit #{offset},#{limit}
+  </select>
+  <select id="getBillOfMonth" parameterType="cj.netos.absorb.robot.model.TailBill" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tail_bill
+    where bankid = #{bankid,jdbcType=VARCHAR}
+    and `month` = #{month,jdbcType=INTEGER}
+    and `year` = #{year,jdbcType=INTEGER}
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageBillOfMonth" parameterType="cj.netos.absorb.robot.model.TailBill" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tail_bill
+    where bankid = #{bankid,jdbcType=VARCHAR}
+    and `month` = #{month,jdbcType=INTEGER}
+    and `year` = #{year,jdbcType=INTEGER}
+    and `order` = #{order,jdbcType=INTEGER}
+    limit #{offset},#{limit}
+  </select>
 </mapper>

@@ -61,8 +61,10 @@ public class AbsorberDistribute implements IAbsorberDistribute {
                 throw new EcmException("不支持的洇取器类型:" + absorber.getType());
         }
         long times = absorber.getCurrentTimes() == null ? 0L : absorber.getCurrentTimes();
+        absorber.setCurrentTimes(++times);
         BigDecimal amount = absorber.getCurrentAmount() == null ? new BigDecimal("0.00") : absorber.getCurrentAmount();
-        absorberHubService.updateAbsorberCurrent(absorber.getId(), times++, amount.add(realDistribute));
+        absorber.setCurrentAmount(amount.add(realDistribute));
+        absorberHubService.updateAbsorberCurrent(absorber.getId(), absorber.getCurrentTimes(), absorber.getCurrentAmount());
         return realDistribute;
     }
 

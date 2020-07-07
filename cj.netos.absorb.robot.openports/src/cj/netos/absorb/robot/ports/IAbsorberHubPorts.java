@@ -96,6 +96,12 @@ public interface IAbsorberHubPorts extends IOpenportService {
                       @CjOpenportParameter(usage = "退出原因", name = "exitCause") String exitCause
     ) throws CircuitException;
 
+
+    @CjOpenport(usage = "运行洇取器,仅行主有权限")
+    void startAbsorber(ISecuritySession securitySession,
+                      @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
+    ) throws CircuitException;
+
     @CjOpenport(usage = "调整洇取器分类的权重基数,需要平台管理员权限")
     void adjustWeightOfCategory(ISecuritySession securitySession,
                                 @CjOpenportParameter(usage = "洇取器分类代码", name = "category") String category,

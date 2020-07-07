@@ -360,6 +360,11 @@ public class AbsorberHubService implements IAbsorberHubService {
     public void stopAbsorber(String absorber, String exitCause) {
         absorberMapper.stop(absorber, exitCause);
     }
+    @CjTransaction
+    @Override
+    public void startAbsorber(String absorberid) {
+        absorberMapper.start(absorberid);
+    }
 
     @CjTransaction
     @Override

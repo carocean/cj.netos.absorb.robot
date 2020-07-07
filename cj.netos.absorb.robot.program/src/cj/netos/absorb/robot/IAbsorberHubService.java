@@ -59,4 +59,6 @@ public interface IAbsorberHubService {
 
     List<Recipients> pageGeoRecipients(Absorber absorberid, int limit, long offset) throws CircuitException;
 
+    void startAbsorber(String absorberid);
+
 }

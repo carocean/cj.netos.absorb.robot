@@ -481,6 +481,13 @@
       exit_cause = #{exitCause,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <update id="start" parameterType="cj.netos.absorb.robot.model.Absorber">
+    update absorber
+    set
+      `state` = 0,
+      exit_cause = NULL
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
   <update id="updateWeight" parameterType="cj.netos.absorb.robot.model.Absorber">
     update absorber
     set

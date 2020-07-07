@@ -195,6 +195,16 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
     }
 
     @Override
+    public void startAbsorber(ISecuritySession securitySession, String absorberid) throws CircuitException {
+        Absorber absorber = getAbsorber(securitySession, absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器不存在");
+        }
+        checkWithdrawRights(securitySession, absorber.getBankid());
+        absorberHubService.startAbsorber(absorberid);
+    }
+
+    @Override
     public HubTails getHubTails(ISecuritySession securitySession, String bankid) throws CircuitException {
         checkWithdrawRights(securitySession, bankid);
         return absorberHubService.getAndInitHubTails(bankid);

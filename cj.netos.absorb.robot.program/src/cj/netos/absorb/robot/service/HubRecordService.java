@@ -13,6 +13,7 @@ import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @CjBridge(aspects = "@transaction")
 @CjService(name = "hubRecordService")
@@ -34,9 +35,22 @@ public class HubRecordService implements IHubRecordService {
 
     @CjTransaction
     @Override
-    public BigDecimal totalRecipientsRecord(String absorber, String recipients) {
-        return recipientsRecordMapper.totalRecipientsRecord(absorber,recipients);
+    public List<RecipientsRecord> pageRecipientsRecordByPerson(String absorberid, String recipients, int limit, long offset) {
+        return recipientsRecordMapper.pageByPerson(absorberid, recipients, limit, offset);
     }
+
+    @CjTransaction
+    @Override
+    public List<RecipientsRecord> pageRecipientsRecordById(String recipientsId, int limit, long offset) {
+        return recipientsRecordMapper.pageByRecipientsId(recipientsId, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public BigDecimal totalRecipientsRecord(String absorber, String recipients) {
+        return recipientsRecordMapper.totalRecipientsRecord(absorber, recipients);
+    }
+
     @CjTransaction
     @Override
     public BigDecimal totalRecipientsRecordById(String recipientsId) {

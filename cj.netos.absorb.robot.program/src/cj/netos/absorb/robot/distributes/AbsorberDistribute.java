@@ -91,7 +91,7 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             recipients.setPerson(bo.getCreator());
             recipients.setPersonName(bo.getTitle());
             recipients.setEncourageCode("enter");
-            recipients.setEncourageCause("进圈");
+            recipients.setEncourageCause("在圈内");
             recipients.setDesireAmount(0L);
             recipients.setAbsorber(absorber.getId());
             recipients.setWeight(weight);//距中心位置作为权重

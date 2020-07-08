@@ -10,6 +10,7 @@ import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @CjService(name = "/record.ports")
 public class HubRecordPorts implements IHubRecordPorts {
@@ -22,8 +23,18 @@ public class HubRecordPorts implements IHubRecordPorts {
     }
 
     @Override
+    public List<RecipientsRecord> pageRecipientsRecordByPerson(ISecuritySession securitySession, String absorberid, String recipients, int limit, long offset) throws CircuitException {
+        return hubRecordService.pageRecipientsRecordByPerson(absorberid, recipients, limit, offset);
+    }
+
+    @Override
+    public List<RecipientsRecord> pageRecipientsRecordById(ISecuritySession securitySession, String recipientsId, int limit, long offset) throws CircuitException {
+        return hubRecordService.pageRecipientsRecordById(recipientsId, limit, offset);
+    }
+
+    @Override
     public BigDecimal totalRecipientsRecord(ISecuritySession securitySession, String absorber, String recipients) throws CircuitException {
-        return hubRecordService.totalRecipientsRecord(absorber,recipients);
+        return hubRecordService.totalRecipientsRecord(absorber, recipients);
     }
 
     @Override

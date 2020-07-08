@@ -67,4 +67,8 @@ public interface RecipientsRecordMapper {
 
     BigDecimal totalRecipientsRecordById(@Param(value = "recipientsId")String recipientsId);
 
+    List<RecipientsRecord> pageByPerson(@Param(value = "absorber") String absorber, @Param(value = "recipient") String recipient,@Param(value = "limit") int limit,@Param(value = "offset") long offset);
+
+    List<RecipientsRecord> pageByRecipientsId(@Param(value = "recipientsId")String recipientsId, @Param(value = "limit") int limit,@Param(value = "offset") long offset);
+
 }

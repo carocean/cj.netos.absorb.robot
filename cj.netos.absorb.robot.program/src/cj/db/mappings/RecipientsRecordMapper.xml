@@ -300,4 +300,21 @@
     from recipients_record
     where  recipients_id = #{recipientsId,jdbcType=VARCHAR}
   </select>
+  <select id="pageByPerson" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from recipients_record
+    where recipient = #{recipient,jdbcType=VARCHAR}
+    and absorber = #{absorber,jdbcType=VARCHAR}
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageByRecipientsId" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from recipients_record
+    where recipients_id = #{recipientsId,jdbcType=VARCHAR}
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
 </mapper>

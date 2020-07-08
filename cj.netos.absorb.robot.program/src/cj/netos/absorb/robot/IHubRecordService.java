@@ -15,4 +15,6 @@ public interface IHubRecordService {
 
     BigDecimal totalRecipientsRecord(String absorber, String recipients);
 
+    BigDecimal totalRecipientsRecordById(String recipientsId);
+
 }

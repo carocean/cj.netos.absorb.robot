@@ -687,6 +687,76 @@ public class RecipientsRecordExample {
             addCriterion("encourage_cause not between", value1, value2, "encourageCause");
             return (Criteria) this;
         }
+
+        public Criteria andRecipientsIdIsNull() {
+            addCriterion("recipients_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdIsNotNull() {
+            addCriterion("recipients_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdEqualTo(String value) {
+            addCriterion("recipients_id =", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdNotEqualTo(String value) {
+            addCriterion("recipients_id <>", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdGreaterThan(String value) {
+            addCriterion("recipients_id >", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdGreaterThanOrEqualTo(String value) {
+            addCriterion("recipients_id >=", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdLessThan(String value) {
+            addCriterion("recipients_id <", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdLessThanOrEqualTo(String value) {
+            addCriterion("recipients_id <=", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdLike(String value) {
+            addCriterion("recipients_id like", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdNotLike(String value) {
+            addCriterion("recipients_id not like", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdIn(List<String> values) {
+            addCriterion("recipients_id in", values, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdNotIn(List<String> values) {
+            addCriterion("recipients_id not in", values, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdBetween(String value1, String value2) {
+            addCriterion("recipients_id between", value1, value2, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdNotBetween(String value1, String value2) {
+            addCriterion("recipients_id not between", value1, value2, "recipientsId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

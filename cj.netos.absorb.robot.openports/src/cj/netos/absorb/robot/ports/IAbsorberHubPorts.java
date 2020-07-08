@@ -132,7 +132,7 @@ public interface IAbsorberHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
     ) throws CircuitException;
 
-    @CjOpenport(usage = "统计洇取器的人数")
+    @CjOpenport(usage = "统计洇取器的人数，仅对简单洇取器有效")
     long countRecipients(ISecuritySession securitySession,
                          @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
     ) throws CircuitException;

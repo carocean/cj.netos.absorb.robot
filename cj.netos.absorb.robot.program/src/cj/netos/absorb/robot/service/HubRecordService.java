@@ -37,6 +37,11 @@ public class HubRecordService implements IHubRecordService {
     public BigDecimal totalRecipientsRecord(String absorber, String recipients) {
         return recipientsRecordMapper.totalRecipientsRecord(absorber,recipients);
     }
+    @CjTransaction
+    @Override
+    public BigDecimal totalRecipientsRecordById(String recipientsId) {
+        return recipientsRecordMapper.totalRecipientsRecordById(recipientsId);
+    }
 
     @CjTransaction
     @Override

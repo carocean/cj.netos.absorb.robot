@@ -298,6 +298,7 @@ public class AbsorberHubService implements IAbsorberHubService {
         record.setAbsorber(absorber.getId());
         record.setEncourageCause(recipients.getEncourageCause());
         record.setEncourageCode(recipients.getEncourageCode());
+        record.setRecipientsId(recipients.getId());
         if (result instanceof BankWithdrawResult) {
             BankWithdrawResult bankWithdrawResult = (BankWithdrawResult) result;
             record.setRefsn(bankWithdrawResult.getOutTradeSn());

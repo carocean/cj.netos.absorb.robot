@@ -27,6 +27,11 @@ public class HubRecordPorts implements IHubRecordPorts {
     }
 
     @Override
+    public BigDecimal totalRecipientsRecordById(ISecuritySession securitySession, String recipientsId) throws CircuitException {
+        return hubRecordService.totalRecipientsRecordById(recipientsId);
+    }
+
+    @Override
     public InvestRecord getInvestRecord(ISecuritySession securitySession, String record_sn) throws CircuitException {
         return hubRecordService.getInvestRecord(record_sn);
     }

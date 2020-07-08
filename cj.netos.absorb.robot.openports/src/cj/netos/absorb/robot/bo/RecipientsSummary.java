@@ -8,7 +8,6 @@ public class RecipientsSummary {
     String personName;
     String ctime;
     BigDecimal weights;
-    BigDecimal amount;
     String encourageCauses;
 
     public String getAbsorber() {
@@ -49,14 +48,6 @@ public class RecipientsSummary {
 
     public void setWeights(BigDecimal weights) {
         this.weights = weights;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
     }
 
     public String getEncourageCauses() {

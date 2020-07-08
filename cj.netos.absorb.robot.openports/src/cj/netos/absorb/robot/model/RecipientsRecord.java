@@ -53,6 +53,12 @@ public class RecipientsRecord {
      */
     private String encourageCause;
 
+    /**
+     * Column: recipients_id
+     * Remark: 关联洇取人主键
+     */
+    private String recipientsId;
+
     public String getSn() {
         return sn;
     }
@@ -115,5 +121,13 @@ public class RecipientsRecord {
 
     public void setEncourageCause(String encourageCause) {
         this.encourageCause = encourageCause == null ? null : encourageCause.trim();
+    }
+
+    public String getRecipientsId() {
+        return recipientsId;
+    }
+
+    public void setRecipientsId(String recipientsId) {
+        this.recipientsId = recipientsId == null ? null : recipientsId.trim();
     }
 }

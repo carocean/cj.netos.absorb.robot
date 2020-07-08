@@ -25,6 +25,11 @@ public interface IHubRecordPorts extends IOpenportService {
                                            @CjOpenportParameter(usage = "洇取人", name = "recipients") String recipients
     ) throws CircuitException;
 
+    @CjOpenport(usage = "统计一个洇取人得到的总金")
+    BigDecimal totalRecipientsRecordById(ISecuritySession securitySession,
+                                     @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId
+    ) throws CircuitException;
+
     @CjOpenport(usage = "获取洇取器投资单")
     InvestRecord getInvestRecord(ISecuritySession securitySession,
                                  @CjOpenportParameter(usage = "订单号", name = "record_sn") String record_sn

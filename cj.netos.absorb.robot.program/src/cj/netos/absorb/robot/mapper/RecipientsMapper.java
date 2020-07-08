@@ -4,7 +4,6 @@ import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.Recipients;
 import cj.netos.absorb.robot.model.RecipientsExample;
 import org.apache.ibatis.annotations.Param;
-
 import java.math.BigDecimal;
 import java.util.List;
 

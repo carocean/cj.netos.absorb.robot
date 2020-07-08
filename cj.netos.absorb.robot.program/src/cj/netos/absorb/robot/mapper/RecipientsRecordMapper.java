@@ -2,6 +2,8 @@ package cj.netos.absorb.robot.mapper;
 
 import cj.netos.absorb.robot.model.RecipientsRecord;
 import cj.netos.absorb.robot.model.RecipientsRecordExample;
+
+import java.math.BigDecimal;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -61,4 +63,7 @@ public interface RecipientsRecordMapper {
      * @mbg.generated generated automatically, do not modify!
      */
     int updateByPrimaryKey(RecipientsRecord record);
+
+    BigDecimal totalRecipientsRecord(@Param(value = "absorber") String absorber, @Param(value = "recipient") String recipient);
+
 }

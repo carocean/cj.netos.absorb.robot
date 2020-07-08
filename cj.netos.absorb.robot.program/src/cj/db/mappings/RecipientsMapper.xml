@@ -14,6 +14,16 @@
     <result column="desire_amount" jdbcType="BIGINT" property="desireAmount" />
     <result column="distance" jdbcType="DECIMAL" property="distance" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="cj.netos.absorb.robot.bo.RecipientsSummary">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="person" jdbcType="VARCHAR" property="person" />
+    <result column="absorber" jdbcType="VARCHAR" property="absorber" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="ctime" jdbcType="VARCHAR" property="ctime" />
+    <result column="weights" jdbcType="DECIMAL" property="weights" />
+    <result column="encourage_causes" jdbcType="VARCHAR" property="encourageCauses" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     <where>
@@ -322,4 +332,25 @@
     weight = #{weight,jdbcType=DECIMAL}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="pageSummary" parameterType="cj.netos.absorb.robot.model.Recipients"  resultMap="BaseResultMap2">
+    select main.absorber,
+           main.person,
+           main.person_name,
+           sum(main.weight) as weights,
+           group_concat(main.encourage_cause) as encourage_causes,
+           sum(record.amount) as amount,
+           min(main.ctime) as ctime
+    from recipients main,recipients_record record
+    where main.person=record.recipient
+      and main.absorber=record.absorber
+      and main.encourage_code=record.encourage_code
+      and main.absorber = #{absorber,jdbcType=VARCHAR}
+    group by main.absorber, main.person,main.person_name
+    limit #{offset},#{limit}
+  </select>
+  <select id="countRecipients" parameterType="cj.netos.absorb.robot.model.Recipients"  resultType="java.lang.Long">
+    select count(col.person)
+    from (select distinct person
+          from recipients where absorber = #{absorber,jdbcType=VARCHAR}) as col;
+  </select>
 </mapper>

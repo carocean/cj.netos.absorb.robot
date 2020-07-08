@@ -5,6 +5,7 @@ import cj.netos.absorb.robot.IAbsorberTemplateService;
 import cj.netos.absorb.robot.bo.AbsorberRule;
 import cj.netos.absorb.robot.bo.AbsorberTemplate;
 import cj.netos.absorb.robot.bo.LatLng;
+import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.*;
 import cj.netos.absorb.robot.result.AbsorberHubTailsResult;
 import cj.netos.absorb.robot.util.IdWorker;
@@ -291,5 +292,23 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
             return absorberHubService.pageRecipients(absorberid, limit, offset);
         }
         return absorberHubService.pageGeoRecipients(absorber, limit, offset);
+    }
+
+    @Override
+    public List<RecipientsSummary> pageSimpleRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
+        Absorber absorber = getAbsorber(securitySession, absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器不存在");
+        }
+        checkWithdrawRights(securitySession, absorber.getBankid());
+        if (absorber.getType() != 0) {
+            throw new CircuitException("500", "不是简单涸取器");
+        }
+        return absorberHubService.pageRecipientsSummary(absorberid, limit, offset);
+    }
+
+    @Override
+    public long countRecipients(ISecuritySession securitySession, String absorberid) throws CircuitException {
+        return absorberHubService.countRecipients(absorberid);
     }
 }

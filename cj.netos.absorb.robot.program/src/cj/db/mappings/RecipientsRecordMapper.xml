@@ -9,6 +9,8 @@
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
     <result column="refsn" jdbcType="VARCHAR" property="refsn" />
     <result column="absorber" jdbcType="VARCHAR" property="absorber" />
+    <result column="encourage_code" jdbcType="VARCHAR" property="encourageCode" />
+    <result column="encourage_cause" jdbcType="VARCHAR" property="encourageCause" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -72,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, recipient, amount, ctime, refsn, absorber
+    sn, recipient, amount, ctime, refsn, absorber, encourage_code, encourage_cause
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.RecipientsRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -111,11 +113,11 @@
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.RecipientsRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into recipients_record (sn, recipient, amount, 
-      ctime, refsn, absorber
-      )
+      ctime, refsn, absorber, 
+      encourage_code, encourage_cause)
     values (#{sn,jdbcType=VARCHAR}, #{recipient,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
-      #{ctime,jdbcType=VARCHAR}, #{refsn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}
-      )
+      #{ctime,jdbcType=VARCHAR}, #{refsn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, 
+      #{encourageCode,jdbcType=VARCHAR}, #{encourageCause,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.RecipientsRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -139,6 +141,12 @@
       <if test="absorber != null">
         absorber,
       </if>
+      <if test="encourageCode != null">
+        encourage_code,
+      </if>
+      <if test="encourageCause != null">
+        encourage_cause,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sn != null">
@@ -158,6 +166,12 @@
       </if>
       <if test="absorber != null">
         #{absorber,jdbcType=VARCHAR},
+      </if>
+      <if test="encourageCode != null">
+        #{encourageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="encourageCause != null">
+        #{encourageCause,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -190,6 +204,12 @@
       <if test="record.absorber != null">
         absorber = #{record.absorber,jdbcType=VARCHAR},
       </if>
+      <if test="record.encourageCode != null">
+        encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.encourageCause != null">
+        encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -203,7 +223,9 @@
       amount = #{record.amount,jdbcType=DECIMAL},
       ctime = #{record.ctime,jdbcType=VARCHAR},
       refsn = #{record.refsn,jdbcType=VARCHAR},
-      absorber = #{record.absorber,jdbcType=VARCHAR}
+      absorber = #{record.absorber,jdbcType=VARCHAR},
+      encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
+      encourage_cause = #{record.encourageCause,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +249,12 @@
       <if test="absorber != null">
         absorber = #{absorber,jdbcType=VARCHAR},
       </if>
+      <if test="encourageCode != null">
+        encourage_code = #{encourageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="encourageCause != null">
+        encourage_cause = #{encourageCause,jdbcType=VARCHAR},
+      </if>
     </set>
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
@@ -237,7 +265,16 @@
       amount = #{amount,jdbcType=DECIMAL},
       ctime = #{ctime,jdbcType=VARCHAR},
       refsn = #{refsn,jdbcType=VARCHAR},
-      absorber = #{absorber,jdbcType=VARCHAR}
+      absorber = #{absorber,jdbcType=VARCHAR},
+      encourage_code = #{encourageCode,jdbcType=VARCHAR},
+      encourage_cause = #{encourageCause,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
+  <select id="totalRecipientsRecord" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+    select
+    sum(amount)
+    from recipients_record
+    where absorber = #{absorber,jdbcType=VARCHAR}
+    and recipient = #{recipient,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -3,6 +3,7 @@ package cj.netos.absorb.robot.service;
 import cj.netos.absorb.robot.*;
 import cj.netos.absorb.robot.bo.AbsorberTemplate;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
+import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.mapper.*;
 import cj.netos.absorb.robot.model.*;
 import cj.netos.absorb.robot.util.IdWorker;
@@ -187,12 +188,18 @@ public class AbsorberHubService implements IAbsorberHubService {
             recipients.setDesireAmount(0L);
             recipients.setAbsorber(absorber.getId());
             recipients.setWeight(weight);//距中心位置作为权重
-            recipients.setDistance(bo.getuDistance());
+            recipients.setDistance(por.getDistance());
             recipientsList.add(recipients);
 
             totalWeightsOfRecipients = totalWeightsOfRecipients.add(weight);
         }
         return recipientsList;
+    }
+
+    @CjTransaction
+    @Override
+    public List<RecipientsSummary> pageRecipientsSummary(String absorberid, int limit, long offset) {
+        return recipientsMapper.pageSummary(absorberid, limit, offset);
     }
 
     @CjTransaction
@@ -210,6 +217,12 @@ public class AbsorberHubService implements IAbsorberHubService {
         hubTails.setBankid(bankid);
         hubTailsMapper.insert(hubTails);
         return hubTails;
+    }
+
+    @CjTransaction
+    @Override
+    public long countRecipients(String absorberid) {
+        return recipientsMapper.countRecipients(absorberid);
     }
 
     @CjTransaction
@@ -283,6 +296,8 @@ public class AbsorberHubService implements IAbsorberHubService {
         record.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         record.setRecipient(recipients.getPerson());
         record.setAbsorber(absorber.getId());
+        record.setEncourageCause(recipients.getEncourageCause());
+        record.setEncourageCode(recipients.getEncourageCode());
         if (result instanceof BankWithdrawResult) {
             BankWithdrawResult bankWithdrawResult = (BankWithdrawResult) result;
             record.setRefsn(bankWithdrawResult.getOutTradeSn());

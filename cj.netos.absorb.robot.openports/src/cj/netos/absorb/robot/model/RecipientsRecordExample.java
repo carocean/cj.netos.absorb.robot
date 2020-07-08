@@ -547,6 +547,146 @@ public class RecipientsRecordExample {
             addCriterion("absorber not between", value1, value2, "absorber");
             return (Criteria) this;
         }
+
+        public Criteria andEncourageCodeIsNull() {
+            addCriterion("encourage_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeIsNotNull() {
+            addCriterion("encourage_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeEqualTo(String value) {
+            addCriterion("encourage_code =", value, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeNotEqualTo(String value) {
+            addCriterion("encourage_code <>", value, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeGreaterThan(String value) {
+            addCriterion("encourage_code >", value, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("encourage_code >=", value, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeLessThan(String value) {
+            addCriterion("encourage_code <", value, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeLessThanOrEqualTo(String value) {
+            addCriterion("encourage_code <=", value, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeLike(String value) {
+            addCriterion("encourage_code like", value, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeNotLike(String value) {
+            addCriterion("encourage_code not like", value, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeIn(List<String> values) {
+            addCriterion("encourage_code in", values, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeNotIn(List<String> values) {
+            addCriterion("encourage_code not in", values, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeBetween(String value1, String value2) {
+            addCriterion("encourage_code between", value1, value2, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCodeNotBetween(String value1, String value2) {
+            addCriterion("encourage_code not between", value1, value2, "encourageCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseIsNull() {
+            addCriterion("encourage_cause is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseIsNotNull() {
+            addCriterion("encourage_cause is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseEqualTo(String value) {
+            addCriterion("encourage_cause =", value, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseNotEqualTo(String value) {
+            addCriterion("encourage_cause <>", value, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseGreaterThan(String value) {
+            addCriterion("encourage_cause >", value, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseGreaterThanOrEqualTo(String value) {
+            addCriterion("encourage_cause >=", value, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseLessThan(String value) {
+            addCriterion("encourage_cause <", value, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseLessThanOrEqualTo(String value) {
+            addCriterion("encourage_cause <=", value, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseLike(String value) {
+            addCriterion("encourage_cause like", value, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseNotLike(String value) {
+            addCriterion("encourage_cause not like", value, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseIn(List<String> values) {
+            addCriterion("encourage_cause in", values, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseNotIn(List<String> values) {
+            addCriterion("encourage_cause not in", values, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseBetween(String value1, String value2) {
+            addCriterion("encourage_cause between", value1, value2, "encourageCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageCauseNotBetween(String value1, String value2) {
+            addCriterion("encourage_cause not between", value1, value2, "encourageCause");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

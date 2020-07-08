@@ -41,6 +41,18 @@ public class RecipientsRecord {
      */
     private String absorber;
 
+    /**
+     * Column: encourage_code
+     * Remark: 对应recipients的相应字段
+     */
+    private String encourageCode;
+
+    /**
+     * Column: encourage_cause
+     * Remark: 对应recipients的相应字段
+     */
+    private String encourageCause;
+
     public String getSn() {
         return sn;
     }
@@ -87,5 +99,21 @@ public class RecipientsRecord {
 
     public void setAbsorber(String absorber) {
         this.absorber = absorber == null ? null : absorber.trim();
+    }
+
+    public String getEncourageCode() {
+        return encourageCode;
+    }
+
+    public void setEncourageCode(String encourageCode) {
+        this.encourageCode = encourageCode == null ? null : encourageCode.trim();
+    }
+
+    public String getEncourageCause() {
+        return encourageCause;
+    }
+
+    public void setEncourageCause(String encourageCause) {
+        this.encourageCause = encourageCause == null ? null : encourageCause.trim();
     }
 }

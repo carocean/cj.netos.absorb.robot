@@ -1,8 +1,10 @@
 package cj.netos.absorb.robot.mapper;
 
+import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.Recipients;
 import cj.netos.absorb.robot.model.RecipientsExample;
 import org.apache.ibatis.annotations.Param;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -67,5 +69,9 @@ public interface RecipientsMapper {
 
     List<Recipients> page(@Param(value = "absorber") String absorber, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
+    List<RecipientsSummary> pageSummary(@Param(value = "absorber") String absorber, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
     void updateWeight(@Param(value = "id") String id, @Param(value = "weight") BigDecimal weight);
+
+    Long countRecipients(@Param(value = "absorber") String absorber);
 }

@@ -2,6 +2,7 @@ package cj.netos.absorb.robot;
 
 import cj.netos.absorb.robot.bo.AbsorberTemplate;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
+import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.*;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
@@ -61,4 +62,7 @@ public interface IAbsorberHubService {
 
     void startAbsorber(String absorberid);
 
+    List<RecipientsSummary> pageRecipientsSummary(String absorberid, int limit, long offset);
+
+    long countRecipients(String absorberid);
 }

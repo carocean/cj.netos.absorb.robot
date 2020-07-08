@@ -747,6 +747,66 @@ public class RecipientsExample {
             addCriterion("desire_amount not between", value1, value2, "desireAmount");
             return (Criteria) this;
         }
+
+        public Criteria andDistanceIsNull() {
+            addCriterion("distance is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceIsNotNull() {
+            addCriterion("distance is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceEqualTo(BigDecimal value) {
+            addCriterion("distance =", value, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceNotEqualTo(BigDecimal value) {
+            addCriterion("distance <>", value, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceGreaterThan(BigDecimal value) {
+            addCriterion("distance >", value, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("distance >=", value, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceLessThan(BigDecimal value) {
+            addCriterion("distance <", value, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("distance <=", value, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceIn(List<BigDecimal> values) {
+            addCriterion("distance in", values, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceNotIn(List<BigDecimal> values) {
+            addCriterion("distance not in", values, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("distance between", value1, value2, "distance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistanceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("distance not between", value1, value2, "distance");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -179,7 +179,7 @@ public class AbsorberHubService implements IAbsorberHubService {
             GeoReceptorBO bo = por.getReceptor();
             Recipients recipients = new Recipients();
             recipients.setId(bo.getId());
-            recipients.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+            recipients.setCtime(RobotUtils.dateTimeToMicroSecond(por.getReceptor().getCtime()));
             recipients.setPerson(bo.getCreator());
             recipients.setPersonName(bo.getTitle());
             recipients.setEncourageCode("enter");
@@ -187,6 +187,7 @@ public class AbsorberHubService implements IAbsorberHubService {
             recipients.setDesireAmount(0L);
             recipients.setAbsorber(absorber.getId());
             recipients.setWeight(weight);//距中心位置作为权重
+            recipients.setDistance(bo.getuDistance());
             recipientsList.add(recipients);
 
             totalWeightsOfRecipients = totalWeightsOfRecipients.add(weight);
@@ -360,6 +361,7 @@ public class AbsorberHubService implements IAbsorberHubService {
     public void stopAbsorber(String absorber, String exitCause) {
         absorberMapper.stop(absorber, exitCause);
     }
+
     @CjTransaction
     @Override
     public void startAbsorber(String absorberid) {

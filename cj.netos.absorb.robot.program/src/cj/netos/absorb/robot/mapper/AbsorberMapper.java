@@ -76,5 +76,4 @@ public interface AbsorberMapper {
     void updateWeight(@Param(value = "id") String id, @Param(value = "weight") BigDecimal weight);
 
     void start(@Param(value = "id") String id);
-
 }

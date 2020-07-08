@@ -59,6 +59,12 @@ public class Recipients {
      */
     private Long desireAmount;
 
+    /**
+     * Column: distance
+     * Remark: 离地理洇取器中心的距离，如果有
+     */
+    private BigDecimal distance;
+
     public String getId() {
         return id;
     }
@@ -129,5 +135,13 @@ public class Recipients {
 
     public void setDesireAmount(Long desireAmount) {
         this.desireAmount = desireAmount;
+    }
+
+    public BigDecimal getDistance() {
+        return distance;
+    }
+
+    public void setDistance(BigDecimal distance) {
+        this.distance = distance;
     }
 }

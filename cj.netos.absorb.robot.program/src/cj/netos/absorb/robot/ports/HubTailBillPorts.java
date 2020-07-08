@@ -33,24 +33,36 @@ public class HubTailBillPorts implements IHubTailBillPorts {
     @Override
     public String totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
         BigDecimal v= hubTailBillService.totalInBillOfMonth(wenyBankID,year,month);
+        if (v == null) {
+            v = new BigDecimal("0.00");
+        }
         return v.stripTrailingZeros().toPlainString();
     }
 
     @Override
     public String totalInBillOfYear(ISecuritySession securitySession, String wenyBankID, int year) throws CircuitException {
         BigDecimal v= hubTailBillService.totalInBillOfYear(wenyBankID,year);
+        if (v == null) {
+            v = new BigDecimal("0.00");
+        }
         return v.stripTrailingZeros().toPlainString();
     }
 
     @Override
     public String totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
         BigDecimal v= hubTailBillService.totalOutBillOfMonth(wenyBankID, year, month);
+        if (v == null) {
+            v = new BigDecimal("0.00");
+        }
         return v.stripTrailingZeros().toPlainString();
     }
 
     @Override
     public String totalOutBillOfYear(ISecuritySession securitySession, String wenyBankID, int year) throws CircuitException {
         BigDecimal v= hubTailBillService.totalOutBillOfYear(wenyBankID,year);
+        if (v == null) {
+            v = new BigDecimal("0.00");
+        }
         return v.stripTrailingZeros().toPlainString();
     }
 }

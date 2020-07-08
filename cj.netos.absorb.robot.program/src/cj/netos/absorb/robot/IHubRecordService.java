@@ -22,4 +22,8 @@ public interface IHubRecordService {
 
     List<RecipientsRecord> pageRecipientsRecordById(String recipientsId, int limit, long offset);
 
+    List<InvestRecord> pageInvestRecord(String absorber, int limit, long offset);
+
+    long totalAmountInvests(String absorber);
+
 }

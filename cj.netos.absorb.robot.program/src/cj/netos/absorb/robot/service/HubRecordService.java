@@ -68,4 +68,16 @@ public class HubRecordService implements IHubRecordService {
     public WithdrawRecord getWithdrawRecord(String record_sn) {
         return withdrawRecordMapper.selectByPrimaryKey(record_sn);
     }
+
+    @CjTransaction
+    @Override
+    public List<InvestRecord> pageInvestRecord(String absorber, int limit, long offset) {
+        return investRecordMapper.pageInvestRecord(absorber, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public long totalAmountInvests(String absorber) {
+        return investRecordMapper.totalAmountInvests(absorber);
+    }
 }

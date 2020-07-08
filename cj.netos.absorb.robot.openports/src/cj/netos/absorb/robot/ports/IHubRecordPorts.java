@@ -57,4 +57,17 @@ public interface IHubRecordPorts extends IOpenportService {
     WithdrawRecord getWithdrawRecord(ISecuritySession securitySession,
                                      @CjOpenportParameter(usage = "订单号", name = "record_sn") String record_sn
     ) throws CircuitException;
+
+    @CjOpenport(usage = "分页投单流水")
+    List<InvestRecord> pageInvestRecord(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "统计洇取器的总投单额")
+    long totalAmountInvests(ISecuritySession securitySession,
+                                  @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber
+    ) throws CircuitException;
 }

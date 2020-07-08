@@ -2,6 +2,8 @@ package cj.netos.absorb.robot.mapper;
 
 import cj.netos.absorb.robot.model.InvestRecord;
 import cj.netos.absorb.robot.model.InvestRecordExample;
+
+import java.math.BigDecimal;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -61,4 +63,9 @@ public interface InvestRecordMapper {
      * @mbg.generated generated automatically, do not modify!
      */
     int updateByPrimaryKey(InvestRecord record);
+
+    List<InvestRecord> pageInvestRecord(@Param(value = "absorber") String absorber,@Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    long totalAmountInvests(@Param(value = "absorber") String absorber);
+
 }

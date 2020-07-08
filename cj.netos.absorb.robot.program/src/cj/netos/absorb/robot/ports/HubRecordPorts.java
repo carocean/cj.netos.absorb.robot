@@ -51,4 +51,14 @@ public class HubRecordPorts implements IHubRecordPorts {
     public WithdrawRecord getWithdrawRecord(ISecuritySession securitySession, String record_sn) throws CircuitException {
         return hubRecordService.getWithdrawRecord(record_sn);
     }
+
+    @Override
+    public List<InvestRecord> pageInvestRecord(ISecuritySession securitySession, String absorber, int limit, long offset) throws CircuitException {
+        return hubRecordService.pageInvestRecord(absorber, limit, offset);
+    }
+
+    @Override
+    public long totalAmountInvests(ISecuritySession securitySession, String absorber) throws CircuitException {
+        return hubRecordService.totalAmountInvests(absorber);
+    }
 }

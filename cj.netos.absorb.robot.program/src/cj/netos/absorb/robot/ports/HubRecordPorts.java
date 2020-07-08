@@ -61,4 +61,14 @@ public class HubRecordPorts implements IHubRecordPorts {
     public long totalAmountInvests(ISecuritySession securitySession, String absorber) throws CircuitException {
         return hubRecordService.totalAmountInvests(absorber);
     }
+
+    @Override
+    public List<WithdrawRecord> pageWithdrawRecord(ISecuritySession securitySession, String bankid, int limit, long offset) throws CircuitException {
+        return hubRecordService.pageWithdrawRecord(bankid, limit, offset);
+    }
+
+    @Override
+    public long totalAmountWithdraws(ISecuritySession securitySession, String bankid) throws CircuitException {
+        return hubRecordService.totalAmountWithdraws(bankid);
+    }
 }

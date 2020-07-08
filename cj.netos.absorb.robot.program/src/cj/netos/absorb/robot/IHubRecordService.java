@@ -26,4 +26,7 @@ public interface IHubRecordService {
 
     long totalAmountInvests(String absorber);
 
+    List<WithdrawRecord> pageWithdrawRecord(String bankid, int limit, long offset);
+
+    long totalAmountWithdraws(String bankid);
 }

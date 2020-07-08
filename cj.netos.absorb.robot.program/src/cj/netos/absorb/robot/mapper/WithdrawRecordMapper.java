@@ -2,7 +2,9 @@ package cj.netos.absorb.robot.mapper;
 
 import cj.netos.absorb.robot.model.WithdrawRecord;
 import cj.netos.absorb.robot.model.WithdrawRecordExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface WithdrawRecordMapper {
@@ -67,4 +69,8 @@ public interface WithdrawRecordMapper {
     void done(@Param(value = "sn") String sn, @Param(value = "realAmount") long realAmount, @Param(value = "cbtime") String cbtime);
 
     void updateStatus(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message);
+
+    List<WithdrawRecord> pageWithdrawRecord(@Param(value = "bankid") String bankid, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    long totalAmountWithdraws(@Param(value = "bankid") String bankid);
 }

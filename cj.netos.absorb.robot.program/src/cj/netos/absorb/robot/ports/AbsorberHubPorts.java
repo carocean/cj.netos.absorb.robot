@@ -207,7 +207,7 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
 
     @Override
     public HubTails getHubTails(ISecuritySession securitySession, String bankid) throws CircuitException {
-        checkWithdrawRights(securitySession, bankid);
+//        checkWithdrawRights(securitySession, bankid);
         return absorberHubService.getAndInitHubTails(bankid);
     }
 
@@ -287,7 +287,7 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
-        checkWithdrawRights(securitySession, absorber.getBankid());
+//        checkWithdrawRights(securitySession, absorber.getBankid());
         if (absorber.getType() == 0) {
             return absorberHubService.pageRecipients(absorberid, limit, offset);
         }
@@ -300,7 +300,7 @@ public class AbsorberHubPorts implements IAbsorberHubPorts {
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
-        checkWithdrawRights(securitySession, absorber.getBankid());
+//        checkWithdrawRights(securitySession, absorber.getBankid());
         if (absorber.getType() != 0) {
             throw new CircuitException("500", "不是简单涸取器");
         }

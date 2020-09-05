@@ -236,8 +236,8 @@ public class AbsorberHubService implements IAbsorberHubService {
         }
         TailBill bill = new TailBill();
         bill.setPerson(principal);
-        bill.setAmount(amount);
-        bill.setBalance(tails.subtract(amount));
+        bill.setAmount(amount.multiply(new BigDecimal("-1.00")).setScale(RobotUtils.BIGDECIMAL_SCALE,RoundingMode.DOWN));
+        bill.setBalance(tails.add(amount));
         bill.setOrder(2);
         bill.setRefsn(null);
         bill.setBankid(bankid);

@@ -15,6 +15,9 @@ import cj.ultimate.util.StringUtil;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.LongString;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
+import org.apache.curator.framework.recipes.locks.InterProcessReadWriteLock;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -23,11 +26,16 @@ import java.math.BigDecimal;
 @CjService(name = "/wallet/trade.mhub#payTrade")
 public class OnInvestCommand implements IConsumerCommand {
     @CjServiceRef
-    IAbsorberHubService absorberHubService;
+    IHubService absorberHubService;
 
     @CjServiceRef
     IInvestService investService;
 
+    @CjServiceRef(refByName = "curator.framework")
+    CuratorFramework framework;
+
+    @CjServiceRef
+    ICuratorPathChecker curatorPathChecker;
     @Override
     public void command(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws RabbitMQException, RetryCommandException, IOException {
         LongString payeeType = (LongString) properties.getHeaders().get("payeeType");
@@ -40,7 +48,16 @@ public class OnInvestCommand implements IConsumerCommand {
         if (absorber == null) {
             throw new RetryCommandException("404", "支付的洇取器不存在");
         }
+        String path = String.format("/robot/bank/%s/locks", absorber.getBankid());
         try {
+            curatorPathChecker.check(framework, path);
+        } catch (Exception e) {
+            throw new RabbitMQException("500", e);
+        }
+        InterProcessReadWriteLock lock = new InterProcessReadWriteLock(framework, path);
+        InterProcessMutex mutex = lock.writeLock();
+        try {
+            mutex.acquire();
             investService.doResponse(absorber, result);
         } catch (Exception e) {
             String msg = e.getMessage();
@@ -54,6 +71,12 @@ public class OnInvestCommand implements IConsumerCommand {
                 throw new RabbitMQException(ce.getStatus(), e);
             }
             throw new RabbitMQException("500", e);
+        } finally {
+            try {
+                mutex.release();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

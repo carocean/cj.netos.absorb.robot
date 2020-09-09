@@ -29,20 +29,22 @@ dependencies {
     compile group: 'org.yaml', name: 'snakeyaml', version: '1.25'
     // https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java
     compile group: 'com.alipay.sdk', name: 'alipay-sdk-java', version: '4.10.0.ALL'
-
-
+    compile group: 'cj.studio.gateway2', name: 'cj.studio.orm.curator', version: ref_cj_studio_orm_curator
+    compile group: 'cj.studio.gateway2', name: 'cj.studio.orm.redis', version: ref_cj_studio_orm_redis
 }
 task copyRefembeds(type: Copy) {
     from configurations.compileClasspath.files {
-        include 'cj.studio.orm.mybatis-*.jar'
+        include 'cj.studio.orm.mybatis-*.jar','cj.studio.orm.curator-*.jar'
     }
     into 'src/cj/refembeds'
 }
 task copyReferences(type: Copy) {
     from configurations.compileClasspath.files {
         include 'cj.netos.absorb.robot.openports-*.jar',  'cj.studio.openport-*.jar','okhttp-*.jar',
+                'curator-*.jar','zookeeper-*.jar','jsr305-.*.jar','error_prone_*.jar','failureaccess-*.jar','guava-*.jar','listenablefuture*.jar','j2objc-*.jar',
                 'amqp-client-*.jar','cj.netos.rabbitmq-*.jar', 'mybatis-*.jar','mysql-connector-java-8.0.17.jar',
-                'snakeyaml-*.jar'
+                'snakeyaml-*.jar',
+                'jedis-*.jar','cj.studio.orm.redis-*.jar'
     }
     into 'src/cj/references'
 }

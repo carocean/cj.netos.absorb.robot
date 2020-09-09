@@ -13,13 +13,7 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
-    <result column="exit_expire" jdbcType="BIGINT" property="exitExpire" />
-    <result column="exit_amount" jdbcType="BIGINT" property="exitAmount" />
-    <result column="exit_times" jdbcType="BIGINT" property="exitTimes" />
-    <result column="weight" jdbcType="DECIMAL" property="weight" />
     <result column="max_recipients" jdbcType="BIGINT" property="maxRecipients" />
-    <result column="current_amount" jdbcType="DECIMAL" property="currentAmount" />
-    <result column="current_times" jdbcType="BIGINT" property="currentTimes" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="exit_cause" jdbcType="VARCHAR" property="exitCause" />
   </resultMap>
@@ -85,9 +79,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, title, bankid, category, proxy, `location`, radius, `type`, creator, ctime, exit_expire, 
-    exit_amount, exit_times, weight, max_recipients, current_amount, current_times, `state`, 
-    exit_cause
+    id, title, bankid, category, proxy, `location`, radius, `type`, creator, ctime, max_recipients, 
+    `state`, exit_cause
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.AbsorberExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -128,16 +121,12 @@
     insert into absorber (id, title, bankid, 
       category, proxy, `location`, 
       radius, `type`, creator, 
-      ctime, exit_expire, exit_amount, 
-      exit_times, weight, max_recipients, 
-      current_amount, current_times, `state`, 
+      ctime, max_recipients, `state`, 
       exit_cause)
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{bankid,jdbcType=VARCHAR}, 
       #{category,jdbcType=VARCHAR}, #{proxy,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
       #{radius,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
-      #{ctime,jdbcType=VARCHAR}, #{exitExpire,jdbcType=BIGINT}, #{exitAmount,jdbcType=BIGINT}, 
-      #{exitTimes,jdbcType=BIGINT}, #{weight,jdbcType=DECIMAL}, #{maxRecipients,jdbcType=BIGINT}, 
-      #{currentAmount,jdbcType=DECIMAL}, #{currentTimes,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
+      #{ctime,jdbcType=VARCHAR}, #{maxRecipients,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
       #{exitCause,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.Absorber">
@@ -174,26 +163,8 @@
       <if test="ctime != null">
         ctime,
       </if>
-      <if test="exitExpire != null">
-        exit_expire,
-      </if>
-      <if test="exitAmount != null">
-        exit_amount,
-      </if>
-      <if test="exitTimes != null">
-        exit_times,
-      </if>
-      <if test="weight != null">
-        weight,
-      </if>
       <if test="maxRecipients != null">
         max_recipients,
-      </if>
-      <if test="currentAmount != null">
-        current_amount,
-      </if>
-      <if test="currentTimes != null">
-        current_times,
       </if>
       <if test="state != null">
         `state`,
@@ -233,26 +204,8 @@
       <if test="ctime != null">
         #{ctime,jdbcType=VARCHAR},
       </if>
-      <if test="exitExpire != null">
-        #{exitExpire,jdbcType=BIGINT},
-      </if>
-      <if test="exitAmount != null">
-        #{exitAmount,jdbcType=BIGINT},
-      </if>
-      <if test="exitTimes != null">
-        #{exitTimes,jdbcType=BIGINT},
-      </if>
-      <if test="weight != null">
-        #{weight,jdbcType=DECIMAL},
-      </if>
       <if test="maxRecipients != null">
         #{maxRecipients,jdbcType=BIGINT},
-      </if>
-      <if test="currentAmount != null">
-        #{currentAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="currentTimes != null">
-        #{currentTimes,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         #{state,jdbcType=INTEGER},
@@ -303,26 +256,8 @@
       <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
       </if>
-      <if test="record.exitExpire != null">
-        exit_expire = #{record.exitExpire,jdbcType=BIGINT},
-      </if>
-      <if test="record.exitAmount != null">
-        exit_amount = #{record.exitAmount,jdbcType=BIGINT},
-      </if>
-      <if test="record.exitTimes != null">
-        exit_times = #{record.exitTimes,jdbcType=BIGINT},
-      </if>
-      <if test="record.weight != null">
-        weight = #{record.weight,jdbcType=DECIMAL},
-      </if>
       <if test="record.maxRecipients != null">
         max_recipients = #{record.maxRecipients,jdbcType=BIGINT},
-      </if>
-      <if test="record.currentAmount != null">
-        current_amount = #{record.currentAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="record.currentTimes != null">
-        current_times = #{record.currentTimes,jdbcType=BIGINT},
       </if>
       <if test="record.state != null">
         `state` = #{record.state,jdbcType=INTEGER},
@@ -348,13 +283,7 @@
       `type` = #{record.type,jdbcType=INTEGER},
       creator = #{record.creator,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=VARCHAR},
-      exit_expire = #{record.exitExpire,jdbcType=BIGINT},
-      exit_amount = #{record.exitAmount,jdbcType=BIGINT},
-      exit_times = #{record.exitTimes,jdbcType=BIGINT},
-      weight = #{record.weight,jdbcType=DECIMAL},
       max_recipients = #{record.maxRecipients,jdbcType=BIGINT},
-      current_amount = #{record.currentAmount,jdbcType=DECIMAL},
-      current_times = #{record.currentTimes,jdbcType=BIGINT},
       `state` = #{record.state,jdbcType=INTEGER},
       exit_cause = #{record.exitCause,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -392,26 +321,8 @@
       <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
       </if>
-      <if test="exitExpire != null">
-        exit_expire = #{exitExpire,jdbcType=BIGINT},
-      </if>
-      <if test="exitAmount != null">
-        exit_amount = #{exitAmount,jdbcType=BIGINT},
-      </if>
-      <if test="exitTimes != null">
-        exit_times = #{exitTimes,jdbcType=BIGINT},
-      </if>
-      <if test="weight != null">
-        weight = #{weight,jdbcType=DECIMAL},
-      </if>
       <if test="maxRecipients != null">
         max_recipients = #{maxRecipients,jdbcType=BIGINT},
-      </if>
-      <if test="currentAmount != null">
-        current_amount = #{currentAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="currentTimes != null">
-        current_times = #{currentTimes,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         `state` = #{state,jdbcType=INTEGER},
@@ -434,13 +345,7 @@
       `type` = #{type,jdbcType=INTEGER},
       creator = #{creator,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=VARCHAR},
-      exit_expire = #{exitExpire,jdbcType=BIGINT},
-      exit_amount = #{exitAmount,jdbcType=BIGINT},
-      exit_times = #{exitTimes,jdbcType=BIGINT},
-      weight = #{weight,jdbcType=DECIMAL},
       max_recipients = #{maxRecipients,jdbcType=BIGINT},
-      current_amount = #{currentAmount,jdbcType=DECIMAL},
-      current_times = #{currentTimes,jdbcType=BIGINT},
       `state` = #{state,jdbcType=INTEGER},
       exit_cause = #{exitCause,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
@@ -461,19 +366,6 @@
     and `state` =0
     limit #{offset},#{limit}
   </select>
-  <select id="totalWeightsOfAbsorber" parameterType="cj.netos.absorb.robot.model.Absorber" resultType="java.math.BigDecimal">
-    select
-    sum(weight)
-    from absorber
-    where bankid = #{bankid,jdbcType=VARCHAR}
-  </select>
-  <update id="updateCurrent" parameterType="cj.netos.absorb.robot.model.Absorber">
-    update absorber
-    set
-    current_amount = #{currentAmount,jdbcType=DECIMAL},
-    current_times = #{currentTimes,jdbcType=BIGINT}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
   <update id="stop" parameterType="cj.netos.absorb.robot.model.Absorber">
     update absorber
     set
@@ -486,12 +378,6 @@
     set
       `state` = 0,
       exit_cause = NULL
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateWeight" parameterType="cj.netos.absorb.robot.model.Absorber">
-    update absorber
-    set
-      weight = #{weight,jdbcType=DECIMAL}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

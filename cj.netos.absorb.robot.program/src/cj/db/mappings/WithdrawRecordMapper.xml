@@ -80,7 +80,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, bankid, shunter, `alias`, withdrawer, person_name, req_amount, real_amount, ctime,
+    sn, bankid, shunter, `alias`, withdrawer, person_name, req_amount, real_amount, ctime, 
     cbtime, `state`, refsn, `status`, message
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.WithdrawRecordExample" resultMap="BaseResultMap">
@@ -100,7 +100,7 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    select
+    select 
     <include refid="Base_Column_List" />
     from withdraw_record
     where sn = #{sn,jdbcType=VARCHAR}
@@ -119,15 +119,15 @@
   </delete>
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.WithdrawRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    insert into withdraw_record (sn, bankid, shunter,
-      `alias`, withdrawer, person_name,
-      req_amount, real_amount, ctime,
-      cbtime, `state`, refsn,
+    insert into withdraw_record (sn, bankid, shunter, 
+      `alias`, withdrawer, person_name, 
+      req_amount, real_amount, ctime, 
+      cbtime, `state`, refsn, 
       `status`, message)
-    values (#{sn,jdbcType=VARCHAR}, #{bankid,jdbcType=VARCHAR}, #{shunter,jdbcType=VARCHAR},
-      #{alias,jdbcType=VARCHAR}, #{withdrawer,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR},
-      #{reqAmount,jdbcType=BIGINT}, #{realAmount,jdbcType=BIGINT}, #{ctime,jdbcType=VARCHAR},
-      #{cbtime,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{refsn,jdbcType=VARCHAR},
+    values (#{sn,jdbcType=VARCHAR}, #{bankid,jdbcType=VARCHAR}, #{shunter,jdbcType=VARCHAR}, 
+      #{alias,jdbcType=VARCHAR}, #{withdrawer,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
+      #{reqAmount,jdbcType=BIGINT}, #{realAmount,jdbcType=BIGINT}, #{ctime,jdbcType=VARCHAR}, 
+      #{cbtime,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{refsn,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.WithdrawRecord">

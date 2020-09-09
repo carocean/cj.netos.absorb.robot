@@ -1,322 +1,317 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cj.netos.absorb.robot.mapper.InvestRecordMapper">
-    <resultMap id="BaseResultMap" type="cj.netos.absorb.robot.model.InvestRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        <id column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="absorber" jdbcType="VARCHAR" property="absorber"/>
-        <result column="amount" jdbcType="BIGINT" property="amount"/>
-        <result column="invester" jdbcType="VARCHAR" property="invester"/>
-        <result column="person_name" jdbcType="VARCHAR" property="personName"/>
-        <result column="ctime" jdbcType="VARCHAR" property="ctime"/>
-        <result column="out_trade_sn" jdbcType="VARCHAR" property="outTradeSn"/>
-        <result column="invest_order_no" jdbcType="VARCHAR" property="investOrderNo"/>
-        <result column="invest_order_title" jdbcType="VARCHAR" property="investOrderTitle"/>
-        <result column="note" jdbcType="VARCHAR" property="note"/>
-    </resultMap>
-    <sql id="Example_Where_Clause">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+  <resultMap id="BaseResultMap" type="cj.netos.absorb.robot.model.InvestRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="absorber" jdbcType="VARCHAR" property="absorber" />
+    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="invester" jdbcType="VARCHAR" property="invester" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="ctime" jdbcType="VARCHAR" property="ctime" />
+    <result column="out_trade_sn" jdbcType="VARCHAR" property="outTradeSn" />
+    <result column="invest_order_no" jdbcType="VARCHAR" property="investOrderNo" />
+    <result column="invest_order_title" jdbcType="VARCHAR" property="investOrderTitle" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Update_By_Example_Where_Clause">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Base_Column_List">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        sn, absorber, amount, invester, person_name, ctime, out_trade_sn, invest_order_no,
-        invest_order_title, note
-    </sql>
-    <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.InvestRecordExample"
-            resultMap="BaseResultMap">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        select
-        <if test="distinct">
-            distinct
+          </trim>
         </if>
-        <include refid="Base_Column_List"/>
-        from invest_record
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-    </select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        select
-        <include refid="Base_Column_List"/>
-        from invest_record
-        where sn = #{sn,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        delete from invest_record
-        where sn = #{sn,jdbcType=VARCHAR}
-    </delete>
-    <delete id="deleteByExample" parameterType="cj.netos.absorb.robot.model.InvestRecordExample">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        delete from invest_record
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </delete>
-    <insert id="insert" parameterType="cj.netos.absorb.robot.model.InvestRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        insert into invest_record (sn, absorber, amount,
-        invester, person_name, ctime,
-        out_trade_sn, invest_order_no, invest_order_title,
-        note)
-        values (#{sn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT},
-        #{invester,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR},
-        #{outTradeSn,jdbcType=VARCHAR}, #{investOrderNo,jdbcType=VARCHAR}, #{investOrderTitle,jdbcType=VARCHAR},
-        #{note,jdbcType=VARCHAR})
-    </insert>
-    <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.InvestRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        insert into invest_record
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="sn != null">
-                sn,
-            </if>
-            <if test="absorber != null">
-                absorber,
-            </if>
-            <if test="amount != null">
-                amount,
-            </if>
-            <if test="invester != null">
-                invester,
-            </if>
-            <if test="personName != null">
-                person_name,
-            </if>
-            <if test="ctime != null">
-                ctime,
-            </if>
-            <if test="outTradeSn != null">
-                out_trade_sn,
-            </if>
-            <if test="investOrderNo != null">
-                invest_order_no,
-            </if>
-            <if test="investOrderTitle != null">
-                invest_order_title,
-            </if>
-            <if test="note != null">
-                note,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="sn != null">
-                #{sn,jdbcType=VARCHAR},
-            </if>
-            <if test="absorber != null">
-                #{absorber,jdbcType=VARCHAR},
-            </if>
-            <if test="amount != null">
-                #{amount,jdbcType=BIGINT},
-            </if>
-            <if test="invester != null">
-                #{invester,jdbcType=VARCHAR},
-            </if>
-            <if test="personName != null">
-                #{personName,jdbcType=VARCHAR},
-            </if>
-            <if test="ctime != null">
-                #{ctime,jdbcType=VARCHAR},
-            </if>
-            <if test="outTradeSn != null">
-                #{outTradeSn,jdbcType=VARCHAR},
-            </if>
-            <if test="investOrderNo != null">
-                #{investOrderNo,jdbcType=VARCHAR},
-            </if>
-            <if test="investOrderTitle != null">
-                #{investOrderTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="note != null">
-                #{note,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <select id="countByExample" parameterType="cj.netos.absorb.robot.model.InvestRecordExample"
-            resultType="java.lang.Long">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        select count(*) from invest_record
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </select>
-    <update id="updateByExampleSelective" parameterType="map">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        update invest_record
-        <set>
-            <if test="record.sn != null">
-                sn = #{record.sn,jdbcType=VARCHAR},
-            </if>
-            <if test="record.absorber != null">
-                absorber = #{record.absorber,jdbcType=VARCHAR},
-            </if>
-            <if test="record.amount != null">
-                amount = #{record.amount,jdbcType=BIGINT},
-            </if>
-            <if test="record.invester != null">
-                invester = #{record.invester,jdbcType=VARCHAR},
-            </if>
-            <if test="record.personName != null">
-                person_name = #{record.personName,jdbcType=VARCHAR},
-            </if>
-            <if test="record.ctime != null">
-                ctime = #{record.ctime,jdbcType=VARCHAR},
-            </if>
-            <if test="record.outTradeSn != null">
-                out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
-            </if>
-            <if test="record.investOrderNo != null">
-                invest_order_no = #{record.investOrderNo,jdbcType=VARCHAR},
-            </if>
-            <if test="record.investOrderTitle != null">
-                invest_order_title = #{record.investOrderTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="record.note != null">
-                note = #{record.note,jdbcType=VARCHAR},
-            </if>
-        </set>
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByExample" parameterType="map">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        update invest_record
-        set sn = #{record.sn,jdbcType=VARCHAR},
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    sn, absorber, amount, invester, person_name, ctime, out_trade_sn, invest_order_no, 
+    invest_order_title, note
+  </sql>
+  <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.InvestRecordExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from invest_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select 
+    <include refid="Base_Column_List" />
+    from invest_record
+    where sn = #{sn,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from invest_record
+    where sn = #{sn,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cj.netos.absorb.robot.model.InvestRecordExample">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from invest_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cj.netos.absorb.robot.model.InvestRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into invest_record (sn, absorber, amount, 
+      invester, person_name, ctime, 
+      out_trade_sn, invest_order_no, invest_order_title, 
+      note)
+    values (#{sn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, 
+      #{invester,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
+      #{outTradeSn,jdbcType=VARCHAR}, #{investOrderNo,jdbcType=VARCHAR}, #{investOrderTitle,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.InvestRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into invest_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sn != null">
+        sn,
+      </if>
+      <if test="absorber != null">
+        absorber,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="invester != null">
+        invester,
+      </if>
+      <if test="personName != null">
+        person_name,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="outTradeSn != null">
+        out_trade_sn,
+      </if>
+      <if test="investOrderNo != null">
+        invest_order_no,
+      </if>
+      <if test="investOrderTitle != null">
+        invest_order_title,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sn != null">
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="absorber != null">
+        #{absorber,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="invester != null">
+        #{invester,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeSn != null">
+        #{outTradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="investOrderNo != null">
+        #{investOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="investOrderTitle != null">
+        #{investOrderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cj.netos.absorb.robot.model.InvestRecordExample" resultType="java.lang.Long">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select count(*) from invest_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update invest_record
+    <set>
+      <if test="record.sn != null">
+        sn = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.absorber != null">
         absorber = #{record.absorber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
         amount = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.invester != null">
         invester = #{record.invester,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personName != null">
         person_name = #{record.personName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outTradeSn != null">
         out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investOrderNo != null">
         invest_order_no = #{record.investOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investOrderTitle != null">
         invest_order_title = #{record.investOrderTitle,jdbcType=VARCHAR},
-        note = #{record.note,jdbcType=VARCHAR}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByPrimaryKeySelective" parameterType="cj.netos.absorb.robot.model.InvestRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        update invest_record
-        <set>
-            <if test="absorber != null">
-                absorber = #{absorber,jdbcType=VARCHAR},
-            </if>
-            <if test="amount != null">
-                amount = #{amount,jdbcType=BIGINT},
-            </if>
-            <if test="invester != null">
-                invester = #{invester,jdbcType=VARCHAR},
-            </if>
-            <if test="personName != null">
-                person_name = #{personName,jdbcType=VARCHAR},
-            </if>
-            <if test="ctime != null">
-                ctime = #{ctime,jdbcType=VARCHAR},
-            </if>
-            <if test="outTradeSn != null">
-                out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
-            </if>
-            <if test="investOrderNo != null">
-                invest_order_no = #{investOrderNo,jdbcType=VARCHAR},
-            </if>
-            <if test="investOrderTitle != null">
-                invest_order_title = #{investOrderTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="note != null">
-                note = #{note,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where sn = #{sn,jdbcType=VARCHAR}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="cj.netos.absorb.robot.model.InvestRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        update invest_record
-        set absorber = #{absorber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update invest_record
+    set sn = #{record.sn,jdbcType=VARCHAR},
+      absorber = #{record.absorber,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=BIGINT},
+      invester = #{record.invester,jdbcType=VARCHAR},
+      person_name = #{record.personName,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=VARCHAR},
+      out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
+      invest_order_no = #{record.investOrderNo,jdbcType=VARCHAR},
+      invest_order_title = #{record.investOrderTitle,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cj.netos.absorb.robot.model.InvestRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update invest_record
+    <set>
+      <if test="absorber != null">
+        absorber = #{absorber,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
         amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="invester != null">
         invester = #{invester,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
         person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeSn != null">
         out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="investOrderNo != null">
         invest_order_no = #{investOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="investOrderTitle != null">
         invest_order_title = #{investOrderTitle,jdbcType=VARCHAR},
-        note = #{note,jdbcType=VARCHAR}
-        where sn = #{sn,jdbcType=VARCHAR}
-    </update>
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cj.netos.absorb.robot.model.InvestRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update invest_record
+    set absorber = #{absorber,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      invester = #{invester,jdbcType=VARCHAR},
+      person_name = #{personName,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=VARCHAR},
+      out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
+      invest_order_no = #{investOrderNo,jdbcType=VARCHAR},
+      invest_order_title = #{investOrderTitle,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
     <select id="pageInvestRecord" parameterType="cj.netos.absorb.robot.model.InvestRecord" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from invest_record
         where absorber = #{absorber,jdbcType=VARCHAR}
         order by ctime desc
         limit #{offset},#{limit}
     </select>
-    <select id="totalAmountInvests" parameterType="cj.netos.absorb.robot.model.InvestRecord"
-            resultType="java.lang.Long">
+    <select id="totalAmountInvests" parameterType="cj.netos.absorb.robot.model.InvestRecord" resultType="java.lang.Long">
         select sum(amount)
         from invest_record
         where absorber = #{absorber,jdbcType=VARCHAR}

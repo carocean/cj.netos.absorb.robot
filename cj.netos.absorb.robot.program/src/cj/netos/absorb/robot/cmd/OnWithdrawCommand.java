@@ -1,7 +1,8 @@
 package cj.netos.absorb.robot.cmd;
 
 import cj.netos.absorb.robot.BankWithdrawResult;
-import cj.netos.absorb.robot.IAbsorberHubService;
+import cj.netos.absorb.robot.IHubService;
+import cj.netos.absorb.robot.ICuratorPathChecker;
 import cj.netos.absorb.robot.IWithdrawService;
 import cj.netos.rabbitmq.CjConsumer;
 import cj.netos.rabbitmq.RabbitMQException;
@@ -15,11 +16,12 @@ import cj.ultimate.gson2.com.google.gson.Gson;
 import cj.ultimate.util.StringUtil;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Envelope;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
+import org.apache.curator.framework.recipes.locks.InterProcessReadWriteLock;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 @CjConsumer(name = "fromWyBank_onWithdraw")
 @CjService(name = "/wybank/trade/settle.mq#withdraw")
@@ -27,13 +29,27 @@ public class OnWithdrawCommand implements IConsumerCommand {
     @CjServiceRef
     IWithdrawService withdrawService;
     @CjServiceRef
-    IAbsorberHubService absorberHubService;
+    IHubService absorberHubService;
 
+    @CjServiceRef(refByName = "curator.framework")
+    CuratorFramework framework;
+
+    @CjServiceRef
+    ICuratorPathChecker curatorPathChecker;
     @Override
     public void command(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws RabbitMQException, RetryCommandException, IOException {
         String json = new String(body);
         BankWithdrawResult result = new Gson().fromJson(json, BankWithdrawResult.class);
+        String path = String.format("/robot/bank/%s/locks", result.getBankid());
         try {
+            curatorPathChecker.check(framework, path);
+        } catch (Exception e) {
+            throw new RabbitMQException("500", e);
+        }
+        InterProcessReadWriteLock lock = new InterProcessReadWriteLock(framework, path);
+        InterProcessMutex mutex = lock.writeLock();
+        try {
+            mutex.acquire();
             withdrawService.doResponse(result);
         } catch (Exception e) {
             String msg = e.getMessage();
@@ -47,6 +63,12 @@ public class OnWithdrawCommand implements IConsumerCommand {
                 throw new RabbitMQException(ce.getStatus(), e);
             }
             throw new RabbitMQException("500", e);
+        } finally {
+            try {
+                mutex.release();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

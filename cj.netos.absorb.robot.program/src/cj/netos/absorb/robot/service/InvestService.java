@@ -1,6 +1,6 @@
 package cj.netos.absorb.robot.service;
 
-import cj.netos.absorb.robot.IAbsorberHubService;
+import cj.netos.absorb.robot.IHubService;
 import cj.netos.absorb.robot.IHubDistribute;
 import cj.netos.absorb.robot.IInvestService;
 import cj.netos.absorb.robot.PaymentResult;
@@ -24,7 +24,7 @@ public class InvestService implements IInvestService {
     InvestRecordMapper investRecordMapper;
 
     @CjServiceRef
-    IAbsorberHubService absorberHubService;
+    IHubService absorberHubService;
 
     @CjServiceRef(refByName = "@.rabbitmq.producer.distributeAbsorbsToWallet")
     IRabbitMQProducer rabbitMQProducer;

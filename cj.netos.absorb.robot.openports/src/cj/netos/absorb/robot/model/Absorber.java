@@ -1,7 +1,5 @@
 package cj.netos.absorb.robot.model;
 
-import java.math.BigDecimal;
-
 /**
  * Table: absorber
  */
@@ -49,7 +47,7 @@ public class Absorber {
 
     /**
      * Column: type
-     * Remark: 洇取器类型, 0:简单洇取器 1:地理洇取器，是的时候其location和radius不为空
+     * Remark: 洇取器类型, 0:简单洇取器 1:地理洇取器，是的时候其location和radius不为空 2:余额洇取器。是地理洇取器的一种，用于抢元宝
      */
     private Integer type;
 
@@ -66,50 +64,14 @@ public class Absorber {
     private String ctime;
 
     /**
-     * Column: exit_expire
-     * Remark: 洇取器过期时间 0表示不限期 当达到过期时间则删除
-     */
-    private Long exitExpire;
-
-    /**
-     * Column: exit_amount
-     * Remark: 限制的洇取金额，当达到该金额时删除洇取器 0表示洇取器不受限制的洇取资金
-     */
-    private Long exitAmount;
-
-    /**
-     * Column: exit_times
-     * Remark: 达到洇取次数就删除，0为不限制
-     */
-    private Long exitTimes;
-
-    /**
-     * Column: weight
-     * Remark: 洇取器权重。 一般固定洇取器权重高于一般的 权重比的调整只有地商才有权限调 算法：比重=1个洇取器的比重/（每个洇取器权重之和） 权重基数是1.00
-     */
-    private BigDecimal weight;
-
-    /**
      * Column: max_recipients
-     * Remark: 收取人数限制
+     * Remark: 人数上限，0表示不限制
      */
     private Long maxRecipients;
 
     /**
-     * Column: current_amount
-     * Remark: 累计已派发的金额
-     */
-    private BigDecimal currentAmount;
-
-    /**
-     * Column: current_times
-     * Remark: 累计派发次数
-     */
-    private Long currentTimes;
-
-    /**
      * Column: state
-     * Remark: 0为洇取器可用 -1为停用，停用原因有：过期、达到金额、达到次数
+     * Remark: 0为停用，停用原因有：过期、达到金额、达到次数 1为洇取器可用
      */
     private Integer state;
 
@@ -199,60 +161,12 @@ public class Absorber {
         this.ctime = ctime == null ? null : ctime.trim();
     }
 
-    public Long getExitExpire() {
-        return exitExpire;
-    }
-
-    public void setExitExpire(Long exitExpire) {
-        this.exitExpire = exitExpire;
-    }
-
-    public Long getExitAmount() {
-        return exitAmount;
-    }
-
-    public void setExitAmount(Long exitAmount) {
-        this.exitAmount = exitAmount;
-    }
-
-    public Long getExitTimes() {
-        return exitTimes;
-    }
-
-    public void setExitTimes(Long exitTimes) {
-        this.exitTimes = exitTimes;
-    }
-
-    public BigDecimal getWeight() {
-        return weight;
-    }
-
-    public void setWeight(BigDecimal weight) {
-        this.weight = weight;
-    }
-
     public Long getMaxRecipients() {
         return maxRecipients;
     }
 
     public void setMaxRecipients(Long maxRecipients) {
         this.maxRecipients = maxRecipients;
-    }
-
-    public BigDecimal getCurrentAmount() {
-        return currentAmount;
-    }
-
-    public void setCurrentAmount(BigDecimal currentAmount) {
-        this.currentAmount = currentAmount;
-    }
-
-    public Long getCurrentTimes() {
-        return currentTimes;
-    }
-
-    public void setCurrentTimes(Long currentTimes) {
-        this.currentTimes = currentTimes;
     }
 
     public Integer getState() {

@@ -2,9 +2,8 @@ package cj.netos.absorb.robot.mapper;
 
 import cj.netos.absorb.robot.model.Absorber;
 import cj.netos.absorb.robot.model.AbsorberExample;
-import org.apache.ibatis.annotations.Param;
-import java.math.BigDecimal;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface AbsorberMapper {
 
@@ -67,13 +66,7 @@ public interface AbsorberMapper {
 
     List<Absorber> pageWhere(@Param(value = "bankid") String bankid, @Param(value = "type") int type, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
-    BigDecimal totalWeightsOfAbsorber(@Param(value = "bankid") String bankid);
-
-    void updateCurrent(@Param(value = "id") String id, @Param(value = "currentTimes") long currentTimes, @Param(value = "currentAmount") BigDecimal currentAmount);
-
     void stop(@Param(value = "id") String id, @Param(value = "exitCause") String exitCause);
-
-    void updateWeight(@Param(value = "id") String id, @Param(value = "weight") BigDecimal weight);
 
     void start(@Param(value = "id") String id);
 }

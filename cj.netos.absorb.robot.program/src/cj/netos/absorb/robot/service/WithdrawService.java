@@ -7,7 +7,6 @@ import cj.netos.absorb.robot.model.WithdrawRecord;
 import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
 import cj.netos.rabbitmq.IRabbitMQProducer;
-import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
@@ -17,14 +16,12 @@ import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 import cj.ultimate.gson2.com.google.gson.Gson;
-import cj.ultimate.util.StringUtil;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -37,7 +34,7 @@ public class WithdrawService implements IWithdrawService {
     @CjServiceSite
     IServiceSite site;
     @CjServiceRef
-    IAbsorberHubService absorberHubService;
+    IHubService absorberHubService;
 
     @CjServiceRef(refByName = "@.rabbitmq.producer.distributeAbsorbsToWallet")
     IRabbitMQProducer rabbitMQProducer;

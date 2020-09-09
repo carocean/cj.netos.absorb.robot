@@ -2,9 +2,7 @@ package cj.netos.absorb.robot.mapper;
 
 import cj.netos.absorb.robot.model.WithdrawRecord;
 import cj.netos.absorb.robot.model.WithdrawRecordExample;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface WithdrawRecordMapper {

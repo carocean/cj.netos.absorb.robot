@@ -115,7 +115,7 @@
             <TableInfo>
               <option name="database" value="netos.absorb.robot" />
               <option name="domainName" value="AbsorberBill" />
-              <option name="tableComment" value="洇取器账单" />
+              <option name="tableComment" value="洇取器指数变化账单。三个指标：当前纹银银行投资总额；当前个人投资总额；当前指数" />
               <option name="tableName" value="absorber_bill" />
             </TableInfo>
           </value>
@@ -125,8 +125,28 @@
             <TableInfo>
               <option name="database" value="netos.absorb.robot" />
               <option name="domainName" value="AbsorberBucket" />
-              <option name="tableComment" value="洇取桶&#10;用于让个人或商家向洇取器投资，为了派发资金" />
+              <option name="tableComment" value="洇取器的指数桶" />
               <option name="tableName" value="absorber_bucket" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#domain_bill">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="DomainBill" />
+              <option name="tableComment" value="一个域的指数账单，反映指数变化。说明平均指数是由哪些洇取器的指数变化而来" />
+              <option name="tableName" value="domain_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#domain_bucket">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="DomainBucket" />
+              <option name="tableComment" value="域桶：纹银银行作为一个域的洇取指数桶" />
+              <option name="tableName" value="domain_bucket" />
             </TableInfo>
           </value>
         </entry>

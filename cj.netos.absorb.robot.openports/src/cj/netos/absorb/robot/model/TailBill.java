@@ -31,7 +31,7 @@ public class TailBill {
 
     /**
      * Column: order
-     * Remark: 0为withdraw_record存入 1为invest_record存入 2为取出
+     * Remark: 0为withdraw_record存入 1为invest_record存入 2为取出（根据洇取器类型是否是余额洇取器表示为：非余额洇取器为：洇取器创建人取出；余额洇取器为抢元宝的人取出（仅用于洇取器余额类型）） 
      */
     private Integer order;
 

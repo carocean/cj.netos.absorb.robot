@@ -441,9 +441,9 @@
     order by ctime desc
     limit #{offset},#{limit}
   </select>
-  <select id="totalInBillOfMonth" parameterType="cj.netos.absorb.robot.model.DomainBill" resultType="java.math.BigDecimal">
+  <select id="totalBillOfMonth" parameterType="cj.netos.absorb.robot.model.DomainBill" resultType="java.math.BigDecimal">
     select
-      sum(amount)
+      (sum(w_invest_amount)+sum(p_invest_amount))
     from domain_bill
     where bankid = #{bankid,jdbcType=VARCHAR}
       and `month` = #{month,jdbcType=INTEGER}

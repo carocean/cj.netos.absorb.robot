@@ -426,7 +426,7 @@
     order by ctime desc
     limit #{offset},#{limit}
   </select>
-  <select id="totalInBillOfMonth" parameterType="cj.netos.absorb.robot.model.AbsorberBill" resultType="java.math.BigDecimal">
+  <select id="totalBillOfMonth" parameterType="cj.netos.absorb.robot.model.AbsorberBill" resultType="java.math.BigDecimal">
     select
       sum(amount)
     from absorber_bill

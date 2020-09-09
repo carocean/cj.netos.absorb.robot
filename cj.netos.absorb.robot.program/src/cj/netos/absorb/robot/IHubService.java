@@ -70,25 +70,25 @@ public interface IHubService {
     List<AbsorberBucket> pageAbsorberBucket(String bankid, int limit, int offset);
     /**
      * 更新洇金桶的纹银银行投资余额并计算价格
-     * @param bulletin
      * @param bucket
      * @param realDistribute
      * @param withdrawResult
      */
-    void updateAbsorbBucket0(DomainBulletin bulletin, AbsorberBucket bucket, BigDecimal realDistribute, BankWithdrawResult withdrawResult);
+    void updateAbsorbBucket0(AbsorberBucket bucket, BigDecimal realDistribute, BankWithdrawResult withdrawResult);
 
     /**
      * 更新洇金桶的公众投资余额并计算价格
-     * @param bulletin
      * @param bucket
      * @param realDistribute
      * @param investRecord
      */
-    void updateByPersonInvest(DomainBulletin bulletin, AbsorberBucket bucket, BigDecimal realDistribute, InvestRecord investRecord);
+    void updateByPersonInvest(AbsorberBucket bucket, BigDecimal realDistribute, InvestRecord investRecord);
 
 
     void removeRecipients(String absorberid, String person);
 
     void updateRecipientsWeights(String absorberid, String person, String encourageCode, BigDecimal weights);
+
+    DomainBulletin getDomainBulletinBeginWaaPrice(String bankid);
 
 }

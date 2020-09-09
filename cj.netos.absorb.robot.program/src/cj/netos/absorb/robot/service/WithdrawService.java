@@ -34,7 +34,7 @@ public class WithdrawService implements IWithdrawService {
     @CjServiceSite
     IServiceSite site;
     @CjServiceRef
-    IHubService absorberHubService;
+    IHubService hubService;
 
     @CjServiceRef(refByName = "@.rabbitmq.producer.distributeAbsorbsToWallet")
     IRabbitMQProducer rabbitMQProducer;
@@ -128,7 +128,7 @@ public class WithdrawService implements IWithdrawService {
     @Override
     public void doResponse(BankWithdrawResult result) throws CircuitException {
         withdrawRecordMapper.done(result.getOutTradeSn(), result.getRealAmount(), RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
-        IHubDistribute<BankWithdrawResult> onWithdrawDistributeService = new OnWithdrawHubDistribute(absorberHubService, rabbitMQProducer);
+        IHubDistribute<BankWithdrawResult> onWithdrawDistributeService = new OnWithdrawHubDistribute(hubService, rabbitMQProducer);
         onWithdrawDistributeService.distribute(result);
     }
 }

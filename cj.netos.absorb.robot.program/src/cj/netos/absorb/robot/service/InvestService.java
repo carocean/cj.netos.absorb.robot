@@ -24,7 +24,7 @@ public class InvestService implements IInvestService {
     InvestRecordMapper investRecordMapper;
 
     @CjServiceRef
-    IHubService absorberHubService;
+    IHubService hubService;
 
     @CjServiceRef(refByName = "@.rabbitmq.producer.distributeAbsorbsToWallet")
     IRabbitMQProducer rabbitMQProducer;
@@ -47,7 +47,7 @@ public class InvestService implements IInvestService {
         record.setInvestOrderNo(result.getDetails().getOrderNo());
         record.setInvestOrderTitle(result.getDetails().getOrderTitle());
         investRecordMapper.insert(record);
-        IHubDistribute<InvestRecord> onInvestHubDistribute = new OnInvestHubDistribute(absorberHubService, rabbitMQProducer);
+        IHubDistribute<InvestRecord> onInvestHubDistribute = new OnInvestHubDistribute(hubService, rabbitMQProducer);
         onInvestHubDistribute.distribute(record);
     }
 }

@@ -351,7 +351,7 @@
   <update id="updateWeights" parameterType="cj.netos.absorb.robot.model.Recipients">
     update recipients
     set
-    weight = #{weight,jdbcType=DECIMAL},
+    weight = #{weight,jdbcType=DECIMAL}
     where absorber = #{absorber,jdbcType=VARCHAR}
     and person = #{person,jdbcType=VARCHAR}
     and encourage_code = #{encourageCode,jdbcType=VARCHAR}

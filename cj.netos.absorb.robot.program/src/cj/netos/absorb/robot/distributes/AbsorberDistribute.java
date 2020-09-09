@@ -34,7 +34,7 @@ public class AbsorberDistribute implements IAbsorberDistribute {
 
     //返回实际分出去的钱数
     @Override
-    public BigDecimal distribute(DomainBulletin bulletin, AbsorberBucket bucket, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException {
+    public BigDecimal distribute(AbsorberBucket bucket, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException {
         Absorber absorber = absorberHubService.getAbsorber(bucket.getAbsorber());
         BigDecimal realDistribute = null;
         switch (absorber.getType()) {
@@ -51,10 +51,10 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             return realDistribute;
         }
         if (result instanceof BankWithdrawResult) {
-            absorberHubService.updateAbsorbBucket0(bulletin, bucket, realDistribute, (BankWithdrawResult) result);
+            absorberHubService.updateAbsorbBucket0( bucket, realDistribute, (BankWithdrawResult) result);
         }
         if (result instanceof InvestRecord) {
-            absorberHubService.updateByPersonInvest(bulletin, bucket, realDistribute, (InvestRecord) result);
+            absorberHubService.updateByPersonInvest(bucket, realDistribute, (InvestRecord) result);
         }
         return realDistribute;
     }

@@ -11,13 +11,12 @@ public interface IAbsorberDistribute {
      * 返回实际分出去的钱数
      *
      *
-     * @param bulletin
      * @param bucket
      * @param weightPricePerAbsorber
      * @param result
      * @return
      */
-    BigDecimal distribute(DomainBulletin bulletin, AbsorberBucket bucket, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException;
+    BigDecimal distribute(AbsorberBucket bucket, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException;
 
 
 }

@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 @CjService(name = "/wallet/trade.mhub#payTrade")
 public class OnInvestCommand implements IConsumerCommand {
     @CjServiceRef
-    IHubService absorberHubService;
+    IHubService hubService;
 
     @CjServiceRef
     IInvestService investService;
@@ -44,9 +44,9 @@ public class OnInvestCommand implements IConsumerCommand {
         }
         String json = new String(body);
         PaymentResult result = new Gson().fromJson(json, PaymentResult.class);
-        Absorber absorber = absorberHubService.getAbsorber(result.getDetails().getPayeeCode());
+        Absorber absorber = hubService.getAbsorber(result.getDetails().getPayeeCode());
         if (absorber == null) {
-            throw new RetryCommandException("404", "支付的洇取器不存在");
+            throw new RabbitMQException("404", "支付的洇取器不存在");
         }
         String path = String.format("/robot/bank/%s/locks", absorber.getBankid());
         try {
@@ -64,7 +64,7 @@ public class OnInvestCommand implements IConsumerCommand {
             if (!StringUtil.isEmpty(msg)) {
                 msg = msg.substring(0, msg.length() > 200 ? 200 : msg.length());
             }
-            absorberHubService.addTailAmount(new BigDecimal(result.getAmount() + ""),result.getPerson(), absorber.getBankid(), result.getSn(), 1, String.format("派发过程出错:%s", msg));
+            hubService.addTailAmount(new BigDecimal(result.getAmount() + ""),result.getPerson(), absorber.getBankid(), result.getSn(), 1, String.format("派发过程出错:%s", msg));
             CJSystem.logging().error(getClass(), e);
             CircuitException ce = CircuitException.search(e);
             if (ce == null) {

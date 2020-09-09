@@ -282,6 +282,15 @@
       and absorber.state=1
     group by bucket.bank
   </select>
+  <select id="totalAbsorberBeginWaaPrice" parameterType="cj.netos.absorb.robot.model.AbsorberBucket" resultType="cj.netos.absorb.robot.TotalAbsorber">
+    select sum(bucket.price) as price,count(bucket.absorber) as count
+    from absorber absorber ,absorber_bucket bucket
+    where absorber.id=bucket.absorber
+      and absorber.bankid=#{bankid}
+      and absorber.state=1
+      and price &gt;= #{price,jdbcType=DECIMAL}
+    group by bucket.bank
+  </select>
   <update id="updateByPersonInvest" parameterType="cj.netos.absorb.robot.model.AbsorberBucket">
     update absorber_bucket
     set

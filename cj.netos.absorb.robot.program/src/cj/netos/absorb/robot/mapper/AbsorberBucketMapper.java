@@ -78,4 +78,7 @@ public interface AbsorberBucketMapper {
     void updateByPersonInvest(@Param(value = "absorber") String absorber, @Param(value = "pInvestAmount") BigDecimal pInvestAmount, @Param(value = "times") long times, @Param(value = "price") BigDecimal price, @Param(value = "utime") String utime);
 
     void updateByWithdrawInvest(@Param(value = "absorber") String absorber, @Param(value = "wInvestAmount") BigDecimal wInvestAmount, @Param(value = "times") long times, @Param(value = "price") BigDecimal price, @Param(value = "utime") String utime);
+
+    TotalAbsorber totalAbsorberBeginWaaPrice(@Param(value = "bankid") String bankid, @Param(value = "price")BigDecimal price);
+
 }

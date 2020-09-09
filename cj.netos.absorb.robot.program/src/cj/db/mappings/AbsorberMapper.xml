@@ -363,20 +363,20 @@
     from absorber
     where bankid = #{bankid,jdbcType=VARCHAR}
     and `type` = #{type,jdbcType=INTEGER}
-    and `state` =0
+    and `state` =1
     limit #{offset},#{limit}
   </select>
   <update id="stop" parameterType="cj.netos.absorb.robot.model.Absorber">
     update absorber
     set
-      `state` = -1,
+      `state` = 0,
       exit_cause = #{exitCause,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="start" parameterType="cj.netos.absorb.robot.model.Absorber">
     update absorber
     set
-      `state` = 0,
+      `state` = 1,
       exit_cause = NULL
     where id = #{id,jdbcType=VARCHAR}
   </update>

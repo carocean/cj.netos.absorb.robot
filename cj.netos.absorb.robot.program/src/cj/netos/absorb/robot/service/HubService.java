@@ -117,22 +117,22 @@ public class HubService implements IHubService {
     @CjTransaction
     //更新洇金桶的纹银银行投资余额并计算价格
     @Override
-    public void updateAbsorbBucket0(DomainBulletin bulletin, AbsorberBucket bucket, BigDecimal realDistribute, BankWithdrawResult result) {
-        BigDecimal investAmount = bucket.getwInvestAmount() == null ? BigDecimal.ZERO : bucket.getwInvestAmount();
-        investAmount = investAmount.add(realDistribute);
+    public void updateAbsorbBucket0(AbsorberBucket bucket, BigDecimal realDistribute, BankWithdrawResult result) {
+        BigDecimal winvestAmount = bucket.getwInvestAmount() == null ? BigDecimal.ZERO : bucket.getwInvestAmount();
+        winvestAmount = winvestAmount.add(realDistribute);
         long times = bucket.getTimes() == null ? 0L : bucket.getTimes();
         times = times + 1;
-        if (BigDecimal.ZERO.compareTo(bucket.getwInvestAmount()) == 0) {
-            bucket.setwInvestAmount(new BigDecimal("0.001"));
+        if (BigDecimal.ZERO.compareTo(winvestAmount) == 0) {
+            winvestAmount=new BigDecimal("0.001");
         }
         //为公众投资总额除以纹银银行投资总额
-        BigDecimal newPrice = investAmount.divide(bucket.getwInvestAmount(), RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
+        BigDecimal newPrice = bucket.getpInvestAmount().divide(winvestAmount, RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
 
         AbsorberBill absorberBill = new AbsorberBill();
         absorberBill.setAbsorber(bucket.getAbsorber());
         absorberBill.setAmount(realDistribute);
         absorberBill.setpBalance(bucket.getpInvestAmount());
-        absorberBill.setwBalance(investAmount);
+        absorberBill.setwBalance(winvestAmount);
         absorberBill.setAfterPrice(newPrice);
         absorberBill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         absorberBill.setOrder(0);
@@ -150,11 +150,15 @@ public class HubService implements IHubService {
         absorberBill.setSeason(season);
 
         absorberBillMapper.insert(absorberBill);
-        absorberBucketMapper.updateByWithdrawInvest(bucket.getAbsorber(), investAmount, times, newPrice, absorberBill.getCtime());
+        absorberBucketMapper.updateByWithdrawInvest(bucket.getAbsorber(), winvestAmount, times, newPrice, absorberBill.getCtime());
         //更新域桶,假设在此期间洇取器数量没变，只是增加了投资。（这种分发洇金的程序不需要指数准确）
-        BigDecimal weights = bulletin.getAbsorbWeights().add(newPrice);
+        DomainBulletin bulletin = getDomainBulletin(bucket.getBank());
+        BigDecimal weights = bulletin.getAbsorbWeights();
         long absorbCount = bulletin.getAbsorbCount();
-        BigDecimal waaPrice = weights.divide(new BigDecimal(absorbCount + ""), RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
+        BigDecimal waaPrice = BigDecimal.ZERO;
+        if (absorbCount > 0) {
+            waaPrice = weights.divide(new BigDecimal(absorbCount + ""), RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
+        }
 
         DomainBill domainBill = new DomainBill();
         domainBill.setAbsorbCount(absorbCount);
@@ -163,7 +167,7 @@ public class HubService implements IHubService {
         domainBill.setCtime(absorberBill.getCtime());
         domainBill.setOrder(0);
         domainBill.setpInvestAmount(bucket.getpInvestAmount());
-        domainBill.setwInvestAmount(investAmount);
+        domainBill.setwInvestAmount(winvestAmount);
         domainBill.setNote("纹银银行投资");
         domainBill.setWaaPrice(waaPrice);
         domainBill.setSn(new IdWorker().nextId());
@@ -182,21 +186,21 @@ public class HubService implements IHubService {
     @CjTransaction
     //更新洇金桶的公众投资余额并计算价格
     @Override
-    public void updateByPersonInvest(DomainBulletin bulletin, AbsorberBucket bucket, BigDecimal realDistribute, InvestRecord record) {
-        BigDecimal investAmount = bucket.getpInvestAmount() == null ? BigDecimal.ZERO : bucket.getpInvestAmount();
-        investAmount = investAmount.add(realDistribute);
+    public void updateByPersonInvest( AbsorberBucket bucket, BigDecimal realDistribute, InvestRecord record) {
+        BigDecimal pinvestAmount = bucket.getpInvestAmount() == null ? BigDecimal.ZERO : bucket.getpInvestAmount();
+        pinvestAmount = pinvestAmount.add(realDistribute);
         long times = bucket.getTimes() == null ? 0L : bucket.getTimes();
         times = times + 1;
         if (BigDecimal.ZERO.compareTo(bucket.getwInvestAmount()) == 0) {
             bucket.setwInvestAmount(new BigDecimal("0.001"));
         }
         //为公众投资总额除以纹银银行投资总额
-        BigDecimal newPrice = investAmount.divide(bucket.getwInvestAmount(), RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
+        BigDecimal newPrice = pinvestAmount.divide(bucket.getwInvestAmount(), RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
 
         AbsorberBill absorberBill = new AbsorberBill();
         absorberBill.setAbsorber(bucket.getAbsorber());
         absorberBill.setAmount(realDistribute);
-        absorberBill.setpBalance(investAmount);
+        absorberBill.setpBalance(pinvestAmount);
         absorberBill.setwBalance(bucket.getwInvestAmount());
         absorberBill.setAfterPrice(newPrice);
         absorberBill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
@@ -215,19 +219,22 @@ public class HubService implements IHubService {
         absorberBill.setSeason(season);
 
         absorberBillMapper.insert(absorberBill);
-        absorberBucketMapper.updateByPersonInvest(bucket.getAbsorber(), investAmount, times, newPrice, absorberBill.getCtime());
+        absorberBucketMapper.updateByPersonInvest(bucket.getAbsorber(), pinvestAmount, times, newPrice, absorberBill.getCtime());
         //更新域桶,假设在此期间洇取器数量没变，只是增加了投资。（这种分发洇金的程序不需要指数准确）
-        BigDecimal weights = bulletin.getAbsorbWeights().add(newPrice);
+        DomainBulletin bulletin = getDomainBulletin(bucket.getBank());
+        BigDecimal weights = bulletin.getAbsorbWeights();
         long absorbCount = bulletin.getAbsorbCount();
-        BigDecimal waaPrice = weights.divide(new BigDecimal(absorbCount + ""), RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
-
+        BigDecimal waaPrice = BigDecimal.ZERO;
+        if (absorbCount > 0) {
+            waaPrice = weights.divide(new BigDecimal(absorbCount + ""), RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
+        }
         DomainBill domainBill = new DomainBill();
         domainBill.setAbsorbCount(absorbCount);
         domainBill.setAbsorber(bucket.getAbsorber());
         domainBill.setAfterWaaPrice(waaPrice);
         domainBill.setCtime(absorberBill.getCtime());
         domainBill.setOrder(1);
-        domainBill.setpInvestAmount(investAmount);
+        domainBill.setpInvestAmount(pinvestAmount);
         domainBill.setwInvestAmount(bucket.getwInvestAmount());
         domainBill.setNote("公众投资");
         domainBill.setWaaPrice(waaPrice);
@@ -257,7 +264,7 @@ public class HubService implements IHubService {
         Absorber absorber = getAbsorber(recipients.getAbsorber());
         long count = totalRecipientsCount(absorber.getId());
         long maxRecipients = absorber.getMaxRecipients() == null ? Long.valueOf(site.getProperty("hub.absorber.maxRecipients")) : absorber.getMaxRecipients();
-        if (count > maxRecipients) {
+        if (maxRecipients > 0 && count > maxRecipients) {
             throw new CircuitException("500", String.format("已超出洇取器上限。洇取器:%s 人数:%s", absorber.getTitle(), count));
         }
         recipientsMapper.insert(recipients);
@@ -278,12 +285,12 @@ public class HubService implements IHubService {
         example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(person).andEncourageCodeEqualTo(encourageCode);
         List<Recipients> recipientsList = recipientsMapper.selectByExample(example);
         if (recipientsList.isEmpty()) {
-            return ;
+            return;
         }
         Recipients recipients = recipientsList.get(0);
-        BigDecimal weight=recipients.getWeight();
+        BigDecimal weight = recipients.getWeight();
         if (weight != null) {
-            weights=weights.add(weight);
+            weights = weights.add(weight);
         }
         recipientsMapper.updateWeights(absorberid, person, encourageCode, weights);
     }
@@ -345,6 +352,26 @@ public class HubService implements IHubService {
         return bulletin;
     }
 
+    @CjTransaction
+    @Override
+    public DomainBulletin getDomainBulletinBeginWaaPrice(String bankid) {
+        DomainBucket domainBucket = getAndInitDomainBucket(bankid);
+        TotalAbsorber totalAbsorber = absorberBucketMapper.totalAbsorberBeginWaaPrice(bankid, domainBucket.getWaaPrice());
+        if (totalAbsorber == null) {
+            totalAbsorber = new TotalAbsorber();
+            AbsorberBucketExample example = new AbsorberBucketExample();
+            example.createCriteria().andBankEqualTo(bankid).andPriceGreaterThanOrEqualTo(domainBucket.getWaaPrice());
+            long count = absorberBucketMapper.countByExample(example);
+            BigDecimal weights = new BigDecimal((count / 0.001) + "");
+            totalAbsorber.setPrice(weights);
+            totalAbsorber.setCount(count);
+        }
+        DomainBulletin bulletin = new DomainBulletin();
+        bulletin.setBucket(domainBucket);
+        bulletin.setAbsorbWeights(totalAbsorber.getPrice());
+        bulletin.setAbsorbCount(totalAbsorber.getCount());
+        return bulletin;
+    }
 
     @CjTransaction
     private DomainBucket getAndInitDomainBucket(String bankid) {

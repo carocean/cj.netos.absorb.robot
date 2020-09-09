@@ -34,7 +34,7 @@ import java.util.Map;
 @CjService(name = "/hub.ports")
 public class HubPorts implements IHubPorts {
     @CjServiceRef
-    IHubService absorberHubService;
+    IHubService hubService;
     @CjServiceSite
     IServiceSite site;
 
@@ -63,13 +63,13 @@ public class HubPorts implements IHubPorts {
         absorber.setRadius(radius);
         absorber.setState(1);
         absorber.setMaxRecipients(0L);
-        absorberHubService.createAbsorber(absorber);
+        hubService.createAbsorber(absorber);
         return absorber;
     }
 
     @Override
     public DomainBulletin getDomainBucket(ISecuritySession securitySession, String bankid) throws CircuitException {
-        return absorberHubService.getDomainBulletin(bankid);
+        return hubService.getDomainBulletin(bankid);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class HubPorts implements IHubPorts {
         absorber.setTitle(title);
         absorber.setState(1);
         absorber.setMaxRecipients(maxRecipients);
-        absorberHubService.createAbsorber(absorber);
+        hubService.createAbsorber(absorber);
 
         return absorber;
     }
@@ -114,23 +114,23 @@ public class HubPorts implements IHubPorts {
         absorber.setRadius(radius);
         absorber.setState(1);
         absorber.setMaxRecipients(0L);
-        absorberHubService.createAbsorber(absorber);
+        hubService.createAbsorber(absorber);
         return absorber;
     }
 
     @Override
     public AbsorberResult getAbsorber(ISecuritySession securitySession, String absorberid) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
-        AbsorberBucket bucket = absorberHubService.getAndInitAbsorbBucket(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        AbsorberBucket bucket = hubService.getAndInitAbsorbBucket(absorberid);
         return new AbsorberResult(absorber, bucket);
     }
 
     @Override
     public List<AbsorberResult> pageAbsorber(ISecuritySession securitySession, String bankid, int type, int limit, long offset) throws CircuitException {
-        List<Absorber> absorbers = absorberHubService.pageAbsorber(bankid, type, limit, offset);
+        List<Absorber> absorbers = hubService.pageAbsorber(bankid, type, limit, offset);
         List<AbsorberResult> absorberResults = new ArrayList<>();
         for (Absorber absorber : absorbers) {
-            AbsorberBucket bucket = absorberHubService.getAndInitAbsorbBucket(absorber.getId());
+            AbsorberBucket bucket = hubService.getAndInitAbsorbBucket(absorber.getId());
             absorberResults.add(new AbsorberResult(absorber, bucket));
         }
         return absorberResults;
@@ -138,23 +138,23 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public void removeAbsorber(ISecuritySession securitySession, String absorberid) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             return;
         }
         if (!absorber.getCreator().equals(securitySession.principal())) {
             throw new CircuitException("500", "不能删除他人的洇取器");
         }
-        absorberHubService.removeAbsorber(absorberid);
+        hubService.removeAbsorber(absorberid);
     }
 
     @Override
     public void addRecipients(ISecuritySession securitySession, String absorberid, String encourageCode, String encourageCause, long desireAmount) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器已不存在。" + absorberid);
         }
-        if (absorberHubService.existsRecipientsEncourageCode(securitySession.principal(), absorberid, encourageCode)) {
+        if (hubService.existsRecipientsEncourageCode(securitySession.principal(), absorberid, encourageCode)) {
             throw new CircuitException("2000", String.format("洇取器:%s (%s)中已存在收取人及期激励方式:%s。", absorber.getTitle(), absorber.getId(), securitySession.principal()));
         }
         Recipients recipients = new Recipients();
@@ -187,38 +187,38 @@ public class HubPorts implements IHubPorts {
         recipients.setWeight(weight);//默认为1，只有洇取器的创建者才有权调动收件人的权重
         recipients.setPersonName((String) securitySession.property("nickName"));
 
-        absorberHubService.addRecipients(recipients);
+        hubService.addRecipients(recipients);
     }
 
     @Override
     public void removeRecipients(ISecuritySession securitySession, String absorberid, String person) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器已不存在。" + absorberid);
         }
         if (!absorber.getCreator().equals(securitySession.principal())) {
             throw new CircuitException("500",String.format("不是创建者:%s",securitySession.principal()));
         }
-        absorberHubService.removeRecipients(absorberid,person);
+        hubService.removeRecipients(absorberid,person);
     }
 
     @Override
     public void addWeightsToRecipients(ISecuritySession securitySession, String absorberid, String person, String encourageCode, BigDecimal weights) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器已不存在。" + absorberid);
         }
         if (!absorber.getCreator().equals(securitySession.principal())) {
             throw new CircuitException("500",String.format("不是创建者:%s",securitySession.principal()));
         }
-        absorberHubService.updateRecipientsWeights(absorberid,person,encourageCode,weights);
+        hubService.updateRecipientsWeights(absorberid,person,encourageCode,weights);
     }
 
     @Override
     public TailBill withdrawHubTails(ISecuritySession securitySession, String bankid) throws CircuitException {
         //检查银行的创建者是否有securitySession当事人
         checkWithdrawRights(securitySession, bankid);
-        TailBill bill = absorberHubService.withdrawHubTails(securitySession.principal(), bankid);
+        TailBill bill = hubService.withdrawHubTails(securitySession.principal(), bankid);
         if (bill == null) {
             throw new CircuitException("500", "金额不足1分");
         }
@@ -246,28 +246,28 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public void stopAbsorber(ISecuritySession securitySession, String absorberid, String exitCause) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
         checkWithdrawRights(securitySession, absorber.getBankid());
-        absorberHubService.stopAbsorber(absorberid, exitCause);
+        hubService.stopAbsorber(absorberid, exitCause);
     }
 
     @Override
     public void startAbsorber(ISecuritySession securitySession, String absorberid) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
         checkWithdrawRights(securitySession, absorber.getBankid());
-        absorberHubService.startAbsorber(absorberid);
+        hubService.startAbsorber(absorberid);
     }
 
     @Override
     public HubTails getHubTails(ISecuritySession securitySession, String bankid) throws CircuitException {
 //        checkWithdrawRights(securitySession, bankid);
-        return absorberHubService.getAndInitHubTails(bankid);
+        return hubService.getAndInitHubTails(bankid);
     }
 
     private void checkWithdrawRights(ISecuritySession securitySession, String bankid) throws CircuitException {
@@ -315,20 +315,20 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public List<Recipients> pageRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
 //        checkWithdrawRights(securitySession, absorber.getBankid());
         if (absorber.getType() == 0) {
-            return absorberHubService.pageRecipients(absorberid, limit, offset);
+            return hubService.pageRecipients(absorberid, limit, offset);
         }
-        return absorberHubService.pageGeoRecipients(absorber, limit, offset);
+        return hubService.pageGeoRecipients(absorber, limit, offset);
     }
 
     @Override
     public List<RecipientsSummary> pageSimpleRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
-        Absorber absorber = absorberHubService.getAbsorber(absorberid);
+        Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
@@ -336,11 +336,11 @@ public class HubPorts implements IHubPorts {
         if (absorber.getType() != 0) {
             throw new CircuitException("500", "不是简单涸取器");
         }
-        return absorberHubService.pageRecipientsSummary(absorberid, limit, offset);
+        return hubService.pageRecipientsSummary(absorberid, limit, offset);
     }
 
     @Override
     public long countRecipients(ISecuritySession securitySession, String absorberid) throws CircuitException {
-        return absorberHubService.countRecipients(absorberid);
+        return hubService.countRecipients(absorberid);
     }
 }

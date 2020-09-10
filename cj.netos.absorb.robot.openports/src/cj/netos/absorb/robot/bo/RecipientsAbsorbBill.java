@@ -7,7 +7,7 @@ import cj.netos.absorb.robot.model.Recipients;
 import java.math.BigDecimal;
 
 public class RecipientsAbsorbBill {
-   String absorber;
+    String absorberTitle;
    Recipients recipients;
    BigDecimal amount;
    String refsn;//派发记录流水号
@@ -15,19 +15,19 @@ public class RecipientsAbsorbBill {
     public RecipientsAbsorbBill() {
     }
 
-    public RecipientsAbsorbBill(String absorber, Recipients recipients, BigDecimal amount, String refsn) {
-        this.absorber = absorber;
+    public RecipientsAbsorbBill(String absorberTitle, Recipients recipients, BigDecimal amount, String refsn) {
+        this.absorberTitle = absorberTitle;
         this.recipients = recipients;
         this.amount = amount;
         this.refsn = refsn;
     }
 
-    public String getAbsorber() {
-        return absorber;
+    public String getAbsorberTitle() {
+        return absorberTitle;
     }
 
-    public void setAbsorber(String absorber) {
-        this.absorber = absorber;
+    public void setAbsorberTitle(String absorberTitle) {
+        this.absorberTitle = absorberTitle;
     }
 
     public Recipients getRecipients() {

@@ -35,7 +35,7 @@ public interface IHubService {
 
     void addTailAmount(BigDecimal amount, String person, String bankid, String refsn, int order, String cause);
 
-    RecipientsAbsorbBill addRecipientsRecord(AbsorberBucket bucket, Recipients recipients, Object result, BigDecimal money);
+    RecipientsAbsorbBill addRecipientsRecord(Absorber absorber, Recipients recipients, Object result, BigDecimal money);
 
 
     List<POR> searchAroundPerson(String latLng, Long radius, int limit, long offset) throws CircuitException;

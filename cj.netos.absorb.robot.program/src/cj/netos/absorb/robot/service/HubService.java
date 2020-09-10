@@ -123,7 +123,7 @@ public class HubService implements IHubService {
         long times = bucket.getTimes() == null ? 0L : bucket.getTimes();
         times = times + 1;
         if (BigDecimal.ZERO.compareTo(winvestAmount) == 0) {
-            winvestAmount=new BigDecimal("0.001");
+            winvestAmount = new BigDecimal("0.001");
         }
         //为公众投资总额除以纹银银行投资总额
         BigDecimal newPrice = bucket.getpInvestAmount().divide(winvestAmount, RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
@@ -186,7 +186,7 @@ public class HubService implements IHubService {
     @CjTransaction
     //更新洇金桶的公众投资余额并计算价格
     @Override
-    public void updateByPersonInvest( AbsorberBucket bucket, BigDecimal realDistribute, InvestRecord record) {
+    public void updateByPersonInvest(AbsorberBucket bucket, BigDecimal realDistribute, InvestRecord record) {
         BigDecimal pinvestAmount = bucket.getpInvestAmount() == null ? BigDecimal.ZERO : bucket.getpInvestAmount();
         pinvestAmount = pinvestAmount.add(realDistribute);
         long times = bucket.getTimes() == null ? 0L : bucket.getTimes();
@@ -529,12 +529,12 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public RecipientsAbsorbBill addRecipientsRecord(AbsorberBucket bucket, Recipients recipients, Object result, BigDecimal money) {
+    public RecipientsAbsorbBill addRecipientsRecord(Absorber absorber,  Recipients recipients, Object result, BigDecimal money) {
         RecipientsRecord record = new RecipientsRecord();
         record.setAmount(money);
         record.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         record.setRecipient(recipients.getPerson());
-        record.setAbsorber(bucket.getAbsorber());
+        record.setAbsorber(absorber.getId());
         record.setEncourageCause(recipients.getEncourageCause());
         record.setEncourageCode(recipients.getEncourageCode());
         record.setRecipientsId(recipients.getId());
@@ -549,7 +549,7 @@ public class HubService implements IHubService {
         record.setSn(new IdWorker().nextId());
         recipientsRecordMapper.insert(record);
 
-        return new RecipientsAbsorbBill(bucket.getAbsorber(), recipients, money, record.getSn());
+        return new RecipientsAbsorbBill(absorber.getTitle(), recipients, money, record.getSn());
     }
 
     @CjTransaction

@@ -1,7 +1,6 @@
 package cj.netos.absorb.robot.distributes;
 
 import cj.netos.absorb.robot.*;
-import cj.netos.absorb.robot.bo.DomainBulletin;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
 import cj.netos.absorb.robot.model.Absorber;
 import cj.netos.absorb.robot.model.AbsorberBucket;
@@ -39,7 +38,7 @@ public class AbsorberDistribute implements IAbsorberDistribute {
         BigDecimal realDistribute = null;
         switch (absorber.getType()) {
             case 0://简单洇取器
-                realDistribute = distributeSimpleAbsorber(absorberHubService, bucket, weightPricePerAbsorber, result);
+                realDistribute = distributeSimpleAbsorber(absorberHubService, absorber, bucket, weightPricePerAbsorber, result);
                 break;
             case 1://地理洇取器
                 realDistribute = distributeGeoAbsorber(absorberHubService, absorber, bucket, weightPricePerAbsorber, result);
@@ -51,7 +50,7 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             return realDistribute;
         }
         if (result instanceof BankWithdrawResult) {
-            absorberHubService.updateAbsorbBucket0( bucket, realDistribute, (BankWithdrawResult) result);
+            absorberHubService.updateAbsorbBucket0(bucket, realDistribute, (BankWithdrawResult) result);
         }
         if (result instanceof InvestRecord) {
             absorberHubService.updateByPersonInvest(bucket, realDistribute, (InvestRecord) result);
@@ -112,12 +111,12 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             }
             realDistributeAmount = realDistributeAmount.add(money);
             //生成并存储收取记录单并生成收取账单并将其提交给mhub，钱包会侦听收取单，并存入到收取人的洇金账户
-            transToWallet(bucket, recipients, result, money);
+            transToWallet(absorber, recipients, result, money);
         }
         return realDistributeAmount;
     }
 
-    private BigDecimal distributeSimpleAbsorber(IHubService absorberHubService, AbsorberBucket bucket, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException {
+    private BigDecimal distributeSimpleAbsorber(IHubService absorberHubService, Absorber absorber, AbsorberBucket bucket, BigDecimal weightPricePerAbsorber, Object result) throws CircuitException {
 
         //这个洇取器可发的钱，乘数尽量小，绝不能舍入加1的情况
         BigDecimal price = bucket.getPrice();
@@ -147,15 +146,15 @@ public class AbsorberDistribute implements IAbsorberDistribute {
                 }
                 realDistributeAmount = realDistributeAmount.add(money);
                 //生成并存储收取记录单并生成收取账单并将其提交给mhub，钱包会侦听收取单，并存入到收取人的洇金账户
-                transToWallet(bucket, recipients, result, money);
+                transToWallet(absorber, recipients, result, money);
             }
             _offset_simple += recipientsList.size();
         }
         return realDistributeAmount;
     }
 
-    private void transToWallet(AbsorberBucket bucket, Recipients recipients, Object result, BigDecimal money) throws CircuitException {
-        RecipientsAbsorbBill bill = absorberHubService.addRecipientsRecord(bucket, recipients, result, money);
+    private void transToWallet(Absorber absorber, Recipients recipients, Object result, BigDecimal money) throws CircuitException {
+        RecipientsAbsorbBill bill = absorberHubService.addRecipientsRecord(absorber, recipients, result, money);
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/robot/hub.ports")
                 .headers(new HashMap() {

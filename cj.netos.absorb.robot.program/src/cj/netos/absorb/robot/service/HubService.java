@@ -341,15 +341,18 @@ public class HubService implements IHubService {
     public DomainBulletin getDomainBulletin(String bankid) {
         DomainBucket domainBucket = getAndInitDomainBucket(bankid);
         TotalAbsorber totalAbsorber = absorberBucketMapper.totalAbsorber(bankid);
-        BigDecimal weights = totalAbsorber.getPrice();
-        if (BigDecimal.ZERO.compareTo(weights) == 0) {
-            AbsorberExample example = new AbsorberExample();
-            example.createCriteria().andBankidEqualTo(bankid);
-            weights = new BigDecimal((absorberMapper.countByExample(example) / 0.001) + "");
+        if (totalAbsorber == null) {
+            totalAbsorber = new TotalAbsorber();
+            AbsorberBucketExample example = new AbsorberBucketExample();
+            example.createCriteria().andBankEqualTo(bankid).andPriceGreaterThanOrEqualTo(domainBucket.getWaaPrice());
+            long count = absorberBucketMapper.countByExample(example);
+            BigDecimal weights = new BigDecimal((count / 0.001) + "");
+            totalAbsorber.setPrice(weights);
+            totalAbsorber.setCount(count);
         }
         DomainBulletin bulletin = new DomainBulletin();
         bulletin.setBucket(domainBucket);
-        bulletin.setAbsorbWeights(weights);
+        bulletin.setAbsorbWeights(totalAbsorber.getPrice());
         bulletin.setAbsorbCount(totalAbsorber.getCount());
         return bulletin;
     }

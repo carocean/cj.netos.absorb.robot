@@ -314,7 +314,9 @@ public class HubPorts implements IHubPorts {
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
-        checkWithdrawRights(securitySession, absorber.getBankid());
+        if (!absorber.getCreator().equals(securitySession.principal())) {
+            checkWithdrawRights(securitySession, absorber.getBankid());
+        }
         hubService.stopAbsorber(absorberid, exitCause);
     }
 
@@ -324,7 +326,9 @@ public class HubPorts implements IHubPorts {
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
-        checkWithdrawRights(securitySession, absorber.getBankid());
+        if (!absorber.getCreator().equals(securitySession.principal())) {
+            checkWithdrawRights(securitySession, absorber.getBankid());
+        }
         hubService.startAbsorber(absorberid);
     }
 

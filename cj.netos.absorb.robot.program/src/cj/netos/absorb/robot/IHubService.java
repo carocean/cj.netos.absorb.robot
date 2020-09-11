@@ -1,6 +1,7 @@
 package cj.netos.absorb.robot;
 
 import cj.netos.absorb.robot.bo.DomainBulletin;
+import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
 import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.*;
@@ -90,5 +91,15 @@ public interface IHubService {
     void updateRecipientsWeights(String absorberid, String person, String encourageCode, BigDecimal weights);
 
     DomainBulletin getDomainBulletinBeginWaaPrice(String bankid);
+
+    void updateAbsorberLocation(String absorberid, LatLng location);
+
+    void updateAbsorberRadius(String absorberid, long radius);
+
+    boolean isBindingsAbsorbabler(String absorberid, String absorbabler);
+
+    void bindAbsorbabler(String absorberid, String absorbabler);
+
+    void unbindAbsorbabler(String absorberid);
 
 }

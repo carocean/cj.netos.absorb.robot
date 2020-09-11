@@ -2,6 +2,7 @@ package cj.netos.absorb.robot.service;
 
 import cj.netos.absorb.robot.*;
 import cj.netos.absorb.robot.bo.DomainBulletin;
+import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
 import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.mapper.*;
@@ -18,6 +19,7 @@ import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 import cj.ultimate.gson2.com.google.gson.Gson;
 import cj.ultimate.gson2.com.google.gson.reflect.TypeToken;
+import cj.ultimate.util.StringUtil;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -529,7 +531,7 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public RecipientsAbsorbBill addRecipientsRecord(Absorber absorber,  Recipients recipients, Object result, BigDecimal money) {
+    public RecipientsAbsorbBill addRecipientsRecord(Absorber absorber, Recipients recipients, Object result, BigDecimal money) {
         RecipientsRecord record = new RecipientsRecord();
         record.setAmount(money);
         record.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
@@ -617,4 +619,40 @@ public class HubService implements IHubService {
         absorberMapper.start(absorberid);
     }
 
+    @CjTransaction
+    @Override
+    public boolean isBindingsAbsorbabler(String absorberid, String absorbabler) {
+        Absorber absorber = getAbsorber(absorberid);
+        if (absorber == null) {
+            return false;
+        }
+        if (StringUtil.isEmpty(absorber.getAbsorbabler())) {
+            return false;
+        }
+        return absorber.getAbsorbabler().equals(absorbabler);
+    }
+
+    @CjTransaction
+    @Override
+    public void updateAbsorberLocation(String absorberid, LatLng location) {
+        absorberMapper.updateLocation(absorberid, new Gson().toJson(location));
+    }
+
+    @CjTransaction
+    @Override
+    public void updateAbsorberRadius(String absorberid, long radius) {
+        absorberMapper.updateRadius(absorberid, radius);
+    }
+
+    @CjTransaction
+    @Override
+    public void bindAbsorbabler(String absorberid, String absorbabler) {
+        absorberMapper.updateAbsorbabler(absorberid, absorbabler);
+    }
+
+    @CjTransaction
+    @Override
+    public void unbindAbsorbabler(String absorberid) {
+        absorberMapper.updateAbsorbabler(absorberid, null);
+    }
 }

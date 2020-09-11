@@ -28,12 +28,12 @@ public interface IHubPorts extends IOpenportService {
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "银行标识", name = "bankid") String bankid,
             @CjOpenportParameter(usage = "洇取器名称\n" +
-                    "一般以proxy对应对象的名称命名", name = "title") String title,
+                    "一般以absorbabler对应对象的名称命名", name = "title") String title,
             @CjOpenportParameter(usage = "人数上限,0为无限制", name = "maxRecipients") long maxRecipients,
-            @CjOpenportParameter(usage = "分类，如：喷泉、店、平聊、网流地微中文章、追链中的文章等等，以英文代码表示", name = "category") String category,
-            @CjOpenportParameter(usage = "代表的对象的标识，如具体的文章标识，具体的实体店标识、具体的金证喷泉标识等\n" +
-                    "它与category对应，category说明是哪类实体\n" +
-                    "代表的对象如果是以地址表示的则指向其地址，没有的可为空", name = "proxy") String proxy
+            @CjOpenportParameter(usage = "用途：\n" +
+                    "0网流管道\n" +
+                    "2街道", name = "usage") int usage,
+            @CjOpenportParameter(usage = "可洇取物。管道和感知器以type/id格式表示，其它为id", name = "absorbabler") String absorbabler
     ) throws CircuitException;
 
     @CjOpenport(usage = "创建一个地理洇取器，多用于地理感知器")
@@ -41,11 +41,11 @@ public interface IHubPorts extends IOpenportService {
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "银行标识", name = "bankid") String bankid,
             @CjOpenportParameter(usage = "洇取器名称\n" +
-                    "一般以proxy对应对象的名称命名", name = "title") String title,
-            @CjOpenportParameter(usage = "分类，如：喷泉、店、平聊、网流地微中文章、追链中的文章等等，以英文代码表示", name = "category") String category,
-            @CjOpenportParameter(usage = "代表的对象的标识，如具体的文章标识，具体的实体店标识、具体的金证喷泉标识等\n" +
-                    "它与category对应，category说明是哪类实体\n" +
-                    "代表的对象如果是以地址表示的则指向其地址，没有的可为空", name = "proxy") String proxy,
+                    "一般以absorbabler对应对象的名称命名", name = "title") String title,
+            @CjOpenportParameter(usage = "用途：\n" +
+                    "1地理感知器\n" +
+                    "3金证喷泉", name = "usage") int usage,
+            @CjOpenportParameter(usage = "可洇取物。管道和感知器以type/id格式表示，其它为id", name = "absorbabler") String absorbabler,
             @CjOpenportParameter(usage = "位置，经纬度json，格式为：{\"latitude\":%s,\"longitude\":%s}", name = "location") LatLng location,
             @CjOpenportParameter(usage = "半径，单位米", name = "radius") long radius
     ) throws CircuitException;
@@ -55,11 +55,10 @@ public interface IHubPorts extends IOpenportService {
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "银行标识", name = "bankid") String bankid,
             @CjOpenportParameter(usage = "洇取器名称\n" +
-                    "一般以proxy对应对象的名称命名", name = "title") String title,
-            @CjOpenportParameter(usage = "分类，如：喷泉、店、平聊、网流地微中文章、追链中的文章等等，以英文代码表示", name = "category") String category,
-            @CjOpenportParameter(usage = "代表的对象的标识，如具体的文章标识，具体的实体店标识、具体的金证喷泉标识等\n" +
-                    "它与category对应，category说明是哪类实体\n" +
-                    "代表的对象如果是以地址表示的则指向其地址，没有的可为空", name = "proxy") String proxy,
+                    "一般以absorbabler对应对象的名称命名", name = "title") String title,
+            @CjOpenportParameter(usage = "用途：\n" +
+                    "4抢元宝", name = "usage") int usage,
+            @CjOpenportParameter(usage = "可洇取物。管道和感知器以type/id格式表示，其它为id", name = "absorbabler") String absorbabler,
             @CjOpenportParameter(usage = "位置，经纬度json，格式为：{\"latitude\":%s,\"longitude\":%s}", name = "location") LatLng location,
             @CjOpenportParameter(usage = "半径，单位米", name = "radius") long radius
     ) throws CircuitException;
@@ -81,6 +80,40 @@ public interface IHubPorts extends IOpenportService {
 
     @CjOpenport(usage = "移除指定的洇取器")
     void removeAbsorber(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "更新指定的洇取器的位置")
+    void updateAbsorberLocation(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "位置，经纬度json，格式为：{\"latitude\":%s,\"longitude\":%s}", name = "location") LatLng location
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "更新指定的洇取器半径")
+    void updateAbsorberRadius(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "半径，单位米", name = "radius") long radius
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "判断指定的洇取物是否已被指定洇取器绑定")
+    boolean isBindingsAbsorbabler(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "可洇取物。管道和感知器以type/id格式表示，其它为id", name = "absorbabler") String absorbabler
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "绑定指定的洇取物到指定洇取器")
+    void bindAbsorbabler(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "可洇取物。管道和感知器以type/id格式表示，其它为id", name = "absorbabler") String absorbabler
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "解除指定的洇取物和指定洇取器的绑定")
+    void unbindAbsorbabler(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
     ) throws CircuitException;

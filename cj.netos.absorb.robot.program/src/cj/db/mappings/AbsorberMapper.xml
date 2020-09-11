@@ -6,11 +6,11 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="bankid" jdbcType="VARCHAR" property="bankid" />
-    <result column="category" jdbcType="VARCHAR" property="category" />
-    <result column="proxy" jdbcType="VARCHAR" property="proxy" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="usage" jdbcType="INTEGER" property="usage" />
+    <result column="absorbabler" jdbcType="VARCHAR" property="absorbabler" />
     <result column="location" jdbcType="VARCHAR" property="location" />
     <result column="radius" jdbcType="BIGINT" property="radius" />
-    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
     <result column="max_recipients" jdbcType="BIGINT" property="maxRecipients" />
@@ -79,8 +79,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, title, bankid, category, proxy, `location`, radius, `type`, creator, ctime, max_recipients, 
-    `state`, exit_cause
+    id, title, bankid, `type`, `usage`, absorbabler, `location`, radius, creator, ctime, 
+    max_recipients, `state`, exit_cause
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.AbsorberExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -119,13 +119,13 @@
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.Absorber">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into absorber (id, title, bankid, 
-      category, proxy, `location`, 
-      radius, `type`, creator, 
+      `type`, `usage`, absorbabler, 
+      `location`, radius, creator, 
       ctime, max_recipients, `state`, 
       exit_cause)
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{bankid,jdbcType=VARCHAR}, 
-      #{category,jdbcType=VARCHAR}, #{proxy,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
-      #{radius,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{usage,jdbcType=INTEGER}, #{absorbabler,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{radius,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, 
       #{ctime,jdbcType=VARCHAR}, #{maxRecipients,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
       #{exitCause,jdbcType=VARCHAR})
   </insert>
@@ -142,20 +142,20 @@
       <if test="bankid != null">
         bankid,
       </if>
-      <if test="category != null">
-        category,
+      <if test="type != null">
+        `type`,
       </if>
-      <if test="proxy != null">
-        proxy,
+      <if test="usage != null">
+        `usage`,
+      </if>
+      <if test="absorbabler != null">
+        absorbabler,
       </if>
       <if test="location != null">
         `location`,
       </if>
       <if test="radius != null">
         radius,
-      </if>
-      <if test="type != null">
-        `type`,
       </if>
       <if test="creator != null">
         creator,
@@ -183,20 +183,20 @@
       <if test="bankid != null">
         #{bankid,jdbcType=VARCHAR},
       </if>
-      <if test="category != null">
-        #{category,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
       </if>
-      <if test="proxy != null">
-        #{proxy,jdbcType=VARCHAR},
+      <if test="usage != null">
+        #{usage,jdbcType=INTEGER},
+      </if>
+      <if test="absorbabler != null">
+        #{absorbabler,jdbcType=VARCHAR},
       </if>
       <if test="location != null">
         #{location,jdbcType=VARCHAR},
       </if>
       <if test="radius != null">
         #{radius,jdbcType=BIGINT},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
       </if>
       <if test="creator != null">
         #{creator,jdbcType=VARCHAR},
@@ -235,20 +235,20 @@
       <if test="record.bankid != null">
         bankid = #{record.bankid,jdbcType=VARCHAR},
       </if>
-      <if test="record.category != null">
-        category = #{record.category,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        `type` = #{record.type,jdbcType=INTEGER},
       </if>
-      <if test="record.proxy != null">
-        proxy = #{record.proxy,jdbcType=VARCHAR},
+      <if test="record.usage != null">
+        `usage` = #{record.usage,jdbcType=INTEGER},
+      </if>
+      <if test="record.absorbabler != null">
+        absorbabler = #{record.absorbabler,jdbcType=VARCHAR},
       </if>
       <if test="record.location != null">
         `location` = #{record.location,jdbcType=VARCHAR},
       </if>
       <if test="record.radius != null">
         radius = #{record.radius,jdbcType=BIGINT},
-      </if>
-      <if test="record.type != null">
-        `type` = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.creator != null">
         creator = #{record.creator,jdbcType=VARCHAR},
@@ -276,11 +276,11 @@
     set id = #{record.id,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       bankid = #{record.bankid,jdbcType=VARCHAR},
-      category = #{record.category,jdbcType=VARCHAR},
-      proxy = #{record.proxy,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=INTEGER},
+      `usage` = #{record.usage,jdbcType=INTEGER},
+      absorbabler = #{record.absorbabler,jdbcType=VARCHAR},
       `location` = #{record.location,jdbcType=VARCHAR},
       radius = #{record.radius,jdbcType=BIGINT},
-      `type` = #{record.type,jdbcType=INTEGER},
       creator = #{record.creator,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=VARCHAR},
       max_recipients = #{record.maxRecipients,jdbcType=BIGINT},
@@ -300,20 +300,20 @@
       <if test="bankid != null">
         bankid = #{bankid,jdbcType=VARCHAR},
       </if>
-      <if test="category != null">
-        category = #{category,jdbcType=VARCHAR},
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
       </if>
-      <if test="proxy != null">
-        proxy = #{proxy,jdbcType=VARCHAR},
+      <if test="usage != null">
+        `usage` = #{usage,jdbcType=INTEGER},
+      </if>
+      <if test="absorbabler != null">
+        absorbabler = #{absorbabler,jdbcType=VARCHAR},
       </if>
       <if test="location != null">
         `location` = #{location,jdbcType=VARCHAR},
       </if>
       <if test="radius != null">
         radius = #{radius,jdbcType=BIGINT},
-      </if>
-      <if test="type != null">
-        `type` = #{type,jdbcType=INTEGER},
       </if>
       <if test="creator != null">
         creator = #{creator,jdbcType=VARCHAR},
@@ -338,11 +338,11 @@
     update absorber
     set title = #{title,jdbcType=VARCHAR},
       bankid = #{bankid,jdbcType=VARCHAR},
-      category = #{category,jdbcType=VARCHAR},
-      proxy = #{proxy,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
+      `usage` = #{usage,jdbcType=INTEGER},
+      absorbabler = #{absorbabler,jdbcType=VARCHAR},
       `location` = #{location,jdbcType=VARCHAR},
       radius = #{radius,jdbcType=BIGINT},
-      `type` = #{type,jdbcType=INTEGER},
       creator = #{creator,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=VARCHAR},
       max_recipients = #{maxRecipients,jdbcType=BIGINT},
@@ -378,6 +378,24 @@
     set
       `state` = 1,
       exit_cause = NULL
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateLocation" parameterType="cj.netos.absorb.robot.model.Absorber">
+    update absorber
+    set
+    `location` = #{location,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateRadius" parameterType="cj.netos.absorb.robot.model.Absorber">
+    update absorber
+    set
+    radius = #{radius,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateAbsorbabler" parameterType="cj.netos.absorb.robot.model.Absorber">
+    update absorber
+    set
+    absorbabler = #{absorbabler,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

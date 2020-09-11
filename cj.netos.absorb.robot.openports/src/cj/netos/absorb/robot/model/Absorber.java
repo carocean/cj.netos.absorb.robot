@@ -22,16 +22,22 @@ public class Absorber {
     private String bankid;
 
     /**
-     * Column: category
-     * Remark: 分类，如：喷泉、店、平聊、网流地微中文章、追链中的文章等等,以英文代码表示
+     * Column: type
+     * Remark: 洇取器类型, 0:简单洇取器 1:地理洇取器，是的时候其location和radius不为空 2:余额洇取器。是地理洇取器的一种，用于抢元宝
      */
-    private String category;
+    private Integer type;
 
     /**
-     * Column: proxy
-     * Remark: 代表的对象的标识，如具体的文章标识，具体的实体店标识、具体的金证喷泉标识等 它与category对应，category说明是哪类实体 代表的对象如果是以地址表示的则指向其地址，没有的可为空
+     * Column: usage
+     * Remark: 用途： 0网流管道 1地理感知器 2街道 3金证喷泉 4抢元宝
      */
-    private String proxy;
+    private Integer usage;
+
+    /**
+     * Column: absorbabler
+     * Remark: 可洇取物。管道和感知器以type/id格式表示，其它为id
+     */
+    private String absorbabler;
 
     /**
      * Column: location
@@ -44,12 +50,6 @@ public class Absorber {
      * Remark: 半径，单位米
      */
     private Long radius;
-
-    /**
-     * Column: type
-     * Remark: 洇取器类型, 0:简单洇取器 1:地理洇取器，是的时候其location和radius不为空 2:余额洇取器。是地理洇取器的一种，用于抢元宝
-     */
-    private Integer type;
 
     /**
      * Column: creator
@@ -105,20 +105,28 @@ public class Absorber {
         this.bankid = bankid == null ? null : bankid.trim();
     }
 
-    public String getCategory() {
-        return category;
+    public Integer getType() {
+        return type;
     }
 
-    public void setCategory(String category) {
-        this.category = category == null ? null : category.trim();
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public String getProxy() {
-        return proxy;
+    public Integer getUsage() {
+        return usage;
     }
 
-    public void setProxy(String proxy) {
-        this.proxy = proxy == null ? null : proxy.trim();
+    public void setUsage(Integer usage) {
+        this.usage = usage;
+    }
+
+    public String getAbsorbabler() {
+        return absorbabler;
+    }
+
+    public void setAbsorbabler(String absorbabler) {
+        this.absorbabler = absorbabler == null ? null : absorbabler.trim();
     }
 
     public String getLocation() {
@@ -135,14 +143,6 @@ public class Absorber {
 
     public void setRadius(Long radius) {
         this.radius = radius;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public String getCreator() {

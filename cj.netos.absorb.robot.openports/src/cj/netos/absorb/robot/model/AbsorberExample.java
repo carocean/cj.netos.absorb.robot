@@ -347,143 +347,193 @@ public class AbsorberExample {
             return (Criteria) this;
         }
 
-        public Criteria andCategoryIsNull() {
-            addCriterion("category is null");
+        public Criteria andTypeIsNull() {
+            addCriterion("`type` is null");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryIsNotNull() {
-            addCriterion("category is not null");
+        public Criteria andTypeIsNotNull() {
+            addCriterion("`type` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryEqualTo(String value) {
-            addCriterion("category =", value, "category");
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("`type` =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNotEqualTo(String value) {
-            addCriterion("category <>", value, "category");
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("`type` <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryGreaterThan(String value) {
-            addCriterion("category >", value, "category");
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("`type` >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryGreaterThanOrEqualTo(String value) {
-            addCriterion("category >=", value, "category");
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`type` >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryLessThan(String value) {
-            addCriterion("category <", value, "category");
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("`type` <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryLessThanOrEqualTo(String value) {
-            addCriterion("category <=", value, "category");
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("`type` <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryLike(String value) {
-            addCriterion("category like", value, "category");
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("`type` in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNotLike(String value) {
-            addCriterion("category not like", value, "category");
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("`type` not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryIn(List<String> values) {
-            addCriterion("category in", values, "category");
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("`type` between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNotIn(List<String> values) {
-            addCriterion("category not in", values, "category");
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("`type` not between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryBetween(String value1, String value2) {
-            addCriterion("category between", value1, value2, "category");
+        public Criteria andUsageIsNull() {
+            addCriterion("`usage` is null");
             return (Criteria) this;
         }
 
-        public Criteria andCategoryNotBetween(String value1, String value2) {
-            addCriterion("category not between", value1, value2, "category");
+        public Criteria andUsageIsNotNull() {
+            addCriterion("`usage` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProxyIsNull() {
-            addCriterion("proxy is null");
+        public Criteria andUsageEqualTo(Integer value) {
+            addCriterion("`usage` =", value, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyIsNotNull() {
-            addCriterion("proxy is not null");
+        public Criteria andUsageNotEqualTo(Integer value) {
+            addCriterion("`usage` <>", value, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyEqualTo(String value) {
-            addCriterion("proxy =", value, "proxy");
+        public Criteria andUsageGreaterThan(Integer value) {
+            addCriterion("`usage` >", value, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyNotEqualTo(String value) {
-            addCriterion("proxy <>", value, "proxy");
+        public Criteria andUsageGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`usage` >=", value, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyGreaterThan(String value) {
-            addCriterion("proxy >", value, "proxy");
+        public Criteria andUsageLessThan(Integer value) {
+            addCriterion("`usage` <", value, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyGreaterThanOrEqualTo(String value) {
-            addCriterion("proxy >=", value, "proxy");
+        public Criteria andUsageLessThanOrEqualTo(Integer value) {
+            addCriterion("`usage` <=", value, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyLessThan(String value) {
-            addCriterion("proxy <", value, "proxy");
+        public Criteria andUsageIn(List<Integer> values) {
+            addCriterion("`usage` in", values, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyLessThanOrEqualTo(String value) {
-            addCriterion("proxy <=", value, "proxy");
+        public Criteria andUsageNotIn(List<Integer> values) {
+            addCriterion("`usage` not in", values, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyLike(String value) {
-            addCriterion("proxy like", value, "proxy");
+        public Criteria andUsageBetween(Integer value1, Integer value2) {
+            addCriterion("`usage` between", value1, value2, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyNotLike(String value) {
-            addCriterion("proxy not like", value, "proxy");
+        public Criteria andUsageNotBetween(Integer value1, Integer value2) {
+            addCriterion("`usage` not between", value1, value2, "usage");
             return (Criteria) this;
         }
 
-        public Criteria andProxyIn(List<String> values) {
-            addCriterion("proxy in", values, "proxy");
+        public Criteria andAbsorbablerIsNull() {
+            addCriterion("absorbabler is null");
             return (Criteria) this;
         }
 
-        public Criteria andProxyNotIn(List<String> values) {
-            addCriterion("proxy not in", values, "proxy");
+        public Criteria andAbsorbablerIsNotNull() {
+            addCriterion("absorbabler is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProxyBetween(String value1, String value2) {
-            addCriterion("proxy between", value1, value2, "proxy");
+        public Criteria andAbsorbablerEqualTo(String value) {
+            addCriterion("absorbabler =", value, "absorbabler");
             return (Criteria) this;
         }
 
-        public Criteria andProxyNotBetween(String value1, String value2) {
-            addCriterion("proxy not between", value1, value2, "proxy");
+        public Criteria andAbsorbablerNotEqualTo(String value) {
+            addCriterion("absorbabler <>", value, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerGreaterThan(String value) {
+            addCriterion("absorbabler >", value, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerGreaterThanOrEqualTo(String value) {
+            addCriterion("absorbabler >=", value, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerLessThan(String value) {
+            addCriterion("absorbabler <", value, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerLessThanOrEqualTo(String value) {
+            addCriterion("absorbabler <=", value, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerLike(String value) {
+            addCriterion("absorbabler like", value, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerNotLike(String value) {
+            addCriterion("absorbabler not like", value, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerIn(List<String> values) {
+            addCriterion("absorbabler in", values, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerNotIn(List<String> values) {
+            addCriterion("absorbabler not in", values, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerBetween(String value1, String value2) {
+            addCriterion("absorbabler between", value1, value2, "absorbabler");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbablerNotBetween(String value1, String value2) {
+            addCriterion("absorbabler not between", value1, value2, "absorbabler");
             return (Criteria) this;
         }
 
@@ -614,66 +664,6 @@ public class AbsorberExample {
 
         public Criteria andRadiusNotBetween(Long value1, Long value2) {
             addCriterion("radius not between", value1, value2, "radius");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNull() {
-            addCriterion("`type` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNotNull() {
-            addCriterion("`type` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeEqualTo(Integer value) {
-            addCriterion("`type` =", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotEqualTo(Integer value) {
-            addCriterion("`type` <>", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThan(Integer value) {
-            addCriterion("`type` >", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`type` >=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThan(Integer value) {
-            addCriterion("`type` <", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThanOrEqualTo(Integer value) {
-            addCriterion("`type` <=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIn(List<Integer> values) {
-            addCriterion("`type` in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotIn(List<Integer> values) {
-            addCriterion("`type` not in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeBetween(Integer value1, Integer value2) {
-            addCriterion("`type` between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
-            addCriterion("`type` not between", value1, value2, "type");
             return (Criteria) this;
         }
 

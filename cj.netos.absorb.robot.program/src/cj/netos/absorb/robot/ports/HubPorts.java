@@ -43,8 +43,8 @@ public class HubPorts implements IHubPorts {
 
 
     @Override
-    public Absorber createBalanceAbsorber(ISecuritySession securitySession, String bankid, String title, String category, String proxy, LatLng location, long radius) throws CircuitException {
-        if (StringUtil.isEmpty(bankid) || StringUtil.isEmpty(title) || StringUtil.isEmpty(category) || StringUtil.isEmpty(proxy) || location == null) {
+    public Absorber createBalanceAbsorber(ISecuritySession securitySession, String bankid, String title, int usage, String absorbabler, LatLng location, long radius) throws CircuitException {
+        if (StringUtil.isEmpty(bankid) || StringUtil.isEmpty(title) || StringUtil.isEmpty(absorbabler) || location == null) {
             throw new CircuitException("404", "参数为空");
         }
         if (radius < 1) {
@@ -52,12 +52,12 @@ public class HubPorts implements IHubPorts {
         }
         Absorber absorber = new Absorber();
         absorber.setBankid(bankid);
-        absorber.setCategory(category);
+        absorber.setUsage(usage);
+        absorber.setAbsorbabler(absorbabler);
         absorber.setCreator(securitySession.principal());
         absorber.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         absorber.setId(new IdWorker().nextId());
         absorber.setType(2);
-        absorber.setProxy(proxy);
         absorber.setTitle(title);
         absorber.setLocation(location.toJson());
         absorber.setRadius(radius);
@@ -68,23 +68,18 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
-    public DomainBulletin getDomainBucket(ISecuritySession securitySession, String bankid) throws CircuitException {
-        return hubService.getDomainBulletin(bankid);
-    }
-
-    @Override
-    public Absorber createSimpleAbsorber(ISecuritySession securitySession, String bankid, String title, long maxRecipients, String category, String proxy) throws CircuitException {
-        if (StringUtil.isEmpty(bankid) || StringUtil.isEmpty(title) || StringUtil.isEmpty(category) || StringUtil.isEmpty(proxy)) {
+    public Absorber createSimpleAbsorber(ISecuritySession securitySession, String bankid, String title, long maxRecipients, int usage, String absorbabler) throws CircuitException {
+        if (StringUtil.isEmpty(bankid) || StringUtil.isEmpty(title) || StringUtil.isEmpty(absorbabler)) {
             throw new CircuitException("404", "参数为空");
         }
         Absorber absorber = new Absorber();
         absorber.setBankid(bankid);
-        absorber.setCategory(category);
+        absorber.setUsage(usage);
+        absorber.setAbsorbabler(absorbabler);
         absorber.setCreator(securitySession.principal());
         absorber.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         absorber.setId(new IdWorker().nextId());
         absorber.setType(0);
-        absorber.setProxy(proxy);
         absorber.setTitle(title);
         absorber.setState(1);
         absorber.setMaxRecipients(maxRecipients);
@@ -94,8 +89,8 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
-    public Absorber createGeoAbsorber(ISecuritySession securitySession, String bankid, String title, String category, String proxy, LatLng location, long radius) throws CircuitException {
-        if (StringUtil.isEmpty(bankid) || StringUtil.isEmpty(title) || StringUtil.isEmpty(category) || StringUtil.isEmpty(proxy) || location == null) {
+    public Absorber createGeoAbsorber(ISecuritySession securitySession, String bankid, String title, int usage, String absorbabler, LatLng location, long radius) throws CircuitException {
+        if (StringUtil.isEmpty(bankid) || StringUtil.isEmpty(title) || StringUtil.isEmpty(absorbabler) || location == null) {
             throw new CircuitException("404", "参数为空");
         }
         if (radius < 1) {
@@ -103,12 +98,12 @@ public class HubPorts implements IHubPorts {
         }
         Absorber absorber = new Absorber();
         absorber.setBankid(bankid);
-        absorber.setCategory(category);
+        absorber.setUsage(usage);
+        absorber.setAbsorbabler(absorbabler);
         absorber.setCreator(securitySession.principal());
         absorber.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         absorber.setId(new IdWorker().nextId());
         absorber.setType(1);
-        absorber.setProxy(proxy);
         absorber.setTitle(title);
         absorber.setLocation(location.toJson());
         absorber.setRadius(radius);
@@ -117,6 +112,65 @@ public class HubPorts implements IHubPorts {
         hubService.createAbsorber(absorber);
         return absorber;
     }
+
+    @Override
+    public void updateAbsorberLocation(ISecuritySession securitySession, String absorberid, LatLng location) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            return;
+        }
+        if (!absorber.getCreator().equals(securitySession.principal())) {
+            throw new CircuitException("500", "不是本人");
+        }
+        hubService.updateAbsorberLocation(absorberid, location);
+    }
+
+    @Override
+    public void updateAbsorberRadius(ISecuritySession securitySession, String absorberid, long radius) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            return;
+        }
+        if (!absorber.getCreator().equals(securitySession.principal())) {
+            throw new CircuitException("500", "不是本人");
+        }
+        hubService.updateAbsorberRadius(absorberid, radius);
+    }
+
+    @Override
+    public boolean isBindingsAbsorbabler(ISecuritySession securitySession, String absorberid, String absorbabler) throws CircuitException {
+        return hubService.isBindingsAbsorbabler(absorberid, absorbabler);
+    }
+
+    @Override
+    public void bindAbsorbabler(ISecuritySession securitySession, String absorberid, String absorbabler) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            return;
+        }
+        if (!absorber.getCreator().equals(securitySession.principal())) {
+            throw new CircuitException("500", "不是本人");
+        }
+        hubService.bindAbsorbabler(absorberid, absorbabler);
+    }
+
+    @Override
+    public void unbindAbsorbabler(ISecuritySession securitySession, String absorberid) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            return;
+        }
+        if (!absorber.getCreator().equals(securitySession.principal())) {
+            throw new CircuitException("500", "不是本人");
+        }
+        hubService.unbindAbsorbabler(absorberid);
+    }
+
+    @Override
+    public DomainBulletin getDomainBucket(ISecuritySession securitySession, String bankid) throws CircuitException {
+        return hubService.getDomainBulletin(bankid);
+    }
+
 
     @Override
     public AbsorberResult getAbsorber(ISecuritySession securitySession, String absorberid) throws CircuitException {
@@ -197,9 +251,9 @@ public class HubPorts implements IHubPorts {
             throw new CircuitException("404", "洇取器已不存在。" + absorberid);
         }
         if (!absorber.getCreator().equals(securitySession.principal())) {
-            throw new CircuitException("500",String.format("不是创建者:%s",securitySession.principal()));
+            throw new CircuitException("500", String.format("不是创建者:%s", securitySession.principal()));
         }
-        hubService.removeRecipients(absorberid,person);
+        hubService.removeRecipients(absorberid, person);
     }
 
     @Override
@@ -209,9 +263,9 @@ public class HubPorts implements IHubPorts {
             throw new CircuitException("404", "洇取器已不存在。" + absorberid);
         }
         if (!absorber.getCreator().equals(securitySession.principal())) {
-            throw new CircuitException("500",String.format("不是创建者:%s",securitySession.principal()));
+            throw new CircuitException("500", String.format("不是创建者:%s", securitySession.principal()));
         }
-        hubService.updateRecipientsWeights(absorberid,person,encourageCode,weights);
+        hubService.updateRecipientsWeights(absorberid, person, encourageCode, weights);
     }
 
     @Override

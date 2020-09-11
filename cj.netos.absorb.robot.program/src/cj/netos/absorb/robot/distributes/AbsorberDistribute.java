@@ -41,6 +41,7 @@ public class AbsorberDistribute implements IAbsorberDistribute {
                 realDistribute = distributeSimpleAbsorber(absorberHubService, absorber, bucket, weightPricePerAbsorber, result);
                 break;
             case 1://地理洇取器
+            case 2://余额洇取器现在是仅用于元宝，故可视作地理洇取器
                 realDistribute = distributeGeoAbsorber(absorberHubService, absorber, bucket, weightPricePerAbsorber, result);
                 break;
             default:

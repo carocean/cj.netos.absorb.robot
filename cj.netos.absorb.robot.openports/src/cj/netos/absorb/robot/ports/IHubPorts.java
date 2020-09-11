@@ -69,6 +69,13 @@ public interface IHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
     ) throws CircuitException;
 
+
+    @CjOpenport(usage = "按可洇取物获取洇取器")
+    AbsorberResult getAbsorberByAbsorbabler(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "可洇取物", name = "absorbabler") String absorbabler
+    ) throws CircuitException;
+
     @CjOpenport(usage = "分页洇取器")
     List<AbsorberResult> pageAbsorber(
             ISecuritySession securitySession,

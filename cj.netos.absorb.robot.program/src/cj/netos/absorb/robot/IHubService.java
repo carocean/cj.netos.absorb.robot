@@ -98,8 +98,10 @@ public interface IHubService {
 
     boolean isBindingsAbsorbabler(String absorberid, String absorbabler);
 
-    void bindAbsorbabler(String absorberid, String absorbabler);
+    void bindAbsorbabler(String absorberid, String absorbabler) throws CircuitException;
 
     void unbindAbsorbabler(String absorberid);
+
+    Absorber getAbsorberByAbsorbabler(String absorbabler);
 
 }

@@ -180,6 +180,16 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
+    public AbsorberResult getAbsorberByAbsorbabler(ISecuritySession securitySession, String absorbabler) throws CircuitException {
+        Absorber absorber = hubService.getAbsorberByAbsorbabler(absorbabler);
+        if (absorber == null) {
+            return null;
+        }
+        AbsorberBucket bucket = hubService.getAndInitAbsorbBucket(absorber.getId());
+        return new AbsorberResult(absorber, bucket);
+    }
+
+    @Override
     public List<AbsorberResult> pageAbsorber(ISecuritySession securitySession, String bankid, int type, int limit, long offset) throws CircuitException {
         List<Absorber> absorbers = hubService.pageAbsorber(bankid, type, limit, offset);
         List<AbsorberResult> absorberResults = new ArrayList<>();

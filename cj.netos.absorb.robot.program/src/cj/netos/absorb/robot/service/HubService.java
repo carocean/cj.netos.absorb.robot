@@ -24,6 +24,7 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -649,7 +650,12 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public void bindAbsorbabler(String absorberid, String absorbabler) {
+    public void bindAbsorbabler(String absorberid, String absorbabler) throws CircuitException {
+        AbsorberExample example = new AbsorberExample();
+        example.createCriteria().andAbsorbablerEqualTo(absorbabler);
+        if (absorberMapper.countByExample(example) > 0) {
+            throw new CircuitException("500", String.format("该可洇取物:%s 已被其它洇取器绑定", absorbabler));
+        }
         absorberMapper.updateAbsorbabler(absorberid, absorbabler);
     }
 
@@ -657,5 +663,17 @@ public class HubService implements IHubService {
     @Override
     public void unbindAbsorbabler(String absorberid) {
         absorberMapper.updateAbsorbabler(absorberid, null);
+    }
+
+    @CjTransaction
+    @Override
+    public Absorber getAbsorberByAbsorbabler(String absorbabler) {
+        AbsorberExample example = new AbsorberExample();
+        example.createCriteria().andAbsorbablerEqualTo(absorbabler);
+        List<Absorber> list = absorberMapper.selectByExample(example);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 }

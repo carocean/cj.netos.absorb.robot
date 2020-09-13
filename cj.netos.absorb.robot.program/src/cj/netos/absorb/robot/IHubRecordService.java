@@ -3,6 +3,7 @@ package cj.netos.absorb.robot;
 import cj.netos.absorb.robot.model.InvestRecord;
 import cj.netos.absorb.robot.model.RecipientsRecord;
 import cj.netos.absorb.robot.model.WithdrawRecord;
+import cj.studio.orm.mybatis.annotation.CjTransaction;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,6 +14,8 @@ public interface IHubRecordService {
     InvestRecord getInvestRecord(String record_sn);
 
     WithdrawRecord getWithdrawRecord(String record_sn);
+
+    List<RecipientsRecord> pageByRecipientsRecordWhere(String absorberid, String recipientsId, int limit, long offset);
 
     BigDecimal totalRecipientsRecord(String absorber, String recipients);
 
@@ -29,4 +32,7 @@ public interface IHubRecordService {
     List<WithdrawRecord> pageWithdrawRecord(String bankid, int limit, long offset);
 
     long totalAmountWithdraws(String bankid);
+
+    BigDecimal totalRecipientsRecordWhere(String absorberid, String recipientsId);
+
 }

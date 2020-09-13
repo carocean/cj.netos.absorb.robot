@@ -31,6 +31,10 @@ public class HubRecordPorts implements IHubRecordPorts {
     public List<RecipientsRecord> pageRecipientsRecordById(ISecuritySession securitySession, String recipientsId, int limit, long offset) throws CircuitException {
         return hubRecordService.pageRecipientsRecordById(recipientsId, limit, offset);
     }
+    @Override
+    public List<RecipientsRecord> pageByRecipientsRecordWhere(ISecuritySession securitySession, String absorberid, String recipientsId, int limit, long offset) throws CircuitException {
+        return hubRecordService.pageByRecipientsRecordWhere(absorberid,recipientsId, limit, offset);
+    }
 
     @Override
     public BigDecimal totalRecipientsRecord(ISecuritySession securitySession, String absorber, String recipients) throws CircuitException {
@@ -40,6 +44,11 @@ public class HubRecordPorts implements IHubRecordPorts {
     @Override
     public BigDecimal totalRecipientsRecordById(ISecuritySession securitySession, String recipientsId) throws CircuitException {
         return hubRecordService.totalRecipientsRecordById(recipientsId);
+    }
+
+    @Override
+    public BigDecimal totalRecipientsRecordWhere(ISecuritySession securitySession, String absorberid, String recipientsId) throws CircuitException {
+        return hubRecordService.totalRecipientsRecordWhere(absorberid,recipientsId);
     }
 
     @Override

@@ -45,6 +45,13 @@ public class HubRecordService implements IHubRecordService {
         return recipientsRecordMapper.pageByRecipientsId(recipientsId, limit, offset);
     }
 
+
+    @CjTransaction
+    @Override
+    public List<RecipientsRecord> pageByRecipientsRecordWhere(String absorberid, String recipientsId, int limit, long offset) {
+        return recipientsRecordMapper.pageByRecipientsWhere(absorberid, recipientsId, limit, offset);
+    }
+
     @CjTransaction
     @Override
     public BigDecimal totalRecipientsRecord(String absorber, String recipients) {
@@ -56,6 +63,13 @@ public class HubRecordService implements IHubRecordService {
     public BigDecimal totalRecipientsRecordById(String recipientsId) {
         return recipientsRecordMapper.totalRecipientsRecordById(recipientsId);
     }
+
+    @CjTransaction
+    @Override
+    public BigDecimal totalRecipientsRecordWhere(String absorberid, String recipientsId) {
+        return recipientsRecordMapper.totalRecipientsRecordWhere(absorberid, recipientsId);
+    }
+
 
     @CjTransaction
     @Override

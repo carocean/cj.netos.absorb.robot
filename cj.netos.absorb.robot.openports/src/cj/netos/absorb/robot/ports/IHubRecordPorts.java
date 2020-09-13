@@ -37,6 +37,14 @@ public interface IHubRecordPorts extends IOpenportService {
             @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
     ) throws CircuitException;
 
+    @CjOpenport(usage = "分页获取洇取单")
+    List<RecipientsRecord> pageByRecipientsRecordWhere(ISecuritySession securitySession,
+                                                       @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber,
+                                                       @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId,
+                                                       @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                                       @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
     @CjOpenport(usage = "统计一个洇取人得到的总金")
     BigDecimal totalRecipientsRecord(ISecuritySession securitySession,
                                      @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber,
@@ -46,6 +54,12 @@ public interface IHubRecordPorts extends IOpenportService {
     @CjOpenport(usage = "统计一个洇取人得到的总金")
     BigDecimal totalRecipientsRecordById(ISecuritySession securitySession,
                                          @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "统计一个洇取人得到的总金")
+    BigDecimal totalRecipientsRecordWhere(ISecuritySession securitySession,
+                                          @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+                                          @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取洇取器投资单")

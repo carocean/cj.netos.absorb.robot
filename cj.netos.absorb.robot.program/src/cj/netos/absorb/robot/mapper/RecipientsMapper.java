@@ -75,4 +75,6 @@ public interface RecipientsMapper {
     Long countRecipients(@Param(value = "absorber") String absorber);
 
     void updateWeights(@Param(value = "absorber") String absorber, @Param(value = "person") String person, @Param(value = "encourageCode") String encourageCode, @Param(value = "weight") BigDecimal weight);
+
+
 }

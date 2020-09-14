@@ -104,4 +104,14 @@ public interface IHubService {
 
     Absorber getAbsorberByAbsorbabler(String absorbabler);
 
+    boolean existsRecipients2(String absorberid, String person, String encourageCode);
+
+    void removeRecipients2(String absorberid, String person, String encourageCode);
+
+    void updateMaxRecipients(String absorberid, long maxRecipients);
+
+    Recipients getRecipients(String recipientsId);
+
+    void updateRecipientsWeights(String recipientsId, BigDecimal weights);
+
 }

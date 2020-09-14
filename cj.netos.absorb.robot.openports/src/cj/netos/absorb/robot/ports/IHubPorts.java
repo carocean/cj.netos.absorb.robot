@@ -139,12 +139,69 @@ public interface IHubPorts extends IOpenportService {
                     "激励金如果为0表示永远洇取洇金", name = "desireAmount") long desireAmount
     ) throws CircuitException;
 
-    @CjOpenport(usage = "添加自已为洇金收取人。只有洇取器的创建人才有权限")
+    @CjOpenport(usage = "添加自已为洇金收取人。仅限洇取器主人才有此权限")
+    void addRecipients2(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "公众", name = "person") String person,
+            @CjOpenportParameter(usage = "公众昵称", name = "nickName") String nickName,
+            @CjOpenportParameter(usage = "激励代码，如\n" +
+                    "like\n" +
+                    "comment\n" +
+                    "ingeo\n" +
+                    "pull-in" +
+                    "等等", name = "encourageCode") String encourageCode,
+            @CjOpenportParameter(usage = "激励原因：如他点了赞或做了评论，或在地圈等等原因", name = "encourageCause") String encourageCause,
+            @CjOpenportParameter(usage = "期望的激励金，如果达到激励金额则移除\n" +
+                    "激励金如果为0表示永远洇取洇金", name = "desireAmount") long desireAmount
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "是否存在洇取人")
+    boolean existsRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "成员", name = "person") String person
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "是否存在洇取人")
+    boolean existsRecipients2(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "成员", name = "person") String person,
+            @CjOpenportParameter(usage = "激励代码，如\n" +
+                    "like\n" +
+                    "comment\n" +
+                    "ingeo\n" +
+                    "pull-in" +
+                    "等等", name = "encourageCode") String encourageCode
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "移除洇取人。只有洇取器的创建人才有权限")
     void removeRecipients(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
             @CjOpenportParameter(usage = "成员", name = "person") String person
     ) throws CircuitException;
+
+    @CjOpenport(usage = "移除洇取人。只有洇取器的创建人才有权限")
+    void removeRecipients2(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "成员", name = "person") String person,
+            @CjOpenportParameter(usage = "激励代码，如\n" +
+                    "like\n" +
+                    "comment\n" +
+                    "ingeo\n" +
+                    "pull-in" +
+                    "等等", name = "encourageCode") String encourageCode
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "更新人数上限")
+    void updateMaxRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "人数上限", name = "maxRecipients") long maxRecipients
+            ) throws CircuitException;
 
     @CjOpenport(usage = "添加权重到指定的收取人，如果为负表示减权重，如果减少到负则权重置为0")
     void addWeightsToRecipients(
@@ -156,6 +213,13 @@ public interface IHubPorts extends IOpenportService {
                     "comment\n" +
                     "ingeo\n" +
                     "等等", name = "encourageCode") String encourageCode,
+            @CjOpenportParameter(usage = "权重，正或负", name = "weights") BigDecimal weights
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "更新权重到指定的收取人")
+    void updateRecipientsWeights(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取人id", name = "recipientsId") String recipientsId,
             @CjOpenportParameter(usage = "权重，正或负", name = "weights") BigDecimal weights
     ) throws CircuitException;
 

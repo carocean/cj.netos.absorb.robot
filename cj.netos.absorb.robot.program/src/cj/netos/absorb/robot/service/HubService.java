@@ -283,6 +283,28 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
+    public boolean existsRecipients2(String absorberid, String person, String encourageCode) {
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(person).andEncourageCodeEqualTo(encourageCode);
+        return recipientsMapper.countByExample(example) > 0;
+    }
+
+    @CjTransaction
+    @Override
+    public void removeRecipients2(String absorberid, String person, String encourageCode) {
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(person).andEncourageCodeEqualTo(encourageCode);
+        recipientsMapper.deleteByExample(example);
+    }
+
+    @CjTransaction
+    @Override
+    public void updateMaxRecipients(String absorberid, long maxRecipients) {
+        absorberMapper.updateMaxRecipients(absorberid, maxRecipients);
+    }
+
+    @CjTransaction
+    @Override
     public void updateRecipientsWeights(String absorberid, String person, String encourageCode, BigDecimal weights) {
         RecipientsExample example = new RecipientsExample();
         example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(person).andEncourageCodeEqualTo(encourageCode);
@@ -296,6 +318,21 @@ public class HubService implements IHubService {
             weights = weights.add(weight);
         }
         recipientsMapper.updateWeights(absorberid, person, encourageCode, weights);
+    }
+
+    @CjTransaction
+    @Override
+    public Recipients getRecipients(String recipientsId) {
+        return recipientsMapper.selectByPrimaryKey(recipientsId);
+    }
+
+    @CjTransaction
+    @Override
+    public void updateRecipientsWeights(String recipientsId, BigDecimal weights) {
+        if (weights == null || weights.compareTo(BigDecimal.ZERO) < 0) {
+            weights = BigDecimal.ZERO;
+        }
+        recipientsMapper.updateWeight(recipientsId, weights);
     }
 
     @CjTransaction

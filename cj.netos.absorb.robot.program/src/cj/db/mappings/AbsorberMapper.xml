@@ -398,4 +398,10 @@
     absorbabler = #{absorbabler,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <update id="updateMaxRecipients" parameterType="cj.netos.absorb.robot.model.Absorber">
+    update absorber
+    set
+      max_recipients = #{maxRecipients,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

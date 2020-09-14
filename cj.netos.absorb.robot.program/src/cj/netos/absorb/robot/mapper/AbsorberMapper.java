@@ -2,7 +2,9 @@ package cj.netos.absorb.robot.mapper;
 
 import cj.netos.absorb.robot.model.Absorber;
 import cj.netos.absorb.robot.model.AbsorberExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface AbsorberMapper {
@@ -75,4 +77,7 @@ public interface AbsorberMapper {
     void updateRadius(@Param(value = "id") String id, @Param(value = "radius") long radius);
 
     void updateAbsorbabler(@Param(value = "id") String id, @Param(value = "absorbabler") String absorbabler);
+
+    void updateMaxRecipients(@Param(value = "id") String id, @Param(value = "maxRecipients") long maxRecipients);
+
 }

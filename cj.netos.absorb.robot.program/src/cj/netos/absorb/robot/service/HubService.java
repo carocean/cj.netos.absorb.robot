@@ -555,6 +555,12 @@ public class HubService implements IHubService {
             record.setOrder(1);
         }
         record.setSn(new IdWorker().nextId());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        record.setYear(calendar.get(Calendar.YEAR));
+        record.setMonth(calendar.get(Calendar.MONTH));
+
         recipientsRecordMapper.insert(record);
 
         return new RecipientsAbsorbBill(absorber.getTitle(), recipients, money, record.getSn());

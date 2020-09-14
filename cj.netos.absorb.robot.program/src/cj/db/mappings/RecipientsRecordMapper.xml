@@ -13,6 +13,8 @@
     <result column="encourage_cause" jdbcType="VARCHAR" property="encourageCause" />
     <result column="order" jdbcType="INTEGER" property="order" />
     <result column="recipients_id" jdbcType="VARCHAR" property="recipientsId" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -77,7 +79,7 @@
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     sn, recipient, amount, ctime, refsn, absorber, encourage_code, encourage_cause, `order`, 
-    recipients_id
+    recipients_id, `year`, `month`
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.RecipientsRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -118,11 +120,13 @@
     insert into recipients_record (sn, recipient, amount, 
       ctime, refsn, absorber, 
       encourage_code, encourage_cause, `order`, 
-      recipients_id)
+      recipients_id, `year`, `month`
+      )
     values (#{sn,jdbcType=VARCHAR}, #{recipient,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
       #{ctime,jdbcType=VARCHAR}, #{refsn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, 
       #{encourageCode,jdbcType=VARCHAR}, #{encourageCause,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, 
-      #{recipientsId,jdbcType=VARCHAR})
+      #{recipientsId,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.RecipientsRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -158,6 +162,12 @@
       <if test="recipientsId != null">
         recipients_id,
       </if>
+      <if test="year != null">
+        `year`,
+      </if>
+      <if test="month != null">
+        `month`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sn != null">
@@ -189,6 +199,12 @@
       </if>
       <if test="recipientsId != null">
         #{recipientsId,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -233,6 +249,12 @@
       <if test="record.recipientsId != null">
         recipients_id = #{record.recipientsId,jdbcType=VARCHAR},
       </if>
+      <if test="record.year != null">
+        `year` = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        `month` = #{record.month,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -250,7 +272,9 @@
       encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
       encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
       `order` = #{record.order,jdbcType=INTEGER},
-      recipients_id = #{record.recipientsId,jdbcType=VARCHAR}
+      recipients_id = #{record.recipientsId,jdbcType=VARCHAR},
+      `year` = #{record.year,jdbcType=INTEGER},
+      `month` = #{record.month,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +310,12 @@
       <if test="recipientsId != null">
         recipients_id = #{recipientsId,jdbcType=VARCHAR},
       </if>
+      <if test="year != null">
+        `year` = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        `month` = #{month,jdbcType=INTEGER},
+      </if>
     </set>
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
@@ -300,36 +330,48 @@
       encourage_code = #{encourageCode,jdbcType=VARCHAR},
       encourage_cause = #{encourageCause,jdbcType=VARCHAR},
       `order` = #{order,jdbcType=INTEGER},
-      recipients_id = #{recipientsId,jdbcType=VARCHAR}
+      recipients_id = #{recipientsId,jdbcType=VARCHAR},
+      `year` = #{year,jdbcType=INTEGER},
+      `month` = #{month,jdbcType=INTEGER}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
-  <select id="totalRecipientsRecord" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+  <select id="totalRecipientsRecord" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultType="java.math.BigDecimal">
     select
     sum(amount)
     from recipients_record
     where absorber = #{absorber,jdbcType=VARCHAR}
     and recipient = #{recipient,jdbcType=VARCHAR}
   </select>
-  <select id="totalRecipientsRecordById" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+  <select id="totalRecipientsRecordById" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultType="java.math.BigDecimal">
     select
       sum(amount)
     from recipients_record
     where  recipients_id = #{recipientsId,jdbcType=VARCHAR}
   </select>
-  <select id="totalRecipientsRecordWhere" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+  <select id="totalRecipientsRecordWhere" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultType="java.math.BigDecimal">
     select
       sum(amount)
     from recipients_record
     where  recipients_id = #{recipientsId,jdbcType=VARCHAR}
     and absorber = #{absorber,jdbcType=VARCHAR}
   </select>
-  <select id="totalRecipientsRecordByOrderWhere" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+  <select id="totalRecipientsRecordByOrderWhere" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultType="java.math.BigDecimal">
     select
       sum(amount)
     from recipients_record
     where  recipients_id = #{recipientsId,jdbcType=VARCHAR}
       and absorber = #{absorber,jdbcType=VARCHAR}
       and `order` = #{order,jdbcType=INTEGER}
+  </select>
+  <select id="totalRecipientsRecordByOrderWhere2" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultType="java.math.BigDecimal">
+    select
+      sum(amount)
+    from recipients_record
+    where  recipients_id = #{recipientsId,jdbcType=VARCHAR}
+      and absorber = #{absorber,jdbcType=VARCHAR}
+      and `order` = #{order,jdbcType=INTEGER}
+      and `year` = #{year,jdbcType=INTEGER}
+      and `month` = #{month,jdbcType=INTEGER}
   </select>
   <select id="pageByPerson" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultMap="BaseResultMap">
     select
@@ -357,6 +399,17 @@
     order by ctime desc
     limit #{offset},#{limit}
   </select>
+  <select id="pageRecipientsWhere3" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from recipients_record
+    where recipients_id = #{recipientsId,jdbcType=VARCHAR}
+    and absorber = #{absorber,jdbcType=VARCHAR}
+    and `year` = #{year,jdbcType=INTEGER}
+    and `month` = #{month,jdbcType=INTEGER}
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
   <select id="pageRecipientsRecordByOrderWhere" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -364,6 +417,18 @@
     where recipients_id = #{recipientsId,jdbcType=VARCHAR}
     and absorber = #{absorber,jdbcType=VARCHAR}
     and `order` = #{order,jdbcType=INTEGER}
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageRecipientsRecordByOrderWhere2" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from recipients_record
+    where recipients_id = #{recipientsId,jdbcType=VARCHAR}
+    and absorber = #{absorber,jdbcType=VARCHAR}
+    and `order` = #{order,jdbcType=INTEGER}
+    and `year` = #{year,jdbcType=INTEGER}
+    and `month` = #{month,jdbcType=INTEGER}
     order by ctime desc
     limit #{offset},#{limit}
   </select>

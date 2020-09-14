@@ -65,6 +65,18 @@ public class RecipientsRecord {
      */
     private String recipientsId;
 
+    /**
+     * Column: year
+     * Remark: 年
+     */
+    private Integer year;
+
+    /**
+     * Column: month
+     * Remark: 月，比实际月-1
+     */
+    private Integer month;
+
     public String getSn() {
         return sn;
     }
@@ -143,5 +155,21 @@ public class RecipientsRecord {
 
     public void setRecipientsId(String recipientsId) {
         this.recipientsId = recipientsId == null ? null : recipientsId.trim();
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
     }
 }

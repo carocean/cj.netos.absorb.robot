@@ -80,4 +80,10 @@ public interface RecipientsRecordMapper {
 
     BigDecimal totalRecipientsRecordByOrderWhere(@Param(value = "absorber") String absorber, @Param(value = "recipientsId") String recipientsId, @Param(value = "order") int order);
 
+    List<RecipientsRecord> pageRecipientsRecordByOrderWhere2(@Param(value = "absorber") String absorber, @Param(value = "recipientsId") String recipientsId, @Param(value = "order") int order, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    BigDecimal totalRecipientsRecordByOrderWhere2(@Param(value = "absorber") String absorber, @Param(value = "recipientsId") String recipientsId, @Param(value = "order") int order, @Param(value = "year") int year, @Param(value = "month") int month);
+
+    List<RecipientsRecord> pageRecipientsWhere3(@Param(value = "absorber") String absorber, @Param(value = "recipientsId") String recipientsId, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
 }

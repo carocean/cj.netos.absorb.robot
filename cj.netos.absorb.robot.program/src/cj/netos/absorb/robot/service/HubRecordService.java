@@ -54,8 +54,20 @@ public class HubRecordService implements IHubRecordService {
 
     @CjTransaction
     @Override
+    public List<RecipientsRecord> pageRecipientsRecordWhere3(String absorber, String recipientsId, int year, int month, int limit, long offset) {
+        return recipientsRecordMapper.pageRecipientsWhere3(absorber, recipientsId, year, month, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
     public List<RecipientsRecord> pageRecipientsRecordByOrderWhere(String absorber, String recipientsId, int order, int limit, long offset) {
         return recipientsRecordMapper.pageRecipientsRecordByOrderWhere(absorber, recipientsId, order, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<RecipientsRecord> pageRecipientsRecordByOrderWhere2(String absorber, String recipientsId, int order, int year, int month, int limit, long offset) {
+        return recipientsRecordMapper.pageRecipientsRecordByOrderWhere2(absorber, recipientsId, order, year, month, limit, offset);
     }
 
     @CjTransaction
@@ -80,6 +92,13 @@ public class HubRecordService implements IHubRecordService {
     @Override
     public BigDecimal totalRecipientsRecordByOrderWhere(String absorberid, String recipientsId, int order) {
         return recipientsRecordMapper.totalRecipientsRecordByOrderWhere(absorberid, recipientsId, order);
+    }
+
+    @CjTransaction
+    @Override
+    public BigDecimal totalRecipientsRecordByOrderWhere2(String absorberid, String recipientsId, int order, int year, int month) {
+
+        return recipientsRecordMapper.totalRecipientsRecordByOrderWhere2(absorberid, recipientsId, order, year, month);
     }
 
     @CjTransaction

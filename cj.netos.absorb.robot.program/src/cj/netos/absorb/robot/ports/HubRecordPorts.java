@@ -31,14 +31,25 @@ public class HubRecordPorts implements IHubRecordPorts {
     public List<RecipientsRecord> pageRecipientsRecordById(ISecuritySession securitySession, String recipientsId, int limit, long offset) throws CircuitException {
         return hubRecordService.pageRecipientsRecordById(recipientsId, limit, offset);
     }
+
     @Override
     public List<RecipientsRecord> pageRecipientsRecordWhere(ISecuritySession securitySession, String absorberid, String recipientsId, int limit, long offset) throws CircuitException {
-        return hubRecordService.pageRecipientsRecordWhere(absorberid,recipientsId, limit, offset);
+        return hubRecordService.pageRecipientsRecordWhere(absorberid, recipientsId, limit, offset);
+    }
+
+    @Override
+    public List<RecipientsRecord> pageRecipientsRecordWhere3(ISecuritySession securitySession, String absorber, String recipientsId, int year, int month, int limit, long offset) throws CircuitException {
+        return hubRecordService.pageRecipientsRecordWhere3(absorber, recipientsId, year, month, limit, offset);
     }
 
     @Override
     public List<RecipientsRecord> pageRecipientsRecordByOrderWhere(ISecuritySession securitySession, String absorber, String recipientsId, int order, int limit, long offset) throws CircuitException {
-        return hubRecordService.pageRecipientsRecordByOrderWhere(absorber,recipientsId,order, limit, offset);
+        return hubRecordService.pageRecipientsRecordByOrderWhere(absorber, recipientsId, order, limit, offset);
+    }
+
+    @Override
+    public List<RecipientsRecord> pageRecipientsRecordByOrderWhere2(ISecuritySession securitySession, String absorber, String recipientsId, int order, int year, int month, int limit, long offset) throws CircuitException {
+        return hubRecordService.pageRecipientsRecordByOrderWhere2(absorber, recipientsId, order, year, month, limit, offset);
     }
 
     @Override
@@ -53,12 +64,17 @@ public class HubRecordPorts implements IHubRecordPorts {
 
     @Override
     public BigDecimal totalRecipientsRecordWhere(ISecuritySession securitySession, String absorberid, String recipientsId) throws CircuitException {
-        return hubRecordService.totalRecipientsRecordWhere(absorberid,recipientsId);
+        return hubRecordService.totalRecipientsRecordWhere(absorberid, recipientsId);
     }
 
     @Override
     public BigDecimal totalRecipientsRecordByOrderWhere(ISecuritySession securitySession, String absorberid, String recipientsId, int order) throws CircuitException {
-        return hubRecordService.totalRecipientsRecordByOrderWhere(absorberid,recipientsId,order);
+        return hubRecordService.totalRecipientsRecordByOrderWhere(absorberid, recipientsId, order);
+    }
+
+    @Override
+    public BigDecimal totalRecipientsRecordByOrderWhere2(ISecuritySession securitySession, String absorberid, String recipientsId, int order, int year, int month) throws CircuitException {
+        return hubRecordService.totalRecipientsRecordByOrderWhere2(absorberid, recipientsId, order, year, month);
     }
 
     @Override

@@ -39,4 +39,10 @@ public interface IHubRecordService {
 
     BigDecimal totalRecipientsRecordByOrderWhere(String absorberid, String recipientsId, int order);
 
+    List<RecipientsRecord> pageRecipientsRecordByOrderWhere2(String absorber, String recipientsId, int order, int year, int month, int limit, long offset);
+
+    BigDecimal totalRecipientsRecordByOrderWhere2(String absorberid, String recipientsId, int order, int year, int month);
+
+    List<RecipientsRecord> pageRecipientsRecordWhere3(String absorber, String recipientsId, int year, int month, int limit, long offset);
+
 }

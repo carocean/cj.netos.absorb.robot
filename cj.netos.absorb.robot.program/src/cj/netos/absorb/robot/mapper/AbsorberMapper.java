@@ -70,10 +70,9 @@ public interface AbsorberMapper {
 
     void start(@Param(value = "id") String id);
 
-    void updateLocation(@Param(value = "id") String id,@Param(value = "location")  String location);
+    void updateLocation(@Param(value = "id") String id, @Param(value = "location") String location);
 
-    void updateRadius(@Param(value = "id") String id,@Param(value = "radius")  long radius);
+    void updateRadius(@Param(value = "id") String id, @Param(value = "radius") long radius);
 
     void updateAbsorbabler(@Param(value = "id") String id, @Param(value = "absorbabler") String absorbabler);
-
 }

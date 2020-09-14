@@ -54,6 +54,12 @@ public class RecipientsRecord {
     private String encourageCause;
 
     /**
+     * Column: order
+     * Remark: 0 银行投资withdraw_record\n1 投资者投资invest_record
+     */
+    private Integer order;
+
+    /**
      * Column: recipients_id
      * Remark: 关联洇取人主键
      */
@@ -121,6 +127,14 @@ public class RecipientsRecord {
 
     public void setEncourageCause(String encourageCause) {
         this.encourageCause = encourageCause == null ? null : encourageCause.trim();
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     public String getRecipientsId() {

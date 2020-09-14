@@ -38,11 +38,23 @@ public interface IHubRecordPorts extends IOpenportService {
     ) throws CircuitException;
 
     @CjOpenport(usage = "分页获取洇取单")
-    List<RecipientsRecord> pageByRecipientsRecordWhere(ISecuritySession securitySession,
-                                                       @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber,
-                                                       @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId,
-                                                       @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
-                                                       @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    List<RecipientsRecord> pageRecipientsRecordWhere(ISecuritySession securitySession,
+                                                     @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber,
+                                                     @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId,
+                                                     @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                                     @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+
+    @CjOpenport(usage = "分页获取洇取单")
+    List<RecipientsRecord> pageRecipientsRecordByOrderWhere(ISecuritySession securitySession,
+                                                            @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber,
+                                                            @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId,
+                                                            @CjOpenportParameter(usage = "类型\n" +
+                                                                    "0 银行投资withdraw_record\n" +
+                                                                    "1 投资者投资invest_record", name = "order") int order,
+                                                            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                                            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
     ) throws CircuitException;
 
     @CjOpenport(usage = "统计一个洇取人得到的总金")
@@ -61,6 +73,16 @@ public interface IHubRecordPorts extends IOpenportService {
                                           @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
                                           @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId
     ) throws CircuitException;
+
+    @CjOpenport(usage = "统计一个洇取人得到的总金")
+    BigDecimal totalRecipientsRecordByOrderWhere(ISecuritySession securitySession,
+                                          @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+                                          @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId,
+                                          @CjOpenportParameter(usage = "类型\n" +
+                                                  "0 银行投资withdraw_record\n" +
+                                                  "1 投资者投资invest_record", name = "order") int order
+                                          ) throws CircuitException;
+
 
     @CjOpenport(usage = "获取洇取器投资单")
     InvestRecord getInvestRecord(ISecuritySession securitySession,

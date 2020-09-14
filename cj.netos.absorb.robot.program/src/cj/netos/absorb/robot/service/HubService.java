@@ -547,10 +547,12 @@ public class HubService implements IHubService {
         if (result instanceof BankWithdrawResult) {
             BankWithdrawResult bankWithdrawResult = (BankWithdrawResult) result;
             record.setRefsn(bankWithdrawResult.getOutTradeSn());
+            record.setOrder(0);
         }
         if (result instanceof InvestRecord) {
             InvestRecord investRecord = (InvestRecord) result;
             record.setRefsn(investRecord.getSn());
+            record.setOrder(1);
         }
         record.setSn(new IdWorker().nextId());
         recipientsRecordMapper.insert(record);

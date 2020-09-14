@@ -15,7 +15,7 @@ public interface IHubRecordService {
 
     WithdrawRecord getWithdrawRecord(String record_sn);
 
-    List<RecipientsRecord> pageByRecipientsRecordWhere(String absorberid, String recipientsId, int limit, long offset);
+    List<RecipientsRecord> pageRecipientsRecordWhere(String absorberid, String recipientsId, int limit, long offset);
 
     BigDecimal totalRecipientsRecord(String absorber, String recipients);
 
@@ -34,5 +34,9 @@ public interface IHubRecordService {
     long totalAmountWithdraws(String bankid);
 
     BigDecimal totalRecipientsRecordWhere(String absorberid, String recipientsId);
+
+    List<RecipientsRecord> pageRecipientsRecordByOrderWhere(String absorber, String recipientsId, int order, int limit, long offset);
+
+    BigDecimal totalRecipientsRecordByOrderWhere(String absorberid, String recipientsId, int order);
 
 }

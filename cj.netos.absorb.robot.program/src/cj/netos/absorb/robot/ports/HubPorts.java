@@ -471,6 +471,7 @@ public class HubPorts implements IHubPorts {
         return hubService.pageGeoRecipients(absorber, limit, offset);
     }
 
+
     @Override
     public List<RecipientsSummary> pageSimpleRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
         Absorber absorber = hubService.getAbsorber(absorberid);
@@ -482,6 +483,19 @@ public class HubPorts implements IHubPorts {
             throw new CircuitException("500", "不是简单涸取器");
         }
         return hubService.pageRecipientsSummary(absorberid, limit, offset);
+    }
+
+    @Override
+    public List<Recipients> pageSimpleRecipientsOnlyMe(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器不存在");
+        }
+//        checkWithdrawRights(securitySession, absorber.getBankid());
+        if (absorber.getType() != 0) {
+            throw new CircuitException("500", "不是简单涸取器");
+        }
+        return hubService.pageRecipientsByPerson(absorberid,securitySession.principal(), limit, offset);
     }
 
     @Override

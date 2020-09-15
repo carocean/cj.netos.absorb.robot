@@ -448,6 +448,12 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
+    public List<Recipients> pageRecipientsByPerson(String absorberid, String principal, int limit, long offset) {
+        return recipientsMapper.page2(absorberid, principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
     public List<Recipients> pageGeoRecipients(Absorber absorber, int limit, long offset) throws CircuitException {
         List<POR> porList = searchAroundPerson(absorber.getLocation(), absorber.getRadius(), limit, offset);
         if (porList.isEmpty()) {

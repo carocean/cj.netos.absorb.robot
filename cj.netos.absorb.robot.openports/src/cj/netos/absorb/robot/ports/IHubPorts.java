@@ -201,7 +201,7 @@ public interface IHubPorts extends IOpenportService {
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
             @CjOpenportParameter(usage = "人数上限", name = "maxRecipients") long maxRecipients
-            ) throws CircuitException;
+    ) throws CircuitException;
 
     @CjOpenport(usage = "添加权重到指定的收取人，如果为负表示减权重，如果减少到负则权重置为0")
     void addWeightsToRecipients(
@@ -253,6 +253,14 @@ public interface IHubPorts extends IOpenportService {
 
     @CjOpenport(usage = "分页简单洇取器的洇取人摘要信息")
     List<RecipientsSummary> pageSimpleRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页简单洇取器的洇取人摘要信息")
+    List<Recipients> pageSimpleRecipientsOnlyMe(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
             @CjOpenportParameter(usage = "页大小", name = "limit") int limit,

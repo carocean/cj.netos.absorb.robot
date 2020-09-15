@@ -325,6 +325,15 @@
         order by weight desc
         limit #{offset},#{limit}
     </select>
+  <select id="page2" parameterType="cj.netos.absorb.robot.model.Recipients" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from recipients
+    where absorber = #{absorber,jdbcType=VARCHAR}
+    and person = #{person,jdbcType=VARCHAR}
+    order by weight desc
+    limit #{offset},#{limit}
+  </select>
   <update id="updateWeight" parameterType="cj.netos.absorb.robot.model.Recipients">
     update recipients
     set

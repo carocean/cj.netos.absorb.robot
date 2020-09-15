@@ -114,4 +114,6 @@ public interface IHubService {
 
     void updateRecipientsWeights(String recipientsId, BigDecimal weights);
 
+    List<Recipients> pageRecipientsByPerson(String absorberid, String principal, int limit, long offset);
+
 }

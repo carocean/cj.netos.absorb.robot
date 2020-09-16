@@ -23,8 +23,7 @@ public class AbsorberDistribute implements IAbsorberDistribute {
     IHubService absorberHubService;
 
     IRabbitMQProducer rabbitMQProducer;
-    int _limit_simple = 500;
-    long _offset_simple = 0;
+
 
     public AbsorberDistribute(IHubService absorberHubService, IRabbitMQProducer rabbitMQProducer) {
         this.absorberHubService = absorberHubService;
@@ -133,6 +132,8 @@ public class AbsorberDistribute implements IAbsorberDistribute {
         //求每权的价格,每权价必须小，不然每个收取人一乘就多了，尾金会起出实际要发的金额
         BigDecimal weightPricePerRecipients = absorberAmount.divide(totalWeightsOfRecipients, RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
         //每个收取人权重*价格即是要发的钱
+        int _limit_simple = 500;
+        long _offset_simple = 0;
         while (true) {
             List<Recipients> recipientsList = absorberHubService.pageRecipients(bucket.getAbsorber(), _limit_simple, _offset_simple);
             if (recipientsList.isEmpty()) {

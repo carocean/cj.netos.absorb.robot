@@ -250,6 +250,29 @@ public interface IHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "权重，正或负", name = "weights") BigDecimal weights
     ) throws CircuitException;
 
+
+    @CjOpenport(usage = "添加评论的权重到收取人")
+    void addCommentWeightsOfRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "激励代码，如\n" +
+                    "like\n" +
+                    "comment\n" +
+                    "ingeo\n" +
+                    "等等", name = "encourageCode") String encourageCode
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "减少评论权重到收取人。成功减除为true,否则为false,注：只管减，但小于等于1.5减法无效则返回false。")
+    boolean subCommentWeightOfRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "激励代码，如\n" +
+                    "like\n" +
+                    "comment\n" +
+                    "ingeo\n" +
+                    "等等", name = "encourageCode") String encourageCode
+    ) throws CircuitException;
+
     @CjOpenport(usage = "提取尾金到我的钱包零钱，只有行主的主权账号具有提现权现")
     TailBill withdrawHubTails(ISecuritySession securitySession,
                               @CjOpenportParameter(usage = "行号", name = "bankid") String bankid

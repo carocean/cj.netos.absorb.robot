@@ -6,7 +6,6 @@ import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
 import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.*;
 import cj.studio.ecm.net.CircuitException;
-import cj.studio.orm.mybatis.annotation.CjTransaction;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -115,5 +114,9 @@ public interface IHubService {
     void updateRecipientsWeights(String recipientsId, BigDecimal weights);
 
     List<Recipients> pageRecipientsByPerson(String absorberid, String principal, int limit, long offset);
+
+    void addCommentWeightsOfRecipients(String absorberid, String principal, String encourageCode);
+
+    boolean subCommentWeightOfRecipients(String absorberid, String principal, String encourageCode);
 
 }

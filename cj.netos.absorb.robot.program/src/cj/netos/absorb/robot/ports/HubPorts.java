@@ -380,6 +380,16 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
+    public void addCommentWeightsOfRecipients(ISecuritySession securitySession, String absorberid, String encourageCode) throws CircuitException {
+        hubService.addCommentWeightsOfRecipients(absorberid,securitySession.principal(),encourageCode);
+    }
+
+    @Override
+    public boolean subCommentWeightOfRecipients(ISecuritySession securitySession, String absorberid, String encourageCode) throws CircuitException {
+       return hubService.subCommentWeightOfRecipients(absorberid,securitySession.principal(),encourageCode);
+    }
+
+    @Override
     public TailBill withdrawHubTails(ISecuritySession securitySession, String bankid) throws CircuitException {
         //检查银行的创建者是否有securitySession当事人
         checkWithdrawRights(securitySession, bankid);

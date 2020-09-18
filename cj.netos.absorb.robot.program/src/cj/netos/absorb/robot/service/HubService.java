@@ -24,7 +24,6 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -335,6 +334,7 @@ public class HubService implements IHubService {
         recipientsMapper.updateWeight(recipientsId, weights);
     }
 
+
     @CjTransaction
     @Override
     public long totalRecipientsCount(String absorber) {
@@ -363,15 +363,49 @@ public class HubService implements IHubService {
     @Override
     public void addWeightToRecipients(String principal, String absorberid) {
         RecipientsExample example = new RecipientsExample();
-        example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(principal).andAbsorberEqualTo(absorberid);
+        example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(principal);
         List<Recipients> list = recipientsMapper.selectByExample(example);
         if (list.isEmpty()) {
             return;
         }
         Recipients recipients = list.get(0);
         BigDecimal weight = recipients.getWeight();
-        weight = weight.add(new BigDecimal("0.5"));
+        weight = weight.add(new BigDecimal("0.15"));
         recipientsMapper.updateWeight(recipients.getId(), weight);
+    }
+
+    @CjTransaction
+    @Override
+    public void addCommentWeightsOfRecipients(String absorberid, String principal, String encourageCode) {
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(principal).andEncourageCodeEqualTo(encourageCode);
+        List<Recipients> list = recipientsMapper.selectByExample(example);
+        if (list.isEmpty()) {
+            return;
+        }
+        Recipients recipients = list.get(0);
+        BigDecimal weight = recipients.getWeight();
+        weight = weight.add(new BigDecimal("0.15"));
+        recipientsMapper.updateWeight(recipients.getId(), weight);
+    }
+
+    @CjTransaction
+    @Override
+    public boolean subCommentWeightOfRecipients(String absorberid, String principal, String encourageCode) {
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(principal).andEncourageCodeEqualTo(encourageCode);
+        List<Recipients> list = recipientsMapper.selectByExample(example);
+        if (list.isEmpty()) {
+            return false;
+        }
+        Recipients recipients = list.get(0);
+        BigDecimal weight = recipients.getWeight();
+        if (new BigDecimal("1.5").compareTo(weight) == 0) {
+            return false;
+        }
+        weight = weight.subtract(new BigDecimal("0.15"));
+        recipientsMapper.updateWeight(recipients.getId(), weight);
+        return true;
     }
 
     @CjTransaction

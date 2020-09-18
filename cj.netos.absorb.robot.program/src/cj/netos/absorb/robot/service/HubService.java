@@ -482,7 +482,7 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public List<Recipients> pageRecipientsByPerson(String absorberid, String principal, int limit, long offset) {
+    public List<Recipients> pageSimpleRecipientsByPerson(String absorberid, String principal, int limit, long offset) {
         return recipientsMapper.page2(absorberid, principal, limit, offset);
     }
 
@@ -490,6 +490,38 @@ public class HubService implements IHubService {
     @Override
     public List<Recipients> pageGeoRecipients(Absorber absorber, int limit, long offset) throws CircuitException {
         List<POR> porList = searchAroundPerson(absorber.getLocation(), absorber.getRadius(), limit, offset);
+        if (porList.isEmpty()) {
+            return new ArrayList<>();
+        }
+        //求权和，把半径-离中心的距离加起来作为权和
+        List<Recipients> recipientsList = new ArrayList<>();
+        BigDecimal totalWeightsOfRecipients = new BigDecimal("0.00");
+        for (POR por : porList) {
+            BigDecimal weight = new BigDecimal(absorber.getRadius() + "").subtract(por.getDistance());//离中心越近权重越大，故而半径减之
+            //越近权重越高,当离圈后就取消洇金了
+            GeoReceptorBO bo = por.getReceptor();
+            Recipients recipients = new Recipients();
+            recipients.setId(bo.getId());
+            recipients.setCtime(RobotUtils.dateTimeToMicroSecond(por.getReceptor().getCtime()));
+            recipients.setPerson(bo.getCreator());
+            recipients.setPersonName(bo.getTitle());
+            recipients.setEncourageCode("enter");
+            recipients.setEncourageCause("在圈内");
+            recipients.setDesireAmount(0L);
+            recipients.setAbsorber(absorber.getId());
+            recipients.setWeight(weight);//距中心位置作为权重
+            recipients.setDistance(por.getDistance());
+            recipientsList.add(recipients);
+
+            totalWeightsOfRecipients = totalWeightsOfRecipients.add(weight);
+        }
+        return recipientsList;
+    }
+
+    @CjTransaction
+    @Override
+    public List<Recipients> getAroundLocationByPerson(Absorber absorber, String principal) throws CircuitException {
+        List<POR> porList = searchPersonAround(absorber.getLocation(), absorber.getRadius(), principal);
         if (porList.isEmpty()) {
             return new ArrayList<>();
         }
@@ -665,6 +697,51 @@ public class HubService implements IHubService {
         final Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Rest-Command", "searchAroundLocation")
+                .addHeader("app-id", appid)
+                .addHeader("app-key", appKey)
+                .addHeader("app-nonce", nonce)
+                .addHeader("app-sign", sign)
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (Double.parseDouble(map.get("status") + "") >= 400) {
+            throw new CircuitException(map.get("status") + "", map.get("message") + "");
+        }
+        json = (String) map.get("dataText");
+        return new Gson().fromJson(json, new TypeToken<ArrayList<POR>>() {
+        }.getType());
+    }
+
+    private List<POR> searchPersonAround(String location, Long radius, String principal) throws CircuitException {
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+
+        String appid = site.getProperty("appid");
+        String appKey = site.getProperty("appKey");
+        String appSecret = site.getProperty("appSecret");
+        String linkPorts = site.getProperty("rhub.ports.link.geo");
+
+        String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
+        String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
+        String url = String.format("%s?location=%s&radius=%s&geoType=mobiles&person=%s", linkPorts, location, radius, principal);
+        final Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Rest-Command", "searchPersonAroundLocation")
                 .addHeader("app-id", appid)
                 .addHeader("app-key", appKey)
                 .addHeader("app-nonce", nonce)

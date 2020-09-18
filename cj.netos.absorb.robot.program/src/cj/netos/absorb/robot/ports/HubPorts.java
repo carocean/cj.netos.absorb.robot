@@ -303,6 +303,12 @@ public class HubPorts implements IHubPorts {
         if (absorber == null) {
             return false;
         }
+        if (absorber.getType() != 0) {
+            List<Recipients> recipients=hubService.getAroundLocationByPerson(absorber,person);
+            if (!recipients.isEmpty()) {
+                return true;
+            }
+        }
         return hubService.existsRecipients(person, absorberid);
     }
 
@@ -509,10 +515,11 @@ public class HubPorts implements IHubPorts {
             throw new CircuitException("404", "洇取器不存在");
         }
         List<Recipients> recipients = new ArrayList<>();
-
-        List<Recipients> geoRecipients = hubService.pageGeoRecipients(absorber, limit, offset);
-        if (!geoRecipients.isEmpty()) {
-            recipients.addAll(geoRecipients);
+        if (absorber.getType() !=0) {
+            List<Recipients> geoRecipients = hubService.pageGeoRecipients(absorber, limit, offset);
+            if (!geoRecipients.isEmpty()) {
+                recipients.addAll(geoRecipients);
+            }
         }
 
         List<Recipients> simpleRecipients = hubService.pageSimpleRecipients(absorberid, limit, offset);
@@ -545,7 +552,23 @@ public class HubPorts implements IHubPorts {
         if (absorber.getType() != 0) {
             throw new CircuitException("500", "不是简单涸取器");
         }
-        return hubService.pageRecipientsByPerson(absorberid, securitySession.principal(), limit, offset);
+        return hubService.pageSimpleRecipientsByPerson(absorberid, securitySession.principal(), limit, offset);
+    }
+
+    @Override
+    public List<Recipients> pageRecipientsOnlyMe(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器不存在");
+        }
+        List<Recipients> recipientsList = new ArrayList<>();
+        if (absorber.getType() != 0) {
+            List<Recipients> geoRecipients=hubService.getAroundLocationByPerson(absorber,securitySession.principal());
+            recipientsList.addAll(geoRecipients);
+        }
+        List<Recipients> simples=hubService.pageSimpleRecipientsByPerson(absorberid, securitySession.principal(), limit, offset);
+        recipientsList.addAll(simples);
+        return recipientsList;
     }
 
     @Override

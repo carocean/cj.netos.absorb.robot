@@ -113,10 +113,12 @@ public interface IHubService {
 
     void updateRecipientsWeights(String recipientsId, BigDecimal weights);
 
-    List<Recipients> pageRecipientsByPerson(String absorberid, String principal, int limit, long offset);
+    List<Recipients> pageSimpleRecipientsByPerson(String absorberid, String principal, int limit, long offset);
 
     void addCommentWeightsOfRecipients(String absorberid, String principal, String encourageCode);
 
     boolean subCommentWeightOfRecipients(String absorberid, String principal, String encourageCode);
+
+    List<Recipients> getAroundLocationByPerson(Absorber absorber, String principal) throws CircuitException;
 
 }

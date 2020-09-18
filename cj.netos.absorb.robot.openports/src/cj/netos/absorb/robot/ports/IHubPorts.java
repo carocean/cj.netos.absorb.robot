@@ -327,6 +327,14 @@ public interface IHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
     ) throws CircuitException;
 
+    @CjOpenport(usage = "分页简单洇取器的洇取人摘要信息,含地理洇取人")
+    List<Recipients> pageRecipientsOnlyMe(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
     @CjOpenport(usage = "统计洇取器的人数，仅对简单洇取器有效")
     long countRecipients(ISecuritySession securitySession,
                          @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid

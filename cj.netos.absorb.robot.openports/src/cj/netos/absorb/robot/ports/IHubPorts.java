@@ -160,7 +160,6 @@ public interface IHubPorts extends IOpenportService {
     void addRecipients3(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
-            @CjOpenportParameter(usage = "公众昵称", name = "nickName") String nickName,
             @CjOpenportParameter(usage = "激励代码，如\n" +
                     "like\n" +
                     "comment\n" +

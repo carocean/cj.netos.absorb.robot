@@ -274,7 +274,7 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
-    public void addRecipients3(ISecuritySession securitySession, String absorberid, String nickName, String encourageCode, String encourageCause, long desireAmount) throws CircuitException {
+    public void addRecipients3(ISecuritySession securitySession, String absorberid, String encourageCode, String encourageCause, long desireAmount) throws CircuitException {
         Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器已不存在。" + absorberid);
@@ -285,7 +285,7 @@ public class HubPorts implements IHubPorts {
         if (!absorber.getCreator().equals(securitySession.principal())) {
             throw new CircuitException("801", "非洇取器创建者,拒绝该问。");
         }
-        _addRecipients(absorberid, securitySession.principal(), nickName, encourageCode, encourageCause, desireAmount);
+        _addRecipients(absorberid, securitySession.principal(), (String) securitySession.property("nickName"), encourageCode, encourageCause, desireAmount);
     }
 
     @Override

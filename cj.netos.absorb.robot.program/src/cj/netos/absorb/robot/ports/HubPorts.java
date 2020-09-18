@@ -274,6 +274,21 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
+    public void addRecipients3(ISecuritySession securitySession, String absorberid, String nickName, String encourageCode, String encourageCause, long desireAmount) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器已不存在。" + absorberid);
+        }
+        if (hubService.existsRecipientsEncourageCode(securitySession.principal(), absorberid, encourageCode)) {
+            throw new CircuitException("2000", String.format("洇取器:%s (%s)中已存在收取人及期激励方式:%s。", absorber.getTitle(), absorber.getId(), securitySession.principal()));
+        }
+        if (!absorber.getCreator().equals(securitySession.principal())) {
+            throw new CircuitException("801", "非洇取器创建者,拒绝该问。");
+        }
+        _addRecipients(absorberid, securitySession.principal(), nickName, encourageCode, encourageCause, desireAmount);
+    }
+
+    @Override
     public void removeRecipients(ISecuritySession securitySession, String absorberid, String person) throws CircuitException {
         Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
@@ -316,6 +331,15 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
+    public void removeRecipients3(ISecuritySession securitySession, String absorberid, String encourageCode) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器已不存在。" + absorberid);
+        }
+        hubService.removeRecipients2(absorberid, securitySession.principal(), encourageCode);
+    }
+
+    @Override
     public void updateMaxRecipients(ISecuritySession securitySession, String absorberid, long maxRecipients) throws CircuitException {
         Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
@@ -341,7 +365,7 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public void updateRecipientsWeights(ISecuritySession securitySession, String recipientsId, BigDecimal weights) throws CircuitException {
-        Recipients recipients=hubService.getRecipients(recipientsId);
+        Recipients recipients = hubService.getRecipients(recipientsId);
         if (recipients == null) {
             throw new CircuitException("404", "洇取人标识不存在。" + recipientsId);
         }
@@ -352,7 +376,7 @@ public class HubPorts implements IHubPorts {
         if (!absorber.getCreator().equals(securitySession.principal())) {
             throw new CircuitException("500", String.format("不是创建者:%s", securitySession.principal()));
         }
-        hubService.updateRecipientsWeights(recipientsId,  weights);
+        hubService.updateRecipientsWeights(recipientsId, weights);
     }
 
     @Override
@@ -495,7 +519,7 @@ public class HubPorts implements IHubPorts {
         if (absorber.getType() != 0) {
             throw new CircuitException("500", "不是简单涸取器");
         }
-        return hubService.pageRecipientsByPerson(absorberid,securitySession.principal(), limit, offset);
+        return hubService.pageRecipientsByPerson(absorberid, securitySession.principal(), limit, offset);
     }
 
     @Override

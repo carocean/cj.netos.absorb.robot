@@ -156,6 +156,22 @@ public interface IHubPorts extends IOpenportService {
                     "激励金如果为0表示永远洇取洇金", name = "desireAmount") long desireAmount
     ) throws CircuitException;
 
+    @CjOpenport(usage = "添加自已为洇金收取人。仅限洇取器主人才有此权限")
+    void addRecipients3(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "公众昵称", name = "nickName") String nickName,
+            @CjOpenportParameter(usage = "激励代码，如\n" +
+                    "like\n" +
+                    "comment\n" +
+                    "ingeo\n" +
+                    "pull-in" +
+                    "等等", name = "encourageCode") String encourageCode,
+            @CjOpenportParameter(usage = "激励原因：如他点了赞或做了评论，或在地圈等等原因", name = "encourageCause") String encourageCause,
+            @CjOpenportParameter(usage = "期望的激励金，如果达到激励金额则移除\n" +
+                    "激励金如果为0表示永远洇取洇金", name = "desireAmount") long desireAmount
+    ) throws CircuitException;
+
     @CjOpenport(usage = "是否存在洇取人")
     boolean existsRecipients(
             ISecuritySession securitySession,
@@ -188,6 +204,18 @@ public interface IHubPorts extends IOpenportService {
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
             @CjOpenportParameter(usage = "成员", name = "person") String person,
+            @CjOpenportParameter(usage = "激励代码，如\n" +
+                    "like\n" +
+                    "comment\n" +
+                    "ingeo\n" +
+                    "pull-in" +
+                    "等等", name = "encourageCode") String encourageCode
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "移除洇取人自已")
+    void removeRecipients3(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
             @CjOpenportParameter(usage = "激励代码，如\n" +
                     "like\n" +
                     "comment\n" +

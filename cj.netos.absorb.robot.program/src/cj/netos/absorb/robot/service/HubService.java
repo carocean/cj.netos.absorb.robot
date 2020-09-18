@@ -476,7 +476,7 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public List<Recipients> pageRecipients(String absorber, int limit, long offset) {
+    public List<Recipients> pageSimpleRecipients(String absorber, int limit, long offset) {
         return recipientsMapper.page(absorber, limit, offset);
     }
 

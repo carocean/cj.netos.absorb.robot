@@ -31,7 +31,7 @@ public interface IHubService {
 
     BigDecimal totalWeightsOfRecipients(String absorberid);
 
-    List<Recipients> pageRecipients(String id, int limit, long offset);
+    List<Recipients> pageSimpleRecipients(String id, int limit, long offset);
 
     void addTailAmount(BigDecimal amount, String person, String bankid, String refsn, int order, String cause);
 

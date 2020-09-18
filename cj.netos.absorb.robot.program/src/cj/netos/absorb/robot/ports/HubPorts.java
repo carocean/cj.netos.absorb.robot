@@ -26,10 +26,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CjService(name = "/hub.ports")
 public class HubPorts implements IHubPorts {
@@ -381,12 +378,12 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public void addCommentWeightsOfRecipients(ISecuritySession securitySession, String absorberid, String encourageCode) throws CircuitException {
-        hubService.addCommentWeightsOfRecipients(absorberid,securitySession.principal(),encourageCode);
+        hubService.addCommentWeightsOfRecipients(absorberid, securitySession.principal(), encourageCode);
     }
 
     @Override
     public boolean subCommentWeightOfRecipients(ISecuritySession securitySession, String absorberid, String encourageCode) throws CircuitException {
-       return hubService.subCommentWeightOfRecipients(absorberid,securitySession.principal(),encourageCode);
+        return hubService.subCommentWeightOfRecipients(absorberid, securitySession.principal(), encourageCode);
     }
 
     @Override
@@ -493,18 +490,37 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
-    public List<Recipients> pageRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
+    public List<Recipients> pageGeoRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
         Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {
             throw new CircuitException("404", "洇取器不存在");
         }
 //        checkWithdrawRights(securitySession, absorber.getBankid());
         if (absorber.getType() == 0) {
-            return hubService.pageRecipients(absorberid, limit, offset);
+            return hubService.pageSimpleRecipients(absorberid, limit, offset);
         }
         return hubService.pageGeoRecipients(absorber, limit, offset);
     }
 
+    @Override
+    public List<Recipients> pageRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {
+        Absorber absorber = hubService.getAbsorber(absorberid);
+        if (absorber == null) {
+            throw new CircuitException("404", "洇取器不存在");
+        }
+        List<Recipients> recipients = new ArrayList<>();
+
+        List<Recipients> geoRecipients = hubService.pageGeoRecipients(absorber, limit, offset);
+        if (!geoRecipients.isEmpty()) {
+            recipients.addAll(geoRecipients);
+        }
+
+        List<Recipients> simpleRecipients = hubService.pageSimpleRecipients(absorberid, limit, offset);
+        if (!simpleRecipients.isEmpty()) {
+            recipients.addAll(simpleRecipients);
+        }
+        return recipients;
+    }
 
     @Override
     public List<RecipientsSummary> pageSimpleRecipients(ISecuritySession securitySession, String absorberid, int limit, long offset) throws CircuitException {

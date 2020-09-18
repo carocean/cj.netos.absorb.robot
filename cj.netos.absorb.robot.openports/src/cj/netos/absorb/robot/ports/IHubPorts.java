@@ -294,12 +294,22 @@ public interface IHubPorts extends IOpenportService {
     ) throws CircuitException;
 
     @CjOpenport(usage = "分页洇取人，支持地理洇取器")
+    List<Recipients> pageGeoRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+
+    @CjOpenport(usage = "分页洇取人，支持地理洇取器")
     List<Recipients> pageRecipients(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
             @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
             @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
     ) throws CircuitException;
+
 
     @CjOpenport(usage = "分页简单洇取器的洇取人摘要信息")
     List<RecipientsSummary> pageSimpleRecipients(

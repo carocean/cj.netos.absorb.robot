@@ -96,9 +96,26 @@ public class AbsorberDistribute implements IAbsorberDistribute {
 
             totalWeightsOfRecipients = totalWeightsOfRecipients.add(weight);
         }
-        if (totalWeightsOfRecipients.compareTo(realDistributeAmount) == 0) {//如果权重和为0则退出处理
-            return realDistributeAmount;
+        //对非地理洇取人计算洇金
+        //每个简单收取人设为1权重对应离中心近1米，实际上由于权重超小，所以简单收取人永远在边缘
+        int _limit_simple = 500;
+        long _offset_simple = 0;
+        while (true) {
+            List<Recipients> simpleRecipientsList = absorberHubService.pageSimpleRecipients(bucket.getAbsorber(), _limit_simple, _offset_simple);
+            if (simpleRecipientsList.isEmpty()) {
+                break;
+            }
+            for (Recipients recipients : simpleRecipientsList) {
+                BigDecimal weight=recipients.getWeight();
+                if (weight == null ) {
+                    weight=BigDecimal.ZERO;
+                }
+                totalWeightsOfRecipients = totalWeightsOfRecipients.add(weight);
+            }
+            recipientsList.addAll(simpleRecipientsList);
+            _offset_simple += simpleRecipientsList.size();
         }
+
         //求每权的价格,每权价必须小，不然每个收取人一乘就多了，尾金会起出实际要发的金额
         BigDecimal weightPricePerRecipients = absorberAmount.divide(totalWeightsOfRecipients, RobotUtils.BIGDECIMAL_SCALE, RoundingMode.DOWN);
         //每个收取人权重*价格即是要发的钱
@@ -135,7 +152,7 @@ public class AbsorberDistribute implements IAbsorberDistribute {
         int _limit_simple = 500;
         long _offset_simple = 0;
         while (true) {
-            List<Recipients> recipientsList = absorberHubService.pageRecipients(bucket.getAbsorber(), _limit_simple, _offset_simple);
+            List<Recipients> recipientsList = absorberHubService.pageSimpleRecipients(bucket.getAbsorber(), _limit_simple, _offset_simple);
             if (recipientsList.isEmpty()) {
                 break;
             }

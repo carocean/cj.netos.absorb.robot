@@ -198,6 +198,39 @@ public class HubPorts implements IHubPorts {
     }
 
     @Override
+    public List<AbsorberResult> pageMyAbsorber(ISecuritySession securitySession, int type, int limit, long offset) throws CircuitException {
+        List<Absorber> absorbers = hubService.pageMyAbsorber(securitySession.principal(),type, limit, offset);
+        List<AbsorberResult> absorberResults = new ArrayList<>();
+        for (Absorber absorber : absorbers) {
+            AbsorberBucket bucket = hubService.getAndInitAbsorbBucket(absorber.getId());
+            absorberResults.add(new AbsorberResult(absorber, bucket));
+        }
+        return absorberResults;
+    }
+
+    @Override
+    public List<AbsorberResult> pageMyAbsorberByUsage(ISecuritySession securitySession, int usage, int limit, long offset) throws CircuitException {
+        List<Absorber> absorbers = hubService.pageMyAbsorberByUsage(securitySession.principal(),usage, limit, offset);
+        List<AbsorberResult> absorberResults = new ArrayList<>();
+        for (Absorber absorber : absorbers) {
+            AbsorberBucket bucket = hubService.getAndInitAbsorbBucket(absorber.getId());
+            absorberResults.add(new AbsorberResult(absorber, bucket));
+        }
+        return absorberResults;
+    }
+
+    @Override
+    public List<AbsorberResult> pageJioninAbsorberByUsage(ISecuritySession securitySession, int usage, int limit, long offset) throws CircuitException {
+        List<Absorber> absorbers = hubService.pageJioninAbsorberByUsage(securitySession.principal(),usage, limit, offset);
+        List<AbsorberResult> absorberResults = new ArrayList<>();
+        for (Absorber absorber : absorbers) {
+            AbsorberBucket bucket = hubService.getAndInitAbsorbBucket(absorber.getId());
+            absorberResults.add(new AbsorberResult(absorber, bucket));
+        }
+        return absorberResults;
+    }
+
+    @Override
     public void removeAbsorber(ISecuritySession securitySession, String absorberid) throws CircuitException {
         Absorber absorber = hubService.getAbsorber(absorberid);
         if (absorber == null) {

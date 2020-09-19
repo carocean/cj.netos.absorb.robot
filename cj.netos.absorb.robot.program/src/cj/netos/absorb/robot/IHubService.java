@@ -121,4 +121,10 @@ public interface IHubService {
 
     List<Recipients> getAroundLocationByPerson(Absorber absorber, String principal) throws CircuitException;
 
+    List<Absorber> pageMyAbsorber(String principal, int type, int limit, long offset);
+
+    List<Absorber> pageMyAbsorberByUsage(String principal, int usage, int limit, long offset);
+
+    List<Absorber> pageJioninAbsorberByUsage(String principal, int usage, int limit, long offset);
+
 }

@@ -357,12 +357,59 @@
     where bankid = #{bankid,jdbcType=VARCHAR}
     limit #{offset},#{limit}
   </select>
+  <select id="pageAnyByCreator" parameterType="cj.netos.absorb.robot.model.Absorber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from absorber
+    where creator = #{creator,jdbcType=VARCHAR}
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageAnyJioninAbsorberByUsage" parameterType="cj.netos.absorb.robot.model.Absorber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from absorber
+    where id in (select  distinct absorber
+                 from recipients
+                 where person=#{person}
+                 order by absorber)
+    limit #{offset},#{limit}
+  </select>
   <select id="pageWhere" parameterType="cj.netos.absorb.robot.model.Absorber" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from absorber
     where bankid = #{bankid,jdbcType=VARCHAR}
     and `type` = #{type,jdbcType=INTEGER}
+    and `state` =1
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageByCreator" parameterType="cj.netos.absorb.robot.model.Absorber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from absorber
+    where creator = #{creator,jdbcType=VARCHAR}
+    and `type` = #{type,jdbcType=INTEGER}
+    and `state` =1
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageByCreatorAndUsage" parameterType="cj.netos.absorb.robot.model.Absorber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from absorber
+    where creator = #{creator,jdbcType=VARCHAR}
+    and `usage` = #{usage,jdbcType=INTEGER}
+    and `state` =1
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageJioninAbsorberByUsage" parameterType="cj.netos.absorb.robot.model.Absorber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from absorber
+    where id in (select  distinct absorber
+                 from recipients
+                 where person=#{person}
+                 order by absorber)
+    and `usage` = #{usage,jdbcType=INTEGER}
     and `state` =1
     limit #{offset},#{limit}
   </select>

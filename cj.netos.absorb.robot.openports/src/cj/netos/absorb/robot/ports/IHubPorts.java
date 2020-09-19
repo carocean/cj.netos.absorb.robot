@@ -85,6 +85,40 @@ public interface IHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
     ) throws CircuitException;
 
+    @CjOpenport(usage = "分页我创建的洇取器")
+    List<AbsorberResult> pageMyAbsorber(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器类型。-1指所有洇取器；0指简单洇取器；2指地理洇取器；3余额洇取器", name = "type") int type,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页我创建的洇取器")
+    List<AbsorberResult> pageMyAbsorberByUsage(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "用途：\n" +
+                    "0网流管道\n" +
+                    "1地理感知器\n" +
+                    "2街道\n" +
+                    "3金证喷泉\n" +
+                    "4抢元宝", name = "usage") int usage,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页我参与的洇取器")
+    List<AbsorberResult> pageJioninAbsorberByUsage(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "用途：\n" +
+                    "0网流管道\n" +
+                    "1地理感知器\n" +
+                    "2街道\n" +
+                    "3金证喷泉\n" +
+                    "4抢元宝", name = "usage") int usage,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
     @CjOpenport(usage = "移除指定的洇取器")
     void removeAbsorber(
             ISecuritySession securitySession,

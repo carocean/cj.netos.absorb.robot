@@ -68,6 +68,16 @@ public interface AbsorberMapper {
 
     List<Absorber> pageWhere(@Param(value = "bankid") String bankid, @Param(value = "type") int type, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
+    List<Absorber> pageAnyByCreator(@Param(value = "creator") String creator, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    List<Absorber> pageByCreator(@Param(value = "creator") String creator, @Param(value = "type") int type, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    List<Absorber> pageByCreatorAndUsage(@Param(value = "creator") String creator, @Param(value = "usage") int usage, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    List<Absorber> pageAnyJioninAbsorberByUsage(@Param(value = "person") String person, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    List<Absorber> pageJioninAbsorberByUsage(@Param(value = "person") String person, @Param(value = "usage") int usage, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
     void stop(@Param(value = "id") String id, @Param(value = "exitCause") String exitCause);
 
     void start(@Param(value = "id") String id);
@@ -79,5 +89,6 @@ public interface AbsorberMapper {
     void updateAbsorbabler(@Param(value = "id") String id, @Param(value = "absorbabler") String absorbabler);
 
     void updateMaxRecipients(@Param(value = "id") String id, @Param(value = "maxRecipients") long maxRecipients);
+
 
 }

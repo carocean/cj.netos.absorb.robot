@@ -105,10 +105,38 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
+    public List<Absorber> pageMyAbsorber(String creator, int type, int limit, long offset) {
+        if (type == -1) {
+            return absorberMapper.pageAnyByCreator(creator, limit, offset);
+        }
+        return absorberMapper.pageByCreator(creator, type, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<Absorber> pageMyAbsorberByUsage(String creator, int usage, int limit, long offset) {
+        if (usage == -1) {
+            return absorberMapper.pageAnyByCreator(creator, limit, offset);
+        }
+        return absorberMapper.pageByCreatorAndUsage(creator, usage, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<Absorber> pageJioninAbsorberByUsage(String creator, int usage, int limit, long offset) {
+        if (usage == -1) {
+            return absorberMapper.pageAnyJioninAbsorberByUsage(creator, limit, offset);
+        }
+        return absorberMapper.pageJioninAbsorberByUsage(creator, usage, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
     public List<AbsorberBucket> pageAbsorberBucketInBullectin(DomainBulletin bulletin, int limit, int offset) {
         List<AbsorberBucket> buckets = absorberBucketMapper.pageAbsorberBucketGTEPrice(bulletin.getBucket().getBank(), bulletin.getBucket().getWaaPrice(), limit, offset);
         return buckets;
     }
+
 
     @CjTransaction
     @Override

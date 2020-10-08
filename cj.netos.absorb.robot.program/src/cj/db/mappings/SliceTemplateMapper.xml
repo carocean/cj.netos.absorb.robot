@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cj.netos.absorb.robot.mapper.SliceTemplateMapper">
+  <resultMap id="BaseResultMap" type="cj.netos.absorb.robot.model.SliceTemplate">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="ctime" jdbcType="VARCHAR" property="ctime" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="copyright" jdbcType="VARCHAR" property="copyright" />
+    <result column="max_absorbers" jdbcType="BIGINT" property="maxAbsorbers" />
+    <result column="owner_weight" jdbcType="BIGINT" property="ownerWeight" />
+    <result column="particip_weight" jdbcType="BIGINT" property="participWeight" />
+    <result column="ingeo_weight" jdbcType="BIGINT" property="ingeoWeight" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    id, `name`, ctime, note, copyright, max_absorbers, owner_weight, particip_weight, 
+    ingeo_weight
+  </sql>
+  <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.SliceTemplateExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from slice_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select 
+    <include refid="Base_Column_List" />
+    from slice_template
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from slice_template
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cj.netos.absorb.robot.model.SliceTemplateExample">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from slice_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cj.netos.absorb.robot.model.SliceTemplate">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into slice_template (id, `name`, ctime, 
+      note, copyright, max_absorbers, 
+      owner_weight, particip_weight, ingeo_weight
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR}, #{copyright,jdbcType=VARCHAR}, #{maxAbsorbers,jdbcType=BIGINT}, 
+      #{ownerWeight,jdbcType=BIGINT}, #{participWeight,jdbcType=BIGINT}, #{ingeoWeight,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.SliceTemplate">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into slice_template
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="copyright != null">
+        copyright,
+      </if>
+      <if test="maxAbsorbers != null">
+        max_absorbers,
+      </if>
+      <if test="ownerWeight != null">
+        owner_weight,
+      </if>
+      <if test="participWeight != null">
+        particip_weight,
+      </if>
+      <if test="ingeoWeight != null">
+        ingeo_weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="copyright != null">
+        #{copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="maxAbsorbers != null">
+        #{maxAbsorbers,jdbcType=BIGINT},
+      </if>
+      <if test="ownerWeight != null">
+        #{ownerWeight,jdbcType=BIGINT},
+      </if>
+      <if test="participWeight != null">
+        #{participWeight,jdbcType=BIGINT},
+      </if>
+      <if test="ingeoWeight != null">
+        #{ingeoWeight,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cj.netos.absorb.robot.model.SliceTemplateExample" resultType="java.lang.Long">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select count(*) from slice_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update slice_template
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.copyright != null">
+        copyright = #{record.copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxAbsorbers != null">
+        max_absorbers = #{record.maxAbsorbers,jdbcType=BIGINT},
+      </if>
+      <if test="record.ownerWeight != null">
+        owner_weight = #{record.ownerWeight,jdbcType=BIGINT},
+      </if>
+      <if test="record.participWeight != null">
+        particip_weight = #{record.participWeight,jdbcType=BIGINT},
+      </if>
+      <if test="record.ingeoWeight != null">
+        ingeo_weight = #{record.ingeoWeight,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update slice_template
+    set id = #{record.id,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR},
+      copyright = #{record.copyright,jdbcType=VARCHAR},
+      max_absorbers = #{record.maxAbsorbers,jdbcType=BIGINT},
+      owner_weight = #{record.ownerWeight,jdbcType=BIGINT},
+      particip_weight = #{record.participWeight,jdbcType=BIGINT},
+      ingeo_weight = #{record.ingeoWeight,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cj.netos.absorb.robot.model.SliceTemplate">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update slice_template
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="copyright != null">
+        copyright = #{copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="maxAbsorbers != null">
+        max_absorbers = #{maxAbsorbers,jdbcType=BIGINT},
+      </if>
+      <if test="ownerWeight != null">
+        owner_weight = #{ownerWeight,jdbcType=BIGINT},
+      </if>
+      <if test="participWeight != null">
+        particip_weight = #{participWeight,jdbcType=BIGINT},
+      </if>
+      <if test="ingeoWeight != null">
+        ingeo_weight = #{ingeoWeight,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cj.netos.absorb.robot.model.SliceTemplate">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update slice_template
+    set `name` = #{name,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      copyright = #{copyright,jdbcType=VARCHAR},
+      max_absorbers = #{maxAbsorbers,jdbcType=BIGINT},
+      owner_weight = #{ownerWeight,jdbcType=BIGINT},
+      particip_weight = #{participWeight,jdbcType=BIGINT},
+      ingeo_weight = #{ingeoWeight,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="page" parameterType="cj.netos.absorb.robot.model.SliceTemplate" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from slice_template
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+</mapper>

@@ -9,7 +9,7 @@
           <option name="driverClass" value="" />
           <option name="driverLibrary" value="" />
           <option name="driverType" value="MySQL" />
-          <option name="host" value="47.104.128.137" />
+          <option name="host" value="120.27.15.205" />
           <option name="id" value="cc3ff3ad68b848428c78b6a1971d007e" />
           <option name="name" value="netos.absorb.robot" />
           <option name="port" value="3306" />
@@ -170,6 +170,16 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="netos.absorb.robot#qrcode_slice">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="QrcodeSlice" />
+              <option name="tableComment" value="码片" />
+              <option name="tableName" value="qrcode_slice" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="netos.absorb.robot#recipients">
           <value>
             <TableInfo>
@@ -177,6 +187,36 @@
               <option name="domainName" value="Recipients" />
               <option name="tableComment" value="固定收件人&#10;对于动态的收件人也应按此信息生成，洇取器只认识固定收件人属性" />
               <option name="tableName" value="recipients" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#recipients_balance">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="RecipientsBalance" />
+              <option name="tableComment" value="洇取人余额。当recipients表的encourage_code=balance时为余额洇取器，本表才有对应记录&#10;余额的充值记录与其它洇取人一样在recipients_record中，提取记录也用该表&#10;" />
+              <option name="tableName" value="recipients_balance" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#recipients_balance_bill">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="RecipientsBalanceBill" />
+              <option name="tableComment" value="洇取者余额转出账单" />
+              <option name="tableName" value="recipients_balance_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#recipients_balance_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="RecipientsBalanceRecord" />
+              <option name="tableComment" value="洇取者余额转出记录" />
+              <option name="tableName" value="recipients_balance_record" />
             </TableInfo>
           </value>
         </entry>
@@ -190,6 +230,36 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="netos.absorb.robot#slice_batch">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="SliceBatch" />
+              <option name="tableComment" value="发码批次&#10;只有本批次的所有码片均发完才能再生成下一批次的码片&#10;其批次发码数量及消费情况在qrcode_slice中查" />
+              <option name="tableName" value="slice_batch" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#slice_prop">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="SliceProp" />
+              <option name="tableComment" value="码片的属性文本，一般先从模板复制过来，然后由发片人改动" />
+              <option name="tableName" value="slice_prop" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#slice_template">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="SliceTemplate" />
+              <option name="tableComment" value="模板显示控件用于渲染属性的二维码" />
+              <option name="tableName" value="slice_template" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="netos.absorb.robot#tail_bill">
           <value>
             <TableInfo>
@@ -197,6 +267,16 @@
               <option name="domainName" value="TailBill" />
               <option name="tableComment" value="尾金账单" />
               <option name="tableName" value="tail_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.absorb.robot#template_prop">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.absorb.robot" />
+              <option name="domainName" value="TemplateProp" />
+              <option name="tableComment" value="码片模板定义的属性文本" />
+              <option name="tableName" value="template_prop" />
             </TableInfo>
           </value>
         </entry>

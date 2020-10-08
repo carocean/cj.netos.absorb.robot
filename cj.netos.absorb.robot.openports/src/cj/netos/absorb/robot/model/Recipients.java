@@ -43,9 +43,15 @@ public class Recipients {
 
     /**
      * Column: encourage_code
-     * Remark: 激励代码，如 great like ingeo 等等
+     * Remark: 激励代码，如 great like ingeo balance,表示余额洇取器，一般指扫码占位于此，直到码被消费才替换为真实用户 等等
      */
     private String encourageCode;
+
+    /**
+     * Column: encourage_by
+     * Remark: 被什么激励。如果激励代码是pubSlice此处为码片标识
+     */
+    private String encourageBy;
 
     /**
      * Column: encourage_cause
@@ -119,6 +125,14 @@ public class Recipients {
 
     public void setEncourageCode(String encourageCode) {
         this.encourageCode = encourageCode == null ? null : encourageCode.trim();
+    }
+
+    public String getEncourageBy() {
+        return encourageBy;
+    }
+
+    public void setEncourageBy(String encourageBy) {
+        this.encourageBy = encourageBy == null ? null : encourageBy.trim();
     }
 
     public String getEncourageCause() {

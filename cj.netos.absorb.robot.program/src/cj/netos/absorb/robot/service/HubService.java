@@ -1,14 +1,16 @@
 package cj.netos.absorb.robot.service;
 
 import cj.netos.absorb.robot.*;
-import cj.netos.absorb.robot.bo.DomainBulletin;
-import cj.netos.absorb.robot.bo.LatLng;
-import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
-import cj.netos.absorb.robot.bo.RecipientsSummary;
+import cj.netos.absorb.robot.bo.*;
 import cj.netos.absorb.robot.mapper.*;
 import cj.netos.absorb.robot.model.*;
+import cj.netos.absorb.robot.result.QrcodeSliceResult;
+import cj.netos.absorb.robot.result.QrcodeSliceTemplateResult;
+import cj.netos.absorb.robot.result.TemplatePropResult;
 import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
+import cj.netos.rabbitmq.IRabbitMQProducer;
+import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
@@ -20,6 +22,7 @@ import cj.studio.orm.mybatis.annotation.CjTransaction;
 import cj.ultimate.gson2.com.google.gson.Gson;
 import cj.ultimate.gson2.com.google.gson.reflect.TypeToken;
 import cj.ultimate.util.StringUtil;
+import com.rabbitmq.client.AMQP;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -51,8 +54,24 @@ public class HubService implements IHubService {
     DomainBucketMapper domainBucketMapper;
     @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.DomainBillMapper")
     DomainBillMapper domainBillMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.SliceTemplateMapper")
+    SliceTemplateMapper sliceTemplateMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.TemplatePropMapper")
+    TemplatePropMapper templatePropMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.QrcodeSliceMapper")
+    QrcodeSliceMapper qrcodeSliceMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.SlicePropMapper")
+    SlicePropMapper slicePropMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.SliceBatchMapper")
+    SliceBatchMapper sliceBatchMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.RecipientsBalanceMapper")
+    RecipientsBalanceMapper recipientsBalanceMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.absorb.robot.mapper.RecipientsBalanceBillMapper")
+    RecipientsBalanceBillMapper recipientsBalanceBillMapper;
     @CjServiceSite
     IServiceSite site;
+    @CjServiceRef(refByName = "@.rabbitmq.producer.distributeAbsorbsToWallet")
+    IRabbitMQProducer rabbitMQProducer;
 
     @CjTransaction
     @Override
@@ -679,6 +698,7 @@ public class HubService implements IHubService {
         record.setRecipient(recipients.getPerson());
         record.setAbsorber(absorber.getId());
         record.setEncourageCause(recipients.getEncourageCause());
+        record.setEncourageBy(recipients.getEncourageBy());
         record.setEncourageCode(recipients.getEncourageCode());
         record.setRecipientsId(recipients.getId());
         if (result instanceof BankWithdrawResult) {
@@ -691,6 +711,7 @@ public class HubService implements IHubService {
             record.setRefsn(investRecord.getSn());
             record.setOrder(1);
         }
+
         record.setSn(new IdWorker().nextId());
 
         Calendar calendar = Calendar.getInstance();
@@ -865,5 +886,363 @@ public class HubService implements IHubService {
             return null;
         }
         return list.get(0);
+    }
+
+    @CjTransaction
+    @Override
+    public void configQrcodeSliceTemplate(List<QrcodeSliceTemplateBO> templates) {
+        emptySliceTemplate();
+        for (QrcodeSliceTemplateBO bo : templates) {
+            SliceTemplate template = bo.createTemplate();
+            sliceTemplateMapper.insert(template);
+            List<TemplateProp> props = bo.createProps();
+            for (TemplateProp prop : props) {
+                templatePropMapper.insert(prop);
+            }
+        }
+    }
+
+    @CjTransaction
+    @Override
+    public void emptySliceTemplate() {
+        SliceTemplateExample example = new SliceTemplateExample();
+        example.createCriteria();
+        sliceTemplateMapper.deleteByExample(example);
+        TemplatePropExample example1 = new TemplatePropExample();
+        example1.createCriteria();
+        templatePropMapper.deleteByExample(example1);
+    }
+
+    @CjTransaction
+    @Override
+    public boolean cannotCreateQrocdeSlice(String principal) {
+        //只要用户下存在state!=1的码片就不能创建新码片
+        QrcodeSliceExample example = new QrcodeSliceExample();
+        example.createCriteria().andCreatorEqualTo(principal).andStateNotEqualTo(1);
+        return this.qrcodeSliceMapper.countByExample(example) > 0;
+    }
+
+    @CjTransaction
+    @Override
+    public List<QrcodeSliceResult> createQrcodeSlice(String principal, String nickName, QrcodeSliceTemplateResult sliceTemplate, long expire, LatLng location, long radius, String originAbsorber, String originPerson, int count, String note) throws CircuitException {
+        SliceBatch batch = new SliceBatch();
+        batch.setCreator(principal);
+        batch.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        batch.setId(new IdWorker().nextId());
+        sliceBatchMapper.insert(batch);
+
+        String href = site.getProperty("qrcodeSlice.href");
+        List<QrcodeSliceResult> qrcodeSliceResults = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            QrcodeSlice slice = new QrcodeSlice();
+            slice.setBatchNo(batch.getId());
+            slice.setCreator(principal);
+            slice.setCtime(batch.getCtime());
+            slice.setExpire(expire);
+            slice.setId(new IdWorker().nextId());
+            slice.setLocation(location.toJson());
+            slice.setRadius(radius);
+            slice.setCname(nickName);
+            slice.setMaxAbsorbers(sliceTemplate.getMaxAbsorbers());
+            slice.setState(-1);
+            slice.setTemplate(sliceTemplate.getId());
+            slice.setNote(note);
+            slice.setOriginPerson(originPerson);
+            slice.setOriginAbsorber(originAbsorber);
+            slice.setHref(href);
+            qrcodeSliceMapper.insert(slice);
+
+            List<SliceProp> sliceProps = new ArrayList<>();
+            List<TemplatePropResult> props = sliceTemplate.getProperties();
+            for (TemplatePropResult r : props) {
+                SliceProp prop = new SliceProp();
+                prop.setPropId(r.getId());
+                prop.setName(r.getName());
+                prop.setValue(r.getValue());
+                prop.setNote(r.getNote());
+                prop.setQrcodeSlice(slice.getId());
+                slicePropMapper.insert(prop);
+                sliceProps.add(prop);
+            }
+            QrcodeSliceResult result = QrcodeSliceResult.createBy(slice, sliceProps);
+            qrcodeSliceResults.add(result);
+        }
+        return qrcodeSliceResults;
+    }
+
+    @CjTransaction
+    @Override
+    public void updateQrcodeSliceProperty(String principal, String slice, String propId, String propValue) {
+        slicePropMapper.update(slice, propId, propValue);
+    }
+
+    @CjTransaction
+    @Override
+    public QrcodeSliceTemplateResult getQrcodeSliceTemplate(String id) {
+        SliceTemplate template = this.sliceTemplateMapper.selectByPrimaryKey(id);
+        if (template == null) {
+            return null;
+        }
+        TemplatePropExample example = new TemplatePropExample();
+        example.createCriteria().andTemplateEqualTo(id);
+        List<TemplateProp> props = this.templatePropMapper.selectByExample(example);
+        return QrcodeSliceTemplateResult.createBy(template, props);
+    }
+
+    @CjTransaction
+    @Override
+    public List<QrcodeSliceTemplateResult> pageQrcodeSliceTemplate(int limit, long offset) {
+        List<SliceTemplate> list = this.sliceTemplateMapper.page(limit, offset);
+        List<QrcodeSliceTemplateResult> results = new ArrayList<>();
+        for (SliceTemplate template : list) {
+            TemplatePropExample example = new TemplatePropExample();
+            example.createCriteria().andTemplateEqualTo(template.getId());
+            List<TemplateProp> props = this.templatePropMapper.selectByExample(example);
+            QrcodeSliceTemplateResult result = QrcodeSliceTemplateResult.createBy(template, props);
+            results.add(result);
+        }
+        return results;
+    }
+
+    @CjTransaction
+    @Override
+    public List<SliceBatch> pageQrcodeSliceBatch(int limit, long offset) {
+        return sliceBatchMapper.page(limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<QrcodeSliceResult> pageQrcodeSlice(int limit, long offset) {
+        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.page(limit, offset);
+        List<QrcodeSliceResult> list = new ArrayList<>();
+        for (QrcodeSlice slice : qrcodeSlices) {
+            SlicePropExample example = new SlicePropExample();
+            example.createCriteria().andQrcodeSliceEqualTo(slice.getId());
+            List<SliceProp> props = slicePropMapper.selectByExample(example);
+            QrcodeSliceResult result = QrcodeSliceResult.createBy(slice, props);
+            list.add(result);
+        }
+        return list;
+    }
+
+    @CjTransaction
+    @Override
+    public List<QrcodeSliceResult> pageQrcodeSliceOfBatch(String batchno, int limit, long offset) {
+        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.pageByBatch(batchno, limit, offset);
+        List<QrcodeSliceResult> list = new ArrayList<>();
+        for (QrcodeSlice slice : qrcodeSlices) {
+            SlicePropExample example = new SlicePropExample();
+            example.createCriteria().andQrcodeSliceEqualTo(slice.getId());
+            List<SliceProp> props = slicePropMapper.selectByExample(example);
+            QrcodeSliceResult result = QrcodeSliceResult.createBy(slice, props);
+            list.add(result);
+        }
+        return list;
+    }
+
+    @CjTransaction
+    @Override
+    public QrcodeSliceResult getQrcodeSlice(String slice) {
+        QrcodeSlice qrcodeSlice = qrcodeSliceMapper.selectByPrimaryKey(slice);
+        if (qrcodeSlice == null) {
+            return null;
+        }
+        SlicePropExample example = new SlicePropExample();
+        example.createCriteria().andQrcodeSliceEqualTo(slice);
+        List<SliceProp> props = slicePropMapper.selectByExample(example);
+        QrcodeSliceResult result = QrcodeSliceResult.createBy(qrcodeSlice, props);
+        return result;
+    }
+
+    @CjTransaction
+    @Override
+    public void addQrcodeSliceRecipients(String principal, String absorberid, String qrcodeSlice) throws CircuitException {
+        Absorber absorber = getAbsorber(absorberid);
+        QrcodeSlice slice = getQrcodeSlice(qrcodeSlice);
+        if (absorber == null || slice == null || slice.getState() == 1) {
+            CJSystem.logging().info(getClass(), String.format("码片%s不存在或状态为已消费", qrcodeSlice));
+            return;
+        }
+        if (slice.getState() == -1) {
+            updateQrcodeSliceState(slice.getId(), 0);//修改状态为激活态
+        }
+
+        //如果是发码人创建的的洇取器，则只放余额洇取人，否则即放余额洇取人又发发码激历洇取人
+        if (!absorber.getCreator().equals(slice.getCreator())) {//参与的洇取器则添加发码激历洇取人
+            Recipients recipients = new Recipients();
+            recipients.setAbsorber(absorberid);
+            recipients.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+            recipients.setDesireAmount(0L);
+            recipients.setEncourageCode("pubSlice");
+            recipients.setEncourageCause("发码");
+            recipients.setEncourageBy(slice.getId());
+            recipients.setId(new IdWorker().nextId());
+            recipients.setPerson(slice.getCreator());
+            recipients.setPersonName(slice.getCname());
+            recipients.setWeight(new BigDecimal("0.00"));//权重为零，之后消费一个码片则添加一次权重
+            addRecipients(recipients);
+        }
+        //添加余额洇取人及余额
+        Recipients recipients = new Recipients();
+        recipients.setAbsorber(absorberid);
+        recipients.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        recipients.setDesireAmount(0L);
+        recipients.setEncourageCode("balance");
+        recipients.setEncourageCause("码片待消费");
+        recipients.setEncourageBy(slice.getId());
+        recipients.setId(new IdWorker().nextId());
+        recipients.setPerson(slice.getCreator());
+        recipients.setPersonName(slice.getCname());
+        recipients.setWeight(new BigDecimal(absorber.getState() == 0 ? "2.0" : "100.0"));
+        addRecipients(recipients);
+        //添加余额
+        RecipientsBalance balance = new RecipientsBalance();
+        balance.setId(new IdWorker().nextId());
+        balance.setRecipients(recipients.getId());
+        balance.setQrcodeSlice(slice.getId());
+        balance.setState(0);
+        balance.setAmount(new BigDecimal("0.00"));
+        recipientsBalanceMapper.insert(balance);
+    }
+
+    @CjTransaction
+    public void updateQrcodeSliceState(String slice, int state) {
+        qrcodeSliceMapper.updateState(slice, state);
+    }
+
+    @CjTransaction
+    @Override
+    public void consumeQrcodeSlice(String consumer, String nickName, QrcodeSlice qrcodeSlice) throws CircuitException {
+        //修改发码人在各个洇取器中的权重，要保证：但不是消费一个码片就修改全部，至到所有码片消费完才全部修改完
+        //处理当前码片的洇取人余额，并将洇取人修改为实际的消费者
+        //注意码片状态的修改
+        updateSlicePublisherWeight(qrcodeSlice);
+        doRecipientsBalance(consumer, nickName, qrcodeSlice);
+        updateQrcodeSliceState(qrcodeSlice.getId(), 1);
+    }
+
+    private void updateSlicePublisherWeight(QrcodeSlice qrcodeSlice) {
+        long countSliceInBatch = countSliceInBatch(qrcodeSlice.getBatchNo());
+        long countSliceConsumedInBatch = countConsumedSliceInBatch(qrcodeSlice.getBatchNo());
+        if (countSliceConsumedInBatch == countSliceInBatch) {
+            return;
+        }
+        double ratio = (countSliceConsumedInBatch + 1.0) / (countSliceInBatch * 1.0);
+        long countRecipientsInSlice = countRecipientsInSlice(qrcodeSlice.getId());
+        double demandUpdateRecipients = countRecipientsInSlice * ratio;
+        if (demandUpdateRecipients < 1) {
+            demandUpdateRecipients = 1;
+        }
+        //本次需要修改发码人的权重的数量
+        long demandUpdateRecipientsCount = (long) demandUpdateRecipients;
+        List<Recipients> recipients = recipientsMapper.listRecipientsWeightIsZeroOfEncourageBy("pubSlice", qrcodeSlice.getId(), demandUpdateRecipientsCount);
+        for (Recipients r : recipients) {
+            Absorber absorber = getAbsorber(r.getAbsorber());
+            if (absorber == null) {
+                continue;
+            }
+            updateRecipientsWeights(r.getId(), new BigDecimal(absorber.getState() == 0 ? "2.0" : "100.0"));
+        }
+    }
+
+    private long countRecipientsInSlice(String slice) {
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria().andEncourageByEqualTo(slice).andEncourageCodeEqualTo("pubSlice");
+        return recipientsMapper.countByExample(example);
+    }
+
+    private long countConsumedSliceInBatch(String batchNo) {
+        QrcodeSliceExample example = new QrcodeSliceExample();
+        example.createCriteria().andBatchNoEqualTo(batchNo).andStateEqualTo(1);
+        return qrcodeSliceMapper.countByExample(example);
+    }
+
+    private long countSliceInBatch(String batchNo) {
+        QrcodeSliceExample example = new QrcodeSliceExample();
+        example.createCriteria().andBatchNoEqualTo(batchNo);
+        return qrcodeSliceMapper.countByExample(example);
+    }
+
+    private void doRecipientsBalance(String consumer, String nickName, QrcodeSlice qrcodeSlice) throws CircuitException {
+        //将洇取人修改为消费者，并将余额转出、修改洇取人余额状态为1（停止接收到余额而采取直接洇取模式）
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria().andEncourageByEqualTo(qrcodeSlice.getId()).andEncourageCodeEqualTo("balance");
+        List<Recipients> recipients = recipientsMapper.selectByExample(example);
+        for (Recipients r : recipients) {
+            recipientsMapper.consumeSlice(r.getId(), consumer, nickName, "消费码片");
+            r.setEncourageCause("消费码片");
+            r.setPersonName(nickName);
+            r.setPerson(consumer);
+            recipientsBalanceMapper.updateState(qrcodeSlice.getId(), r.getId(), 1);
+            RecipientsBalance balance = getRecipientsBalnace(r.getId());
+            if (balance == null) {
+                continue;
+            }
+            if (balance.getAmount().compareTo(BigDecimal.ZERO) > 0) {
+                Absorber absorber = getAbsorber(r.getAbsorber());
+                RecipientsBalanceBill bill = new RecipientsBalanceBill();
+                bill.setAmount(balance.getAmount().multiply(new BigDecimal("-1.0")));
+                bill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+                bill.setPerson(r.getPerson());
+                bill.setPersonName(r.getPersonName());
+                bill.setTitle("码片余额转结");
+                bill.setOrder(1);
+                bill.setSn(new IdWorker().nextId());
+                recipientsBalanceBillMapper.insert(bill);
+                BigDecimal balanceAmount = balance.getAmount().add(bill.getAmount());
+                bill.setBalance(balanceAmount);
+                recipientsBalanceMapper.updateBalance(r.getId(), balanceAmount);
+                r.setEncourageCause("码片余额转结");
+                RecipientsAbsorbBill abill = new RecipientsAbsorbBill(absorber.getTitle(), r, balance.getAmount(), bill.getSn());
+                transToWallet(abill);
+            }
+        }
+    }
+
+    @CjTransaction
+    @Override
+    public void addRecipientsBalanceBill(Recipients recipients, RecipientsBalance balance, BigDecimal money) {
+        RecipientsBalanceBill bill = new RecipientsBalanceBill();
+        bill.setAmount(money);
+        bill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        bill.setPerson(recipients.getPerson());
+        bill.setPersonName(recipients.getPersonName());
+        bill.setTitle("洇取到码片余额");
+        bill.setOrder(0);
+        bill.setSn(new IdWorker().nextId());
+        recipientsBalanceBillMapper.insert(bill);
+        BigDecimal nextBalance = balance.getAmount().add(bill.getAmount());
+        bill.setBalance(nextBalance);
+        recipientsBalanceMapper.updateBalance(recipients.getId(), nextBalance);
+    }
+
+    @CjTransaction
+    @Override
+    public RecipientsBalance getRecipientsBalnace(String recipientsid) {
+        RecipientsBalanceExample example = new RecipientsBalanceExample();
+        example.createCriteria().andRecipientsEqualTo(recipientsid);
+        List<RecipientsBalance> balances = recipientsBalanceMapper.selectByExample(example);
+        if (balances.isEmpty()) {
+            return null;
+        }
+        return balances.get(0);
+    }
+
+    @CjTransaction
+    @Override
+    public void updateRecipientsBalance(String recipientsid, BigDecimal amount) {
+        recipientsBalanceMapper.updateBalance(recipientsid, amount);
+    }
+
+    private void transToWallet(RecipientsAbsorbBill bill) throws CircuitException {
+        AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
+                .type("/robot/hub.ports")
+                .headers(new HashMap() {
+                    {
+                        put("command", "distribute");
+                    }
+                }).build();
+        byte[] body = new Gson().toJson(bill).getBytes();
+        rabbitMQProducer.publish("wallet", properties, body);
     }
 }

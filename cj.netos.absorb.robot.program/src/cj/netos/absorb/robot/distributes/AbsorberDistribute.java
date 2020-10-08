@@ -2,10 +2,8 @@ package cj.netos.absorb.robot.distributes;
 
 import cj.netos.absorb.robot.*;
 import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
-import cj.netos.absorb.robot.model.Absorber;
-import cj.netos.absorb.robot.model.AbsorberBucket;
-import cj.netos.absorb.robot.model.InvestRecord;
-import cj.netos.absorb.robot.model.Recipients;
+import cj.netos.absorb.robot.model.*;
+import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
 import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.EcmException;
@@ -106,9 +104,9 @@ public class AbsorberDistribute implements IAbsorberDistribute {
                 break;
             }
             for (Recipients recipients : simpleRecipientsList) {
-                BigDecimal weight=recipients.getWeight();
-                if (weight == null ) {
-                    weight=BigDecimal.ZERO;
+                BigDecimal weight = recipients.getWeight();
+                if (weight == null) {
+                    weight = BigDecimal.ZERO;
                 }
                 totalWeightsOfRecipients = totalWeightsOfRecipients.add(weight);
             }
@@ -128,7 +126,13 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             }
             realDistributeAmount = realDistributeAmount.add(money);
             //生成并存储收取记录单并生成收取账单并将其提交给mhub，钱包会侦听收取单，并存入到收取人的洇金账户
-            transToWallet(absorber, recipients, result, money);
+            RecipientsAbsorbBill bill = absorberHubService.addRecipientsRecord(absorber, recipients, result, money);
+            RecipientsBalance balance = absorberHubService.getRecipientsBalnace(recipients.getId());
+            if (balance != null && balance.getState() == 0) {//积累到余额而跳过转出钱包
+                absorberHubService.addRecipientsBalanceBill(recipients,balance,money);
+                continue;
+            }
+            transToWallet(bill);
         }
         return realDistributeAmount;
     }
@@ -165,15 +169,22 @@ public class AbsorberDistribute implements IAbsorberDistribute {
                 }
                 realDistributeAmount = realDistributeAmount.add(money);
                 //生成并存储收取记录单并生成收取账单并将其提交给mhub，钱包会侦听收取单，并存入到收取人的洇金账户
-                transToWallet(absorber, recipients, result, money);
+                RecipientsAbsorbBill bill = absorberHubService.addRecipientsRecord(absorber, recipients, result, money);
+                RecipientsBalance balance = absorberHubService.getRecipientsBalnace(recipients.getId());
+                if (balance != null && balance.getState() == 0) {//积累到余额而跳过转出钱包
+                    absorberHubService.addRecipientsBalanceBill(recipients,balance,money);
+                    continue;
+                }
+                transToWallet(bill);
             }
             _offset_simple += recipientsList.size();
         }
         return realDistributeAmount;
     }
 
-    private void transToWallet(Absorber absorber, Recipients recipients, Object result, BigDecimal money) throws CircuitException {
-        RecipientsAbsorbBill bill = absorberHubService.addRecipientsRecord(absorber, recipients, result, money);
+
+
+    private void transToWallet(RecipientsAbsorbBill bill) throws CircuitException {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/robot/hub.ports")
                 .headers(new HashMap() {

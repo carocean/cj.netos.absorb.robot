@@ -3,7 +3,6 @@ package cj.netos.absorb.robot.mapper;
 import cj.netos.absorb.robot.model.RecipientsRecord;
 import cj.netos.absorb.robot.model.RecipientsRecordExample;
 import org.apache.ibatis.annotations.Param;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -85,5 +84,4 @@ public interface RecipientsRecordMapper {
     BigDecimal totalRecipientsRecordByOrderWhere2(@Param(value = "absorber") String absorber, @Param(value = "recipientsId") String recipientsId, @Param(value = "order") int order, @Param(value = "year") int year, @Param(value = "month") int month);
 
     List<RecipientsRecord> pageRecipientsWhere3(@Param(value = "absorber") String absorber, @Param(value = "recipientsId") String recipientsId, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
-
 }

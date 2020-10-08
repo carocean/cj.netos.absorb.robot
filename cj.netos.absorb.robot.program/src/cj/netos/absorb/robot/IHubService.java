@@ -1,11 +1,11 @@
 package cj.netos.absorb.robot;
 
-import cj.netos.absorb.robot.bo.DomainBulletin;
-import cj.netos.absorb.robot.bo.LatLng;
-import cj.netos.absorb.robot.bo.RecipientsAbsorbBill;
-import cj.netos.absorb.robot.bo.RecipientsSummary;
+import cj.netos.absorb.robot.bo.*;
 import cj.netos.absorb.robot.model.*;
+import cj.netos.absorb.robot.result.QrcodeSliceResult;
+import cj.netos.absorb.robot.result.QrcodeSliceTemplateResult;
 import cj.studio.ecm.net.CircuitException;
+import cj.studio.orm.mybatis.annotation.CjTransaction;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -126,5 +126,39 @@ public interface IHubService {
     List<Absorber> pageMyAbsorberByUsage(String principal, int usage, int limit, long offset);
 
     List<Absorber> pageJioninAbsorberByUsage(String principal, int usage, int limit, long offset);
+
+    void configQrcodeSliceTemplate(List<QrcodeSliceTemplateBO> templates);
+
+    void emptySliceTemplate();
+
+    List<QrcodeSliceResult> createQrcodeSlice(String principal, String nickName,  QrcodeSliceTemplateResult sliceTemplate, long expire, LatLng location, long radius, String originAbsorber, String originPerson, int count, String note) throws CircuitException;
+
+    void updateQrcodeSliceProperty(String principal,String slice, String propId, String propValue);
+
+    QrcodeSliceTemplateResult getQrcodeSliceTemplate(String id);
+
+    List<QrcodeSliceTemplateResult> pageQrcodeSliceTemplate(int limit, long offset);
+
+    List<SliceBatch> pageQrcodeSliceBatch(int limit, long offset);
+
+    List<QrcodeSliceResult> pageQrcodeSlice(int limit, long offset);
+
+    void addQrcodeSliceRecipients(String principal,String absorberid, String qrcodeSlice) throws CircuitException;
+
+    boolean cannotCreateQrocdeSlice(String principal);
+
+    List<QrcodeSliceResult> pageQrcodeSliceOfBatch(String batchno, int limit, long offset);
+
+    QrcodeSliceResult getQrcodeSlice(String slice);
+
+    void consumeQrcodeSlice(String consumer,String nickName, QrcodeSlice qrcodeSlice) throws CircuitException;
+
+    @CjTransaction
+    void addRecipientsBalanceBill(Recipients recipients, RecipientsBalance balance, BigDecimal money);
+
+    @CjTransaction
+    RecipientsBalance getRecipientsBalnace(String recipientsid);
+
+    void updateRecipientsBalance(String recipientsid, BigDecimal amount);
 
 }

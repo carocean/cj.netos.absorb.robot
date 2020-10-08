@@ -48,6 +48,12 @@ public class RecipientsRecord {
     private String encourageCode;
 
     /**
+     * Column: encourage_by
+     * Remark: 被什么激励。如果激励代码是pubSlice此处为码片标识
+     */
+    private String encourageBy;
+
+    /**
      * Column: encourage_cause
      * Remark: 对应recipients的相应字段
      */
@@ -55,7 +61,7 @@ public class RecipientsRecord {
 
     /**
      * Column: order
-     * Remark: 0 银行投资withdraw_record\n1 投资者投资invest_record
+     * Remark: 类型 0 银行投资withdraw_record 1 投资者投资invest_record
      */
     private Integer order;
 
@@ -131,6 +137,14 @@ public class RecipientsRecord {
 
     public void setEncourageCode(String encourageCode) {
         this.encourageCode = encourageCode == null ? null : encourageCode.trim();
+    }
+
+    public String getEncourageBy() {
+        return encourageBy;
+    }
+
+    public void setEncourageBy(String encourageBy) {
+        this.encourageBy = encourageBy == null ? null : encourageBy.trim();
     }
 
     public String getEncourageCause() {

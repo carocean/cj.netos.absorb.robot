@@ -10,6 +10,7 @@
     <result column="refsn" jdbcType="VARCHAR" property="refsn" />
     <result column="absorber" jdbcType="VARCHAR" property="absorber" />
     <result column="encourage_code" jdbcType="VARCHAR" property="encourageCode" />
+    <result column="encourage_by" jdbcType="VARCHAR" property="encourageBy" />
     <result column="encourage_cause" jdbcType="VARCHAR" property="encourageCause" />
     <result column="order" jdbcType="INTEGER" property="order" />
     <result column="recipients_id" jdbcType="VARCHAR" property="recipientsId" />
@@ -78,8 +79,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, recipient, amount, ctime, refsn, absorber, encourage_code, encourage_cause, `order`, 
-    recipients_id, `year`, `month`
+    sn, recipient, amount, ctime, refsn, absorber, encourage_code, encourage_by, encourage_cause, 
+    `order`, recipients_id, `year`, `month`
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.RecipientsRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -119,14 +120,14 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into recipients_record (sn, recipient, amount, 
       ctime, refsn, absorber, 
-      encourage_code, encourage_cause, `order`, 
-      recipients_id, `year`, `month`
-      )
+      encourage_code, encourage_by, encourage_cause, 
+      `order`, recipients_id, `year`, 
+      `month`)
     values (#{sn,jdbcType=VARCHAR}, #{recipient,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
       #{ctime,jdbcType=VARCHAR}, #{refsn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, 
-      #{encourageCode,jdbcType=VARCHAR}, #{encourageCause,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, 
-      #{recipientsId,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}
-      )
+      #{encourageCode,jdbcType=VARCHAR}, #{encourageBy,jdbcType=VARCHAR}, #{encourageCause,jdbcType=VARCHAR}, 
+      #{order,jdbcType=INTEGER}, #{recipientsId,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
+      #{month,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.RecipientsRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -152,6 +153,9 @@
       </if>
       <if test="encourageCode != null">
         encourage_code,
+      </if>
+      <if test="encourageBy != null">
+        encourage_by,
       </if>
       <if test="encourageCause != null">
         encourage_cause,
@@ -190,6 +194,9 @@
       </if>
       <if test="encourageCode != null">
         #{encourageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="encourageBy != null">
+        #{encourageBy,jdbcType=VARCHAR},
       </if>
       <if test="encourageCause != null">
         #{encourageCause,jdbcType=VARCHAR},
@@ -240,6 +247,9 @@
       <if test="record.encourageCode != null">
         encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.encourageBy != null">
+        encourage_by = #{record.encourageBy,jdbcType=VARCHAR},
+      </if>
       <if test="record.encourageCause != null">
         encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
       </if>
@@ -270,6 +280,7 @@
       refsn = #{record.refsn,jdbcType=VARCHAR},
       absorber = #{record.absorber,jdbcType=VARCHAR},
       encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
+      encourage_by = #{record.encourageBy,jdbcType=VARCHAR},
       encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
       `order` = #{record.order,jdbcType=INTEGER},
       recipients_id = #{record.recipientsId,jdbcType=VARCHAR},
@@ -301,6 +312,9 @@
       <if test="encourageCode != null">
         encourage_code = #{encourageCode,jdbcType=VARCHAR},
       </if>
+      <if test="encourageBy != null">
+        encourage_by = #{encourageBy,jdbcType=VARCHAR},
+      </if>
       <if test="encourageCause != null">
         encourage_cause = #{encourageCause,jdbcType=VARCHAR},
       </if>
@@ -328,6 +342,7 @@
       refsn = #{refsn,jdbcType=VARCHAR},
       absorber = #{absorber,jdbcType=VARCHAR},
       encourage_code = #{encourageCode,jdbcType=VARCHAR},
+      encourage_by = #{encourageBy,jdbcType=VARCHAR},
       encourage_cause = #{encourageCause,jdbcType=VARCHAR},
       `order` = #{order,jdbcType=INTEGER},
       recipients_id = #{recipientsId,jdbcType=VARCHAR},

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cj.netos.absorb.robot.mapper.QrcodeSliceMapper">
+  <resultMap id="BaseResultMap" type="cj.netos.absorb.robot.model.QrcodeSlice">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="href" jdbcType="VARCHAR" property="href" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="consumer" jdbcType="VARCHAR" property="consumer" />
+    <result column="template" jdbcType="VARCHAR" property="template" />
+    <result column="ctime" jdbcType="VARCHAR" property="ctime" />
+    <result column="expire" jdbcType="BIGINT" property="expire" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="radius" jdbcType="BIGINT" property="radius" />
+    <result column="max_absorbers" jdbcType="BIGINT" property="maxAbsorbers" />
+    <result column="origin_absorber" jdbcType="VARCHAR" property="originAbsorber" />
+    <result column="origin_person" jdbcType="VARCHAR" property="originPerson" />
+    <result column="batch_no" jdbcType="VARCHAR" property="batchNo" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    id, href, creator, cname, consumer, `template`, ctime, expire, `location`, radius, 
+    max_absorbers, origin_absorber, origin_person, batch_no, `state`, note
+  </sql>
+  <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.QrcodeSliceExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from qrcode_slice
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select 
+    <include refid="Base_Column_List" />
+    from qrcode_slice
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from qrcode_slice
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cj.netos.absorb.robot.model.QrcodeSliceExample">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from qrcode_slice
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cj.netos.absorb.robot.model.QrcodeSlice">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into qrcode_slice (id, href, creator, 
+      cname, consumer, `template`, 
+      ctime, expire, `location`, 
+      radius, max_absorbers, origin_absorber, 
+      origin_person, batch_no, `state`, 
+      note)
+    values (#{id,jdbcType=VARCHAR}, #{href,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{cname,jdbcType=VARCHAR}, #{consumer,jdbcType=VARCHAR}, #{template,jdbcType=VARCHAR}, 
+      #{ctime,jdbcType=VARCHAR}, #{expire,jdbcType=BIGINT}, #{location,jdbcType=VARCHAR}, 
+      #{radius,jdbcType=BIGINT}, #{maxAbsorbers,jdbcType=BIGINT}, #{originAbsorber,jdbcType=VARCHAR}, 
+      #{originPerson,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.QrcodeSlice">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into qrcode_slice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="href != null">
+        href,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="consumer != null">
+        consumer,
+      </if>
+      <if test="template != null">
+        `template`,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="expire != null">
+        expire,
+      </if>
+      <if test="location != null">
+        `location`,
+      </if>
+      <if test="radius != null">
+        radius,
+      </if>
+      <if test="maxAbsorbers != null">
+        max_absorbers,
+      </if>
+      <if test="originAbsorber != null">
+        origin_absorber,
+      </if>
+      <if test="originPerson != null">
+        origin_person,
+      </if>
+      <if test="batchNo != null">
+        batch_no,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="href != null">
+        #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="consumer != null">
+        #{consumer,jdbcType=VARCHAR},
+      </if>
+      <if test="template != null">
+        #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null">
+        #{expire,jdbcType=BIGINT},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="radius != null">
+        #{radius,jdbcType=BIGINT},
+      </if>
+      <if test="maxAbsorbers != null">
+        #{maxAbsorbers,jdbcType=BIGINT},
+      </if>
+      <if test="originAbsorber != null">
+        #{originAbsorber,jdbcType=VARCHAR},
+      </if>
+      <if test="originPerson != null">
+        #{originPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cj.netos.absorb.robot.model.QrcodeSliceExample" resultType="java.lang.Long">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select count(*) from qrcode_slice
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update qrcode_slice
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.href != null">
+        href = #{record.href,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cname != null">
+        cname = #{record.cname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumer != null">
+        consumer = #{record.consumer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.template != null">
+        `template` = #{record.template,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expire != null">
+        expire = #{record.expire,jdbcType=BIGINT},
+      </if>
+      <if test="record.location != null">
+        `location` = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.radius != null">
+        radius = #{record.radius,jdbcType=BIGINT},
+      </if>
+      <if test="record.maxAbsorbers != null">
+        max_absorbers = #{record.maxAbsorbers,jdbcType=BIGINT},
+      </if>
+      <if test="record.originAbsorber != null">
+        origin_absorber = #{record.originAbsorber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originPerson != null">
+        origin_person = #{record.originPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchNo != null">
+        batch_no = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        `state` = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update qrcode_slice
+    set id = #{record.id,jdbcType=VARCHAR},
+      href = #{record.href,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      cname = #{record.cname,jdbcType=VARCHAR},
+      consumer = #{record.consumer,jdbcType=VARCHAR},
+      `template` = #{record.template,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=VARCHAR},
+      expire = #{record.expire,jdbcType=BIGINT},
+      `location` = #{record.location,jdbcType=VARCHAR},
+      radius = #{record.radius,jdbcType=BIGINT},
+      max_absorbers = #{record.maxAbsorbers,jdbcType=BIGINT},
+      origin_absorber = #{record.originAbsorber,jdbcType=VARCHAR},
+      origin_person = #{record.originPerson,jdbcType=VARCHAR},
+      batch_no = #{record.batchNo,jdbcType=VARCHAR},
+      `state` = #{record.state,jdbcType=INTEGER},
+      note = #{record.note,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cj.netos.absorb.robot.model.QrcodeSlice">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update qrcode_slice
+    <set>
+      <if test="href != null">
+        href = #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null">
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="consumer != null">
+        consumer = #{consumer,jdbcType=VARCHAR},
+      </if>
+      <if test="template != null">
+        `template` = #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null">
+        expire = #{expire,jdbcType=BIGINT},
+      </if>
+      <if test="location != null">
+        `location` = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="radius != null">
+        radius = #{radius,jdbcType=BIGINT},
+      </if>
+      <if test="maxAbsorbers != null">
+        max_absorbers = #{maxAbsorbers,jdbcType=BIGINT},
+      </if>
+      <if test="originAbsorber != null">
+        origin_absorber = #{originAbsorber,jdbcType=VARCHAR},
+      </if>
+      <if test="originPerson != null">
+        origin_person = #{originPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cj.netos.absorb.robot.model.QrcodeSlice">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update qrcode_slice
+    set href = #{href,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      cname = #{cname,jdbcType=VARCHAR},
+      consumer = #{consumer,jdbcType=VARCHAR},
+      `template` = #{template,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=VARCHAR},
+      expire = #{expire,jdbcType=BIGINT},
+      `location` = #{location,jdbcType=VARCHAR},
+      radius = #{radius,jdbcType=BIGINT},
+      max_absorbers = #{maxAbsorbers,jdbcType=BIGINT},
+      origin_absorber = #{originAbsorber,jdbcType=VARCHAR},
+      origin_person = #{originPerson,jdbcType=VARCHAR},
+      batch_no = #{batchNo,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="page" parameterType="cj.netos.absorb.robot.model.QrcodeSlice" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from qrcode_slice
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageByBatch" parameterType="cj.netos.absorb.robot.model.QrcodeSlice" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from qrcode_slice
+    where batch_no = #{batchNo,jdbcType=VARCHAR}
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+  <update id="updateState" parameterType="cj.netos.absorb.robot.model.QrcodeSlice">
+    update qrcode_slice
+    set
+      `state` = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

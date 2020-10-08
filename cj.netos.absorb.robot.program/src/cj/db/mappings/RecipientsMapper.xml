@@ -10,6 +10,7 @@
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
     <result column="weight" jdbcType="DECIMAL" property="weight" />
     <result column="encourage_code" jdbcType="VARCHAR" property="encourageCode" />
+    <result column="encourage_by" jdbcType="VARCHAR" property="encourageBy" />
     <result column="encourage_cause" jdbcType="VARCHAR" property="encourageCause" />
     <result column="desire_amount" jdbcType="BIGINT" property="desireAmount" />
     <result column="distance" jdbcType="DECIMAL" property="distance" />
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, person, absorber, person_name, ctime, weight, encourage_code, encourage_cause, 
+    id, person, absorber, person_name, ctime, weight, encourage_code, encourage_by, encourage_cause, 
     desire_amount, distance
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.RecipientsExample" resultMap="BaseResultMap">
@@ -117,12 +118,12 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into recipients (id, person, absorber, 
       person_name, ctime, weight, 
-      encourage_code, encourage_cause, desire_amount, 
-      distance)
+      encourage_code, encourage_by, encourage_cause, 
+      desire_amount, distance)
     values (#{id,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, 
       #{personName,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, #{weight,jdbcType=DECIMAL}, 
-      #{encourageCode,jdbcType=VARCHAR}, #{encourageCause,jdbcType=VARCHAR}, #{desireAmount,jdbcType=BIGINT}, 
-      #{distance,jdbcType=DECIMAL})
+      #{encourageCode,jdbcType=VARCHAR}, #{encourageBy,jdbcType=VARCHAR}, #{encourageCause,jdbcType=VARCHAR}, 
+      #{desireAmount,jdbcType=BIGINT}, #{distance,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.Recipients">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -148,6 +149,9 @@
       </if>
       <if test="encourageCode != null">
         encourage_code,
+      </if>
+      <if test="encourageBy != null">
+        encourage_by,
       </if>
       <if test="encourageCause != null">
         encourage_cause,
@@ -180,6 +184,9 @@
       </if>
       <if test="encourageCode != null">
         #{encourageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="encourageBy != null">
+        #{encourageBy,jdbcType=VARCHAR},
       </if>
       <if test="encourageCause != null">
         #{encourageCause,jdbcType=VARCHAR},
@@ -224,6 +231,9 @@
       <if test="record.encourageCode != null">
         encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.encourageBy != null">
+        encourage_by = #{record.encourageBy,jdbcType=VARCHAR},
+      </if>
       <if test="record.encourageCause != null">
         encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
       </if>
@@ -248,6 +258,7 @@
       ctime = #{record.ctime,jdbcType=VARCHAR},
       weight = #{record.weight,jdbcType=DECIMAL},
       encourage_code = #{record.encourageCode,jdbcType=VARCHAR},
+      encourage_by = #{record.encourageBy,jdbcType=VARCHAR},
       encourage_cause = #{record.encourageCause,jdbcType=VARCHAR},
       desire_amount = #{record.desireAmount,jdbcType=BIGINT},
       distance = #{record.distance,jdbcType=DECIMAL}
@@ -277,6 +288,9 @@
       <if test="encourageCode != null">
         encourage_code = #{encourageCode,jdbcType=VARCHAR},
       </if>
+      <if test="encourageBy != null">
+        encourage_by = #{encourageBy,jdbcType=VARCHAR},
+      </if>
       <if test="encourageCause != null">
         encourage_cause = #{encourageCause,jdbcType=VARCHAR},
       </if>
@@ -298,6 +312,7 @@
       ctime = #{ctime,jdbcType=VARCHAR},
       weight = #{weight,jdbcType=DECIMAL},
       encourage_code = #{encourageCode,jdbcType=VARCHAR},
+      encourage_by = #{encourageBy,jdbcType=VARCHAR},
       encourage_cause = #{encourageCause,jdbcType=VARCHAR},
       desire_amount = #{desireAmount,jdbcType=BIGINT},
       distance = #{distance,jdbcType=DECIMAL}
@@ -364,5 +379,22 @@
     where absorber = #{absorber,jdbcType=VARCHAR}
     and person = #{person,jdbcType=VARCHAR}
     and encourage_code = #{encourageCode,jdbcType=VARCHAR}
+  </update>
+  <select id="listRecipientsWeightIsZeroOfEncourageBy" parameterType="cj.netos.absorb.robot.model.Recipients" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from recipients
+    where encourage_by = #{encourageBy,jdbcType=VARCHAR}
+    and encourage_code = #{encourageCode,jdbcType=VARCHAR}
+    order by weight desc
+    limit #{limit}
+  </select>
+  <update id="consumeSlice" parameterType="cj.netos.absorb.robot.model.Recipients">
+    update recipients
+    set
+      person = #{person,jdbcType=VARCHAR},
+      person_name = #{personName,jdbcType=VARCHAR},
+      encourage_cause = #{encourageCause,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

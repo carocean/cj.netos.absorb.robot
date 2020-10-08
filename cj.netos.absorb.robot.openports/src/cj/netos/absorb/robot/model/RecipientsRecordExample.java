@@ -618,6 +618,76 @@ public class RecipientsRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andEncourageByIsNull() {
+            addCriterion("encourage_by is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByIsNotNull() {
+            addCriterion("encourage_by is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByEqualTo(String value) {
+            addCriterion("encourage_by =", value, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByNotEqualTo(String value) {
+            addCriterion("encourage_by <>", value, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByGreaterThan(String value) {
+            addCriterion("encourage_by >", value, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByGreaterThanOrEqualTo(String value) {
+            addCriterion("encourage_by >=", value, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByLessThan(String value) {
+            addCriterion("encourage_by <", value, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByLessThanOrEqualTo(String value) {
+            addCriterion("encourage_by <=", value, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByLike(String value) {
+            addCriterion("encourage_by like", value, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByNotLike(String value) {
+            addCriterion("encourage_by not like", value, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByIn(List<String> values) {
+            addCriterion("encourage_by in", values, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByNotIn(List<String> values) {
+            addCriterion("encourage_by not in", values, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByBetween(String value1, String value2) {
+            addCriterion("encourage_by between", value1, value2, "encourageBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncourageByNotBetween(String value1, String value2) {
+            addCriterion("encourage_by not between", value1, value2, "encourageBy");
+            return (Criteria) this;
+        }
+
         public Criteria andEncourageCauseIsNull() {
             addCriterion("encourage_cause is null");
             return (Criteria) this;

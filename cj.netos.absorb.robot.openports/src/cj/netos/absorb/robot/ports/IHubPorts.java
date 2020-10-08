@@ -2,12 +2,16 @@ package cj.netos.absorb.robot.ports;
 
 import cj.netos.absorb.robot.bo.DomainBulletin;
 import cj.netos.absorb.robot.bo.LatLng;
+import cj.netos.absorb.robot.bo.QrcodeSliceTemplateBO;
 import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.*;
 import cj.netos.absorb.robot.result.AbsorberResult;
+import cj.netos.absorb.robot.result.QrcodeSliceResult;
+import cj.netos.absorb.robot.result.QrcodeSliceTemplateResult;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.IOpenportService;
 import cj.studio.openport.ISecuritySession;
+import cj.studio.openport.PKeyInRequest;
 import cj.studio.openport.annotations.CjOpenport;
 import cj.studio.openport.annotations.CjOpenportParameter;
 import cj.studio.openport.annotations.CjOpenports;
@@ -372,5 +376,86 @@ public interface IHubPorts extends IOpenportService {
     @CjOpenport(usage = "统计洇取器的人数，仅对简单洇取器有效")
     long countRecipients(ISecuritySession securitySession,
                          @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "配置码片模板，每次调用则覆盖，必须管理员权限", command = "post")
+    void configQrcodeSliceTemplate(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "模板配置信息", name = "templates", elementType = QrcodeSliceTemplateBO.class, in = PKeyInRequest.content, simpleModelFile = "/qrcodeSliceTemplate.md") List<QrcodeSliceTemplateBO> templates
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "创建码片，依据模板。如果需要修改属性请在其后调用更新属性的方法")
+    List<QrcodeSliceResult> createQrcodeSlice(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "码片模板标识", name = "template") String template,
+            @CjOpenportParameter(usage = "码片过期时间，0为永不过期", name = "expire") long expire,
+            @CjOpenportParameter(usage = "发码的位置", name = "location") LatLng location,
+            @CjOpenportParameter(usage = "半径，用于搜范围内的猫", name = "radius") long radius,
+            @CjOpenportParameter(usage = "生成码片依据的猫（洇取器）的标识，如果有的话", name = "originAbsorber") String originAbsorber,
+            @CjOpenportParameter(usage = "生成码片依据的公众，必有。不论猫是否为空", name = "originPerson") String originPerson,
+            @CjOpenportParameter(usage = "要生成的本批码片数量", name = "count") int count,
+            @CjOpenportParameter(usage = "备注，在码片上显示", name = "note") String note
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "更新码片属性")
+    void updateQrcodeSliceProperty(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "码片标识", name = "slice") String slice,
+            @CjOpenportParameter(usage = "码片的属性标识", name = "propId") String propId,
+            @CjOpenportParameter(usage = "码片的属性值", name = "propValue") String propValue
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取码片模板")
+    QrcodeSliceTemplateResult getQrcodeSliceTemplate(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "码片模板标识", name = "id") String id
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页获取码片模板")
+    List<QrcodeSliceTemplateResult> pageQrcodeSliceTemplate(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页获取码片批次")
+    List<SliceBatch> pageQrcodeSliceBatch(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页获取当前用户创建的码片")
+    List<QrcodeSliceResult> pageQrcodeSlice(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取码片")
+    QrcodeSliceResult getQrcodeSlice(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "码片标识", name = "slice") String slice
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页获取当前用户创建的码片")
+    List<QrcodeSliceResult> pageQrcodeSliceOfBatch(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "批次标识", name = "batchno") String batchno,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "添加余额洇取人，该洇取人此时仅为以码片标识占位，如果已占位则什么也不做")
+    void addQrcodeSliceRecipients(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid,
+            @CjOpenportParameter(usage = "码片标识", name = "qrcodeSlice") String qrcodeSlice
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "当前访问者消费码片")
+    void consumeQrcodeSlice(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "码片标识", name = "qrcodeSlice") String qrcodeSlice
     ) throws CircuitException;
 }

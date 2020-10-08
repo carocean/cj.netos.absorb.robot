@@ -4,7 +4,6 @@ import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.Recipients;
 import cj.netos.absorb.robot.model.RecipientsExample;
 import org.apache.ibatis.annotations.Param;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -77,7 +76,9 @@ public interface RecipientsMapper {
 
     void updateWeights(@Param(value = "absorber") String absorber, @Param(value = "person") String person, @Param(value = "encourageCode") String encourageCode, @Param(value = "weight") BigDecimal weight);
 
-
     List<Recipients> page2(@Param(value = "absorber") String absorber, @Param(value = "person") String person, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
+    List<Recipients> listRecipientsWeightIsZeroOfEncourageBy(@Param(value = "encourageCode") String encourageCode, @Param(value = "encourageBy") String encourageBy, @Param(value = "limit") long limit);
+
+    void consumeSlice(@Param(value = "id") String id, @Param(value = "person") String person, @Param(value = "personName") String personName, @Param(value = "encourageCause") String encourageCause);
 }

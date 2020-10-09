@@ -67,4 +67,7 @@ public interface QrcodeSliceMapper {
     List<QrcodeSlice> pageByBatch(@Param(value = "batchNo") String batchNo, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
     void updateState(@Param(value = "id") String id, @Param(value = "state") int state);
+
+    void consume(@Param(value = "id") String id, @Param(value = "id") String consumer);
+
 }

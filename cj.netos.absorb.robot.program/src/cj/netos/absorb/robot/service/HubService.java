@@ -1064,7 +1064,7 @@ public class HubService implements IHubService {
             return;
         }
         if (slice.getState() == -1) {
-            updateQrcodeSliceState(slice.getId(), 0);//修改状态为激活态
+            qrcodeSliceMapper.updateState(slice.getId(), 0);//修改状态为激活态
         }
 
         //如果是发码人创建的的洇取器，则只放余额洇取人，否则即放余额洇取人又发发码激历洇取人
@@ -1106,11 +1106,6 @@ public class HubService implements IHubService {
     }
 
     @CjTransaction
-    public void updateQrcodeSliceState(String slice, int state) {
-        qrcodeSliceMapper.updateState(slice, state);
-    }
-
-    @CjTransaction
     @Override
     public void consumeQrcodeSlice(String consumer, String nickName, QrcodeSlice qrcodeSlice) throws CircuitException {
         //修改发码人在各个洇取器中的权重，要保证：但不是消费一个码片就修改全部，至到所有码片消费完才全部修改完
@@ -1118,7 +1113,7 @@ public class HubService implements IHubService {
         //注意码片状态的修改
         updateSlicePublisherWeight(qrcodeSlice);
         doRecipientsBalance(consumer, nickName, qrcodeSlice);
-        updateQrcodeSliceState(qrcodeSlice.getId(), 1);
+        qrcodeSliceMapper.consume(qrcodeSlice.getId(), consumer);
     }
 
     private void updateSlicePublisherWeight(QrcodeSlice qrcodeSlice) {

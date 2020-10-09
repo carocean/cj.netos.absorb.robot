@@ -418,4 +418,11 @@
       `state` = #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <update id="consume" parameterType="cj.netos.absorb.robot.model.QrcodeSlice">
+    update qrcode_slice
+    set
+      consumer = #{consumer,jdbcType=VARCHAR},
+      `state` = 1
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

@@ -408,6 +408,18 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
+    public boolean existsPubingSliceRecipients(String principal, String absorberid) {
+        RecipientsExample example = new RecipientsExample();
+        example.createCriteria()
+                .andAbsorberEqualTo(absorberid)
+                .andPersonEqualTo(principal)
+                .andEncourageCodeEqualTo("pubSlice")
+                .andWeightGreaterThan(BigDecimal.ZERO);
+        return recipientsMapper.countByExample(example) > 0;
+    }
+
+    @CjTransaction
+    @Override
     public void addWeightToRecipients(String principal, String absorberid) {
         RecipientsExample example = new RecipientsExample();
         example.createCriteria().andAbsorberEqualTo(absorberid).andPersonEqualTo(principal);

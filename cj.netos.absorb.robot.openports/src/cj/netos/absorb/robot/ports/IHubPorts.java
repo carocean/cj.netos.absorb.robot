@@ -453,6 +453,11 @@ public interface IHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "码片标识", name = "qrcodeSlice") String qrcodeSlice
     ) throws CircuitException;
 
+    @CjOpenport(usage = "是否存在发码人")
+    boolean existsPubSliceRecipients(ISecuritySession securitySession,
+                                     @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
+    ) throws CircuitException;
+
     @CjOpenport(usage = "当前访问者消费码片")
     void consumeQrcodeSlice(
             ISecuritySession securitySession,

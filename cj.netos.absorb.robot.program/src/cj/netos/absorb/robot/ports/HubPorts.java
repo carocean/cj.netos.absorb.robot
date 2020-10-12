@@ -685,10 +685,15 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public void addQrcodeSliceRecipients(ISecuritySession securitySession, String absorberid, String qrcodeSlice) throws CircuitException {
-        if (hubService.existsRecipients(securitySession.principal(), absorberid)) {
+        if (hubService.existsPubingSliceRecipients(securitySession.principal(), absorberid)) {
             return;
         }
         hubService.addQrcodeSliceRecipients(securitySession.principal(), absorberid, qrcodeSlice);
+    }
+
+    @Override
+    public boolean existsPubSliceRecipients(ISecuritySession securitySession, String absorberid) throws CircuitException {
+        return hubService.existsPubingSliceRecipients(securitySession.principal(), absorberid);
     }
 
     @Override

@@ -1197,9 +1197,9 @@ public class HubService implements IHubService {
                 bill.setTitle("码片余额转结");
                 bill.setOrder(1);
                 bill.setSn(new IdWorker().nextId());
-                recipientsBalanceBillMapper.insert(bill);
                 BigDecimal balanceAmount = balance.getAmount().add(bill.getAmount());
                 bill.setBalance(balanceAmount);
+                recipientsBalanceBillMapper.insert(bill);
                 recipientsBalanceMapper.updateBalance(r.getId(), balanceAmount);
                 r.setEncourageCause("码片余额转结");
                 RecipientsAbsorbBill abill = new RecipientsAbsorbBill(absorber.getTitle(), r, balance.getAmount(), bill.getSn());
@@ -1221,9 +1221,9 @@ public class HubService implements IHubService {
         bill.setTitle("洇取到码片余额");
         bill.setOrder(0);
         bill.setSn(new IdWorker().nextId());
-        recipientsBalanceBillMapper.insert(bill);
         BigDecimal nextBalance = balance.getAmount().add(bill.getAmount());
         bill.setBalance(nextBalance);
+        recipientsBalanceBillMapper.insert(bill);
         recipientsBalanceMapper.updateBalance(recipients.getId(), nextBalance);
     }
 

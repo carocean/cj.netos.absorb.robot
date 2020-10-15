@@ -1188,6 +1188,8 @@ public class HubService implements IHubService {
             if (balance.getAmount().compareTo(BigDecimal.ZERO) > 0) {
                 Absorber absorber = getAbsorber(r.getAbsorber());
                 RecipientsBalanceBill bill = new RecipientsBalanceBill();
+                bill.setQrcodeSlice(r.getEncourageBy());
+                bill.setRecipientsId(r.getId());
                 bill.setAmount(balance.getAmount().multiply(new BigDecimal("-1.0")));
                 bill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
                 bill.setPerson(r.getPerson());
@@ -1210,6 +1212,8 @@ public class HubService implements IHubService {
     @Override
     public void addRecipientsBalanceBill(Recipients recipients, RecipientsBalance balance, BigDecimal money) {
         RecipientsBalanceBill bill = new RecipientsBalanceBill();
+        bill.setQrcodeSlice(recipients.getEncourageBy());
+        bill.setRecipientsId(recipients.getId());
         bill.setAmount(money);
         bill.setCtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         bill.setPerson(recipients.getPerson());

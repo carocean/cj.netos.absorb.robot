@@ -7,6 +7,8 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="person" jdbcType="VARCHAR" property="person" />
     <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="recipients_id" jdbcType="VARCHAR" property="recipientsId" />
+    <result column="qrcode_slice" jdbcType="VARCHAR" property="qrcodeSlice" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="balance" jdbcType="DECIMAL" property="balance" />
     <result column="order" jdbcType="INTEGER" property="order" />
@@ -75,7 +77,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, title, person, person_name, amount, balance, `order`, ref_sn, ctime
+    sn, title, person, person_name, recipients_id, qrcode_slice, amount, balance, `order`, 
+    ref_sn, ctime
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.RecipientsBalanceBillExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -114,13 +117,13 @@
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.RecipientsBalanceBill">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into recipients_balance_bill (sn, title, person, 
-      person_name, amount, balance, 
-      `order`, ref_sn, ctime
-      )
+      person_name, recipients_id, qrcode_slice, 
+      amount, balance, `order`, 
+      ref_sn, ctime)
     values (#{sn,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, 
-      #{personName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, 
-      #{order,jdbcType=INTEGER}, #{refSn,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}
-      )
+      #{personName,jdbcType=VARCHAR}, #{recipientsId,jdbcType=VARCHAR}, #{qrcodeSlice,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, #{order,jdbcType=INTEGER}, 
+      #{refSn,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.RecipientsBalanceBill">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -137,6 +140,12 @@
       </if>
       <if test="personName != null">
         person_name,
+      </if>
+      <if test="recipientsId != null">
+        recipients_id,
+      </if>
+      <if test="qrcodeSlice != null">
+        qrcode_slice,
       </if>
       <if test="amount != null">
         amount,
@@ -166,6 +175,12 @@
       </if>
       <if test="personName != null">
         #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientsId != null">
+        #{recipientsId,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeSlice != null">
+        #{qrcodeSlice,jdbcType=VARCHAR},
       </if>
       <if test="amount != null">
         #{amount,jdbcType=DECIMAL},
@@ -207,6 +222,12 @@
       <if test="record.personName != null">
         person_name = #{record.personName,jdbcType=VARCHAR},
       </if>
+      <if test="record.recipientsId != null">
+        recipients_id = #{record.recipientsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcodeSlice != null">
+        qrcode_slice = #{record.qrcodeSlice,jdbcType=VARCHAR},
+      </if>
       <if test="record.amount != null">
         amount = #{record.amount,jdbcType=DECIMAL},
       </if>
@@ -234,6 +255,8 @@
       title = #{record.title,jdbcType=VARCHAR},
       person = #{record.person,jdbcType=VARCHAR},
       person_name = #{record.personName,jdbcType=VARCHAR},
+      recipients_id = #{record.recipientsId,jdbcType=VARCHAR},
+      qrcode_slice = #{record.qrcodeSlice,jdbcType=VARCHAR},
       amount = #{record.amount,jdbcType=DECIMAL},
       balance = #{record.balance,jdbcType=DECIMAL},
       `order` = #{record.order,jdbcType=INTEGER},
@@ -255,6 +278,12 @@
       </if>
       <if test="personName != null">
         person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientsId != null">
+        recipients_id = #{recipientsId,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeSlice != null">
+        qrcode_slice = #{qrcodeSlice,jdbcType=VARCHAR},
       </if>
       <if test="amount != null">
         amount = #{amount,jdbcType=DECIMAL},
@@ -280,6 +309,8 @@
     set title = #{title,jdbcType=VARCHAR},
       person = #{person,jdbcType=VARCHAR},
       person_name = #{personName,jdbcType=VARCHAR},
+      recipients_id = #{recipientsId,jdbcType=VARCHAR},
+      qrcode_slice = #{qrcodeSlice,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=DECIMAL},
       balance = #{balance,jdbcType=DECIMAL},
       `order` = #{order,jdbcType=INTEGER},

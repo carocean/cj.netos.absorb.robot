@@ -31,6 +31,18 @@ public class RecipientsBalanceBill {
     private String personName;
 
     /**
+     * Column: recipients_id
+     * Remark: 洇取人标识
+     */
+    private String recipientsId;
+
+    /**
+     * Column: qrcode_slice
+     * Remark: 码片标识
+     */
+    private String qrcodeSlice;
+
+    /**
      * Column: amount
      * Remark: 金额
      */
@@ -89,6 +101,22 @@ public class RecipientsBalanceBill {
 
     public void setPersonName(String personName) {
         this.personName = personName == null ? null : personName.trim();
+    }
+
+    public String getRecipientsId() {
+        return recipientsId;
+    }
+
+    public void setRecipientsId(String recipientsId) {
+        this.recipientsId = recipientsId == null ? null : recipientsId.trim();
+    }
+
+    public String getQrcodeSlice() {
+        return qrcodeSlice;
+    }
+
+    public void setQrcodeSlice(String qrcodeSlice) {
+        this.qrcodeSlice = qrcodeSlice == null ? null : qrcodeSlice.trim();
     }
 
     public BigDecimal getAmount() {

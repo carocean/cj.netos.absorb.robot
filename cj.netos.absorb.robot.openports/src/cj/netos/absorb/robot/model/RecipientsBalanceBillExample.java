@@ -418,6 +418,146 @@ public class RecipientsBalanceBillExample {
             return (Criteria) this;
         }
 
+        public Criteria andRecipientsIdIsNull() {
+            addCriterion("recipients_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdIsNotNull() {
+            addCriterion("recipients_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdEqualTo(String value) {
+            addCriterion("recipients_id =", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdNotEqualTo(String value) {
+            addCriterion("recipients_id <>", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdGreaterThan(String value) {
+            addCriterion("recipients_id >", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdGreaterThanOrEqualTo(String value) {
+            addCriterion("recipients_id >=", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdLessThan(String value) {
+            addCriterion("recipients_id <", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdLessThanOrEqualTo(String value) {
+            addCriterion("recipients_id <=", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdLike(String value) {
+            addCriterion("recipients_id like", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdNotLike(String value) {
+            addCriterion("recipients_id not like", value, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdIn(List<String> values) {
+            addCriterion("recipients_id in", values, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdNotIn(List<String> values) {
+            addCriterion("recipients_id not in", values, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdBetween(String value1, String value2) {
+            addCriterion("recipients_id between", value1, value2, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecipientsIdNotBetween(String value1, String value2) {
+            addCriterion("recipients_id not between", value1, value2, "recipientsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceIsNull() {
+            addCriterion("qrcode_slice is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceIsNotNull() {
+            addCriterion("qrcode_slice is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceEqualTo(String value) {
+            addCriterion("qrcode_slice =", value, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceNotEqualTo(String value) {
+            addCriterion("qrcode_slice <>", value, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceGreaterThan(String value) {
+            addCriterion("qrcode_slice >", value, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceGreaterThanOrEqualTo(String value) {
+            addCriterion("qrcode_slice >=", value, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceLessThan(String value) {
+            addCriterion("qrcode_slice <", value, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceLessThanOrEqualTo(String value) {
+            addCriterion("qrcode_slice <=", value, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceLike(String value) {
+            addCriterion("qrcode_slice like", value, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceNotLike(String value) {
+            addCriterion("qrcode_slice not like", value, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceIn(List<String> values) {
+            addCriterion("qrcode_slice in", values, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceNotIn(List<String> values) {
+            addCriterion("qrcode_slice not in", values, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceBetween(String value1, String value2) {
+            addCriterion("qrcode_slice between", value1, value2, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrcodeSliceNotBetween(String value1, String value2) {
+            addCriterion("qrcode_slice not between", value1, value2, "qrcodeSlice");
+            return (Criteria) this;
+        }
+
         public Criteria andAmountIsNull() {
             addCriterion("amount is null");
             return (Criteria) this;

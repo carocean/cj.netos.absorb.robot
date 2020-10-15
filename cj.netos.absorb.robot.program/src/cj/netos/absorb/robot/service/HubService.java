@@ -1197,6 +1197,7 @@ public class HubService implements IHubService {
                 bill.setTitle("码片余额转结");
                 bill.setOrder(1);
                 bill.setSn(new IdWorker().nextId());
+                bill.setAbsorber(r.getAbsorber());
                 BigDecimal balanceAmount = balance.getAmount().add(bill.getAmount());
                 bill.setBalance(balanceAmount);
                 recipientsBalanceBillMapper.insert(bill);
@@ -1221,6 +1222,7 @@ public class HubService implements IHubService {
         bill.setTitle("洇取到码片余额");
         bill.setOrder(0);
         bill.setSn(new IdWorker().nextId());
+        bill.setAbsorber(recipients.getAbsorber());
         BigDecimal nextBalance = balance.getAmount().add(bill.getAmount());
         bill.setBalance(nextBalance);
         recipientsBalanceBillMapper.insert(bill);

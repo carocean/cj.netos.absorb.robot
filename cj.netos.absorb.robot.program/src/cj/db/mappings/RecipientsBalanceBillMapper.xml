@@ -9,6 +9,7 @@
     <result column="person_name" jdbcType="VARCHAR" property="personName" />
     <result column="recipients_id" jdbcType="VARCHAR" property="recipientsId" />
     <result column="qrcode_slice" jdbcType="VARCHAR" property="qrcodeSlice" />
+    <result column="absorber" jdbcType="VARCHAR" property="absorber" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="balance" jdbcType="DECIMAL" property="balance" />
     <result column="order" jdbcType="INTEGER" property="order" />
@@ -77,8 +78,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, title, person, person_name, recipients_id, qrcode_slice, amount, balance, `order`, 
-    ref_sn, ctime
+    sn, title, person, person_name, recipients_id, qrcode_slice, absorber, amount, balance, 
+    `order`, ref_sn, ctime
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.RecipientsBalanceBillExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -118,12 +119,14 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into recipients_balance_bill (sn, title, person, 
       person_name, recipients_id, qrcode_slice, 
-      amount, balance, `order`, 
-      ref_sn, ctime)
+      absorber, amount, balance, 
+      `order`, ref_sn, ctime
+      )
     values (#{sn,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, 
       #{personName,jdbcType=VARCHAR}, #{recipientsId,jdbcType=VARCHAR}, #{qrcodeSlice,jdbcType=VARCHAR}, 
-      #{amount,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, #{order,jdbcType=INTEGER}, 
-      #{refSn,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR})
+      #{absorber,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, 
+      #{order,jdbcType=INTEGER}, #{refSn,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.RecipientsBalanceBill">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -146,6 +149,9 @@
       </if>
       <if test="qrcodeSlice != null">
         qrcode_slice,
+      </if>
+      <if test="absorber != null">
+        absorber,
       </if>
       <if test="amount != null">
         amount,
@@ -181,6 +187,9 @@
       </if>
       <if test="qrcodeSlice != null">
         #{qrcodeSlice,jdbcType=VARCHAR},
+      </if>
+      <if test="absorber != null">
+        #{absorber,jdbcType=VARCHAR},
       </if>
       <if test="amount != null">
         #{amount,jdbcType=DECIMAL},
@@ -228,6 +237,9 @@
       <if test="record.qrcodeSlice != null">
         qrcode_slice = #{record.qrcodeSlice,jdbcType=VARCHAR},
       </if>
+      <if test="record.absorber != null">
+        absorber = #{record.absorber,jdbcType=VARCHAR},
+      </if>
       <if test="record.amount != null">
         amount = #{record.amount,jdbcType=DECIMAL},
       </if>
@@ -257,6 +269,7 @@
       person_name = #{record.personName,jdbcType=VARCHAR},
       recipients_id = #{record.recipientsId,jdbcType=VARCHAR},
       qrcode_slice = #{record.qrcodeSlice,jdbcType=VARCHAR},
+      absorber = #{record.absorber,jdbcType=VARCHAR},
       amount = #{record.amount,jdbcType=DECIMAL},
       balance = #{record.balance,jdbcType=DECIMAL},
       `order` = #{record.order,jdbcType=INTEGER},
@@ -285,6 +298,9 @@
       <if test="qrcodeSlice != null">
         qrcode_slice = #{qrcodeSlice,jdbcType=VARCHAR},
       </if>
+      <if test="absorber != null">
+        absorber = #{absorber,jdbcType=VARCHAR},
+      </if>
       <if test="amount != null">
         amount = #{amount,jdbcType=DECIMAL},
       </if>
@@ -311,6 +327,7 @@
       person_name = #{personName,jdbcType=VARCHAR},
       recipients_id = #{recipientsId,jdbcType=VARCHAR},
       qrcode_slice = #{qrcodeSlice,jdbcType=VARCHAR},
+      absorber = #{absorber,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=DECIMAL},
       balance = #{balance,jdbcType=DECIMAL},
       `order` = #{order,jdbcType=INTEGER},

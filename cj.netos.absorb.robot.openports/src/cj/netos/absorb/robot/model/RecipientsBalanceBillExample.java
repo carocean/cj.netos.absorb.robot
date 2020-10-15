@@ -558,6 +558,76 @@ public class RecipientsBalanceBillExample {
             return (Criteria) this;
         }
 
+        public Criteria andAbsorberIsNull() {
+            addCriterion("absorber is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberIsNotNull() {
+            addCriterion("absorber is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberEqualTo(String value) {
+            addCriterion("absorber =", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberNotEqualTo(String value) {
+            addCriterion("absorber <>", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberGreaterThan(String value) {
+            addCriterion("absorber >", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberGreaterThanOrEqualTo(String value) {
+            addCriterion("absorber >=", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberLessThan(String value) {
+            addCriterion("absorber <", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberLessThanOrEqualTo(String value) {
+            addCriterion("absorber <=", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberLike(String value) {
+            addCriterion("absorber like", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberNotLike(String value) {
+            addCriterion("absorber not like", value, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberIn(List<String> values) {
+            addCriterion("absorber in", values, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberNotIn(List<String> values) {
+            addCriterion("absorber not in", values, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberBetween(String value1, String value2) {
+            addCriterion("absorber between", value1, value2, "absorber");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorberNotBetween(String value1, String value2) {
+            addCriterion("absorber not between", value1, value2, "absorber");
+            return (Criteria) this;
+        }
+
         public Criteria andAmountIsNull() {
             addCriterion("amount is null");
             return (Criteria) this;

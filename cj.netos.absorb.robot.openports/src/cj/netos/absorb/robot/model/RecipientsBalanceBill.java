@@ -43,6 +43,12 @@ public class RecipientsBalanceBill {
     private String qrcodeSlice;
 
     /**
+     * Column: absorber
+     * Remark: 洇取器标识
+     */
+    private String absorber;
+
+    /**
      * Column: amount
      * Remark: 金额
      */
@@ -117,6 +123,14 @@ public class RecipientsBalanceBill {
 
     public void setQrcodeSlice(String qrcodeSlice) {
         this.qrcodeSlice = qrcodeSlice == null ? null : qrcodeSlice.trim();
+    }
+
+    public String getAbsorber() {
+        return absorber;
+    }
+
+    public void setAbsorber(String absorber) {
+        this.absorber = absorber == null ? null : absorber.trim();
     }
 
     public BigDecimal getAmount() {

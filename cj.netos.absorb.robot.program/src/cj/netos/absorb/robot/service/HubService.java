@@ -413,8 +413,7 @@ public class HubService implements IHubService {
         example.createCriteria()
                 .andAbsorberEqualTo(absorberid)
                 .andPersonEqualTo(principal)
-                .andEncourageCodeEqualTo("pubSlice")
-                .andWeightGreaterThan(BigDecimal.ZERO);
+                .andEncourageCodeEqualTo("pubSlice");
         return recipientsMapper.countByExample(example) > 0;
     }
 

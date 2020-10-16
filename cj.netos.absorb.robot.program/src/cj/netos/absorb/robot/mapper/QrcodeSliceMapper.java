@@ -68,5 +68,5 @@ public interface QrcodeSliceMapper {
 
     void updateState(@Param(value = "id") String id, @Param(value = "state") int state);
 
-    void consume(@Param(value = "id") String id, @Param(value = "id") String consumer);
+    void consume(@Param(value = "id") String id, @Param(value = "consumer") String consumer);
 }

@@ -9,10 +9,12 @@ import cj.netos.absorb.robot.result.AbsorberResult;
 import cj.netos.absorb.robot.result.QrcodeSliceResult;
 import cj.netos.absorb.robot.result.QrcodeSliceTemplateResult;
 import cj.studio.ecm.net.CircuitException;
+import cj.studio.openport.AccessTokenIn;
 import cj.studio.openport.IOpenportService;
 import cj.studio.openport.ISecuritySession;
 import cj.studio.openport.PKeyInRequest;
 import cj.studio.openport.annotations.CjOpenport;
+import cj.studio.openport.annotations.CjOpenportAppSecurity;
 import cj.studio.openport.annotations.CjOpenportParameter;
 import cj.studio.openport.annotations.CjOpenports;
 
@@ -461,6 +463,15 @@ public interface IHubPorts extends IOpenportService {
     @CjOpenport(usage = "当前访问者消费码片")
     void consumeQrcodeSlice(
             ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "码片标识", name = "qrcodeSlice") String qrcodeSlice
+    ) throws CircuitException;
+
+    @CjOpenportAppSecurity
+    @CjOpenport(usage = "当前访问者消费码片",tokenIn = AccessTokenIn.nope)
+    void consumeQrcodeSlice2(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "消费者，公号", name = "consumer") String consumer,
+            @CjOpenportParameter(usage = "消费者昵称", name = "nickName") String nickName,
             @CjOpenportParameter(usage = "码片标识", name = "qrcodeSlice") String qrcodeSlice
     ) throws CircuitException;
 }

@@ -707,4 +707,16 @@ public class HubPorts implements IHubPorts {
         }
         hubService.consumeQrcodeSlice(securitySession.principal(), (String) securitySession.property("nickName"), slice);
     }
+
+    @Override
+    public void consumeQrcodeSlice2(ISecuritySession securitySession, String consumer, String nickName, String qrcodeSlice) throws CircuitException {
+        QrcodeSlice slice = hubService.getQrcodeSlice(qrcodeSlice);
+        if (slice == null) {
+            throw new CircuitException("404", String.format("码片不存在:%s", qrcodeSlice));
+        }
+        if (slice.getState() == 1) {
+            throw new CircuitException("500", String.format("码片已消费:%s", qrcodeSlice));
+        }
+        hubService.consumeQrcodeSlice(consumer, nickName, slice);
+    }
 }

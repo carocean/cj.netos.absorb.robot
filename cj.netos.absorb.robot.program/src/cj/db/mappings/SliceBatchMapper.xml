@@ -197,6 +197,7 @@
     select
     <include refid="Base_Column_List" />
     from slice_batch
+    where creator = #{creator,jdbcType=VARCHAR}
     order by ctime desc
     limit #{offset},#{limit}
   </select>

@@ -665,7 +665,7 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public List<SliceBatch> pageQrcodeSliceBatch(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
-        return hubService.pageQrcodeSliceBatch(limit, offset);
+        return hubService.pageQrcodeSliceBatch(securitySession.principal(),limit, offset);
     }
 
     @Override

@@ -1017,8 +1017,8 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public List<SliceBatch> pageQrcodeSliceBatch(int limit, long offset) {
-        return sliceBatchMapper.page(limit, offset);
+    public List<SliceBatch> pageQrcodeSliceBatch(String principal,int limit, long offset) {
+        return sliceBatchMapper.page(principal,limit, offset);
     }
 
     @CjTransaction

@@ -142,7 +142,7 @@ public interface IHubService {
 
     List<QrcodeSliceTemplateResult> pageQrcodeSliceTemplate(int limit, long offset);
 
-    List<SliceBatch> pageQrcodeSliceBatch(int limit, long offset);
+    List<SliceBatch> pageQrcodeSliceBatch(String principal,int limit, long offset);
 
     List<QrcodeSliceResult> pageQrcodeSlice(String principal,int limit, long offset);
 

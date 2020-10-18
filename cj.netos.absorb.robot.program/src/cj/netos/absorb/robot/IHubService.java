@@ -144,13 +144,13 @@ public interface IHubService {
 
     List<SliceBatch> pageQrcodeSliceBatch(int limit, long offset);
 
-    List<QrcodeSliceResult> pageQrcodeSlice(int limit, long offset);
+    List<QrcodeSliceResult> pageQrcodeSlice(String principal,int limit, long offset);
 
     void addQrcodeSliceRecipients(String principal,String absorberid, String qrcodeSlice) throws CircuitException;
 
     boolean cannotCreateQrocdeSlice(String principal);
 
-    List<QrcodeSliceResult> pageQrcodeSliceOfBatch(String batchno, int limit, long offset);
+    List<QrcodeSliceResult> pageQrcodeSliceOfBatch(String batchno, String principal,int limit, long offset);
 
     QrcodeSliceResult getQrcodeSlice(String slice);
 

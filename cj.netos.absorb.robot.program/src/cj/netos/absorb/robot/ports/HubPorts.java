@@ -670,7 +670,7 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public List<QrcodeSliceResult> pageQrcodeSlice(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
-        return hubService.pageQrcodeSlice(limit, offset);
+        return hubService.pageQrcodeSlice(securitySession.principal(),limit, offset);
     }
 
     @Override
@@ -680,7 +680,7 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public List<QrcodeSliceResult> pageQrcodeSliceOfBatch(ISecuritySession securitySession, String batchno, int limit, long offset) throws CircuitException {
-        return hubService.pageQrcodeSliceOfBatch(batchno, limit, offset);
+        return hubService.pageQrcodeSliceOfBatch(batchno,securitySession.principal(), limit, offset);
     }
 
     @Override

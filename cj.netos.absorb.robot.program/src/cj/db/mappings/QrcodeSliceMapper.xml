@@ -401,6 +401,7 @@
     select
     <include refid="Base_Column_List" />
     from qrcode_slice
+    where creator = #{creator,jdbcType=VARCHAR}
     order by ctime desc
     limit #{offset},#{limit}
   </select>
@@ -409,6 +410,7 @@
     <include refid="Base_Column_List" />
     from qrcode_slice
     where batch_no = #{batchNo,jdbcType=VARCHAR}
+    and creator = #{creator,jdbcType=VARCHAR}
     order by ctime desc
     limit #{offset},#{limit}
   </select>

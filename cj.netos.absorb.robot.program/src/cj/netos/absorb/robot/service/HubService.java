@@ -1023,8 +1023,8 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public List<QrcodeSliceResult> pageQrcodeSlice(int limit, long offset) {
-        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.page(limit, offset);
+    public List<QrcodeSliceResult> pageQrcodeSlice(String principal,int limit, long offset) {
+        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.page(principal,limit, offset);
         List<QrcodeSliceResult> list = new ArrayList<>();
         for (QrcodeSlice slice : qrcodeSlices) {
             SlicePropExample example = new SlicePropExample();
@@ -1038,8 +1038,8 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public List<QrcodeSliceResult> pageQrcodeSliceOfBatch(String batchno, int limit, long offset) {
-        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.pageByBatch(batchno, limit, offset);
+    public List<QrcodeSliceResult> pageQrcodeSliceOfBatch(String batchno,String principal, int limit, long offset) {
+        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.pageByBatch(batchno,principal, limit, offset);
         List<QrcodeSliceResult> list = new ArrayList<>();
         for (QrcodeSlice slice : qrcodeSlices) {
             SlicePropExample example = new SlicePropExample();

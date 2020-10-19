@@ -6,8 +6,9 @@
     <id column="qrcode_slice" jdbcType="VARCHAR" property="qrcodeSlice" />
     <id column="prop_id" jdbcType="VARCHAR" property="propId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -71,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    qrcode_slice, prop_id, `name`, note, `value`
+    qrcode_slice, prop_id, `name`, `type`, `value`, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.SlicePropExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -112,9 +113,9 @@
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.SliceProp">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into slice_prop (qrcode_slice, prop_id, `name`, 
-      note, `value`)
+      `type`, `value`, note)
     values (#{qrcodeSlice,jdbcType=VARCHAR}, #{propId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{note,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR})
+      #{type,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.SliceProp">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -129,11 +130,14 @@
       <if test="name != null">
         `name`,
       </if>
-      <if test="note != null">
-        note,
+      <if test="type != null">
+        `type`,
       </if>
       <if test="value != null">
         `value`,
+      </if>
+      <if test="note != null">
+        note,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -146,11 +150,14 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
-        #{note,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
       <if test="value != null">
         #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -174,11 +181,14 @@
       <if test="record.name != null">
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.note != null">
-        note = #{record.note,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        `type` = #{record.type,jdbcType=VARCHAR},
       </if>
       <if test="record.value != null">
         `value` = #{record.value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -191,8 +201,9 @@
     set qrcode_slice = #{record.qrcodeSlice,jdbcType=VARCHAR},
       prop_id = #{record.propId,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
-      note = #{record.note,jdbcType=VARCHAR},
-      `value` = #{record.value,jdbcType=VARCHAR}
+      `type` = #{record.type,jdbcType=VARCHAR},
+      `value` = #{record.value,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -204,11 +215,14 @@
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="note != null">
-        note = #{note,jdbcType=VARCHAR},
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
       </if>
       <if test="value != null">
         `value` = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
       </if>
     </set>
     where qrcode_slice = #{qrcodeSlice,jdbcType=VARCHAR}
@@ -218,8 +232,9 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update slice_prop
     set `name` = #{name,jdbcType=VARCHAR},
-      note = #{note,jdbcType=VARCHAR},
-      `value` = #{value,jdbcType=VARCHAR}
+      `type` = #{type,jdbcType=VARCHAR},
+      `value` = #{value,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
     where qrcode_slice = #{qrcodeSlice,jdbcType=VARCHAR}
       and prop_id = #{propId,jdbcType=VARCHAR}
   </update>

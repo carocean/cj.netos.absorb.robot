@@ -408,12 +408,13 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public boolean existsPubingSliceRecipients(String principal, String absorberid) {
+    public boolean canntPubingSliceRecipients(String principal, String absorberid) {
         RecipientsExample example = new RecipientsExample();
         example.createCriteria()
                 .andAbsorberEqualTo(absorberid)
                 .andPersonEqualTo(principal)
-                .andEncourageCodeEqualTo("pubSlice");
+                .andEncourageCodeEqualTo("pubSlice")
+                .andWeightEqualTo(BigDecimal.ZERO);
         return recipientsMapper.countByExample(example) > 0;
     }
 
@@ -971,6 +972,7 @@ public class HubService implements IHubService {
                 prop.setName(r.getName());
                 prop.setValue(r.getValue());
                 prop.setNote(r.getNote());
+                prop.setType(r.getType());
                 prop.setQrcodeSlice(slice.getId());
                 slicePropMapper.insert(prop);
                 sliceProps.add(prop);

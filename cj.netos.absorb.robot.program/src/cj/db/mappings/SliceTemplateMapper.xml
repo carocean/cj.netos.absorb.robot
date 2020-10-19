@@ -6,12 +6,13 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
     <result column="copyright" jdbcType="VARCHAR" property="copyright" />
     <result column="max_absorbers" jdbcType="BIGINT" property="maxAbsorbers" />
     <result column="owner_weight" jdbcType="BIGINT" property="ownerWeight" />
     <result column="particip_weight" jdbcType="BIGINT" property="participWeight" />
     <result column="ingeo_weight" jdbcType="BIGINT" property="ingeoWeight" />
+    <result column="background" jdbcType="VARCHAR" property="background" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -75,8 +76,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, `name`, ctime, note, copyright, max_absorbers, owner_weight, particip_weight, 
-    ingeo_weight
+    id, `name`, ctime, copyright, max_absorbers, owner_weight, particip_weight, ingeo_weight, 
+    background, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.SliceTemplateExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -115,13 +116,13 @@
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.SliceTemplate">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into slice_template (id, `name`, ctime, 
-      note, copyright, max_absorbers, 
-      owner_weight, particip_weight, ingeo_weight
-      )
+      copyright, max_absorbers, owner_weight, 
+      particip_weight, ingeo_weight, background, 
+      note)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
-      #{note,jdbcType=VARCHAR}, #{copyright,jdbcType=VARCHAR}, #{maxAbsorbers,jdbcType=BIGINT}, 
-      #{ownerWeight,jdbcType=BIGINT}, #{participWeight,jdbcType=BIGINT}, #{ingeoWeight,jdbcType=BIGINT}
-      )
+      #{copyright,jdbcType=VARCHAR}, #{maxAbsorbers,jdbcType=BIGINT}, #{ownerWeight,jdbcType=BIGINT}, 
+      #{participWeight,jdbcType=BIGINT}, #{ingeoWeight,jdbcType=BIGINT}, #{background,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.SliceTemplate">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -135,9 +136,6 @@
       </if>
       <if test="ctime != null">
         ctime,
-      </if>
-      <if test="note != null">
-        note,
       </if>
       <if test="copyright != null">
         copyright,
@@ -154,6 +152,12 @@
       <if test="ingeoWeight != null">
         ingeo_weight,
       </if>
+      <if test="background != null">
+        background,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -164,9 +168,6 @@
       </if>
       <if test="ctime != null">
         #{ctime,jdbcType=VARCHAR},
-      </if>
-      <if test="note != null">
-        #{note,jdbcType=VARCHAR},
       </if>
       <if test="copyright != null">
         #{copyright,jdbcType=VARCHAR},
@@ -182,6 +183,12 @@
       </if>
       <if test="ingeoWeight != null">
         #{ingeoWeight,jdbcType=BIGINT},
+      </if>
+      <if test="background != null">
+        #{background,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -205,9 +212,6 @@
       <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
       </if>
-      <if test="record.note != null">
-        note = #{record.note,jdbcType=VARCHAR},
-      </if>
       <if test="record.copyright != null">
         copyright = #{record.copyright,jdbcType=VARCHAR},
       </if>
@@ -223,6 +227,12 @@
       <if test="record.ingeoWeight != null">
         ingeo_weight = #{record.ingeoWeight,jdbcType=BIGINT},
       </if>
+      <if test="record.background != null">
+        background = #{record.background,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -234,12 +244,13 @@
     set id = #{record.id,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=VARCHAR},
-      note = #{record.note,jdbcType=VARCHAR},
       copyright = #{record.copyright,jdbcType=VARCHAR},
       max_absorbers = #{record.maxAbsorbers,jdbcType=BIGINT},
       owner_weight = #{record.ownerWeight,jdbcType=BIGINT},
       particip_weight = #{record.participWeight,jdbcType=BIGINT},
-      ingeo_weight = #{record.ingeoWeight,jdbcType=BIGINT}
+      ingeo_weight = #{record.ingeoWeight,jdbcType=BIGINT},
+      background = #{record.background,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -253,9 +264,6 @@
       </if>
       <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
-      </if>
-      <if test="note != null">
-        note = #{note,jdbcType=VARCHAR},
       </if>
       <if test="copyright != null">
         copyright = #{copyright,jdbcType=VARCHAR},
@@ -272,6 +280,12 @@
       <if test="ingeoWeight != null">
         ingeo_weight = #{ingeoWeight,jdbcType=BIGINT},
       </if>
+      <if test="background != null">
+        background = #{background,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -280,12 +294,13 @@
     update slice_template
     set `name` = #{name,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=VARCHAR},
-      note = #{note,jdbcType=VARCHAR},
       copyright = #{copyright,jdbcType=VARCHAR},
       max_absorbers = #{maxAbsorbers,jdbcType=BIGINT},
       owner_weight = #{ownerWeight,jdbcType=BIGINT},
       particip_weight = #{participWeight,jdbcType=BIGINT},
-      ingeo_weight = #{ingeoWeight,jdbcType=BIGINT}
+      ingeo_weight = #{ingeoWeight,jdbcType=BIGINT},
+      background = #{background,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="page" parameterType="cj.netos.absorb.robot.model.SliceTemplate" resultMap="BaseResultMap">

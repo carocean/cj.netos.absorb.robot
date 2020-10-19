@@ -347,76 +347,6 @@ public class SliceTemplateExample {
             return (Criteria) this;
         }
 
-        public Criteria andNoteIsNull() {
-            addCriterion("note is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteIsNotNull() {
-            addCriterion("note is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteEqualTo(String value) {
-            addCriterion("note =", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteNotEqualTo(String value) {
-            addCriterion("note <>", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteGreaterThan(String value) {
-            addCriterion("note >", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteGreaterThanOrEqualTo(String value) {
-            addCriterion("note >=", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteLessThan(String value) {
-            addCriterion("note <", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteLessThanOrEqualTo(String value) {
-            addCriterion("note <=", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteLike(String value) {
-            addCriterion("note like", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteNotLike(String value) {
-            addCriterion("note not like", value, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteIn(List<String> values) {
-            addCriterion("note in", values, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteNotIn(List<String> values) {
-            addCriterion("note not in", values, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteBetween(String value1, String value2) {
-            addCriterion("note between", value1, value2, "note");
-            return (Criteria) this;
-        }
-
-        public Criteria andNoteNotBetween(String value1, String value2) {
-            addCriterion("note not between", value1, value2, "note");
-            return (Criteria) this;
-        }
-
         public Criteria andCopyrightIsNull() {
             addCriterion("copyright is null");
             return (Criteria) this;
@@ -724,6 +654,146 @@ public class SliceTemplateExample {
 
         public Criteria andIngeoWeightNotBetween(Long value1, Long value2) {
             addCriterion("ingeo_weight not between", value1, value2, "ingeoWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundIsNull() {
+            addCriterion("background is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundIsNotNull() {
+            addCriterion("background is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundEqualTo(String value) {
+            addCriterion("background =", value, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundNotEqualTo(String value) {
+            addCriterion("background <>", value, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundGreaterThan(String value) {
+            addCriterion("background >", value, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundGreaterThanOrEqualTo(String value) {
+            addCriterion("background >=", value, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundLessThan(String value) {
+            addCriterion("background <", value, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundLessThanOrEqualTo(String value) {
+            addCriterion("background <=", value, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundLike(String value) {
+            addCriterion("background like", value, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundNotLike(String value) {
+            addCriterion("background not like", value, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundIn(List<String> values) {
+            addCriterion("background in", values, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundNotIn(List<String> values) {
+            addCriterion("background not in", values, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundBetween(String value1, String value2) {
+            addCriterion("background between", value1, value2, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andBackgroundNotBetween(String value1, String value2) {
+            addCriterion("background not between", value1, value2, "background");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIsNull() {
+            addCriterion("note is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIsNotNull() {
+            addCriterion("note is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteEqualTo(String value) {
+            addCriterion("note =", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotEqualTo(String value) {
+            addCriterion("note <>", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteGreaterThan(String value) {
+            addCriterion("note >", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteGreaterThanOrEqualTo(String value) {
+            addCriterion("note >=", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLessThan(String value) {
+            addCriterion("note <", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLessThanOrEqualTo(String value) {
+            addCriterion("note <=", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteLike(String value) {
+            addCriterion("note like", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotLike(String value) {
+            addCriterion("note not like", value, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteIn(List<String> values) {
+            addCriterion("note in", values, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotIn(List<String> values) {
+            addCriterion("note not in", values, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteBetween(String value1, String value2) {
+            addCriterion("note between", value1, value2, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteNotBetween(String value1, String value2) {
+            addCriterion("note not between", value1, value2, "note");
             return (Criteria) this;
         }
     }

@@ -20,6 +20,7 @@ import cj.studio.openport.annotations.CjOpenports;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @CjOpenports(usage = "洇取器集成器")
 public interface IHubPorts extends IOpenportService {
@@ -396,6 +397,7 @@ public interface IHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "生成码片依据的猫（洇取器）的标识，如果有的话", name = "originAbsorber") String originAbsorber,
             @CjOpenportParameter(usage = "生成码片依据的公众，必有。不论猫是否为空", name = "originPerson") String originPerson,
             @CjOpenportParameter(usage = "要生成的本批码片数量", name = "count") int count,
+            @CjOpenportParameter(usage = "自定义的模板属性，如果有", name = "props") Map<String,TemplateProp> props,
             @CjOpenportParameter(usage = "备注，在码片上显示", name = "note") String note
     ) throws CircuitException;
 
@@ -455,9 +457,9 @@ public interface IHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "码片标识", name = "qrcodeSlice") String qrcodeSlice
     ) throws CircuitException;
 
-    @CjOpenport(usage = "是否存在发码人")
-    boolean existsPubSliceRecipients(ISecuritySession securitySession,
-                                     @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
+    @CjOpenport(usage = "判断是否不能为指定的涸取器发码")
+    boolean canntPubSliceRecipients(ISecuritySession securitySession,
+                                    @CjOpenportParameter(usage = "洇取器标识", name = "absorberid") String absorberid
     ) throws CircuitException;
 
     @CjOpenport(usage = "当前访问者消费码片")
@@ -467,11 +469,16 @@ public interface IHubPorts extends IOpenportService {
     ) throws CircuitException;
 
     @CjOpenportAppSecurity
-    @CjOpenport(usage = "当前访问者消费码片",tokenIn = AccessTokenIn.nope)
+    @CjOpenport(usage = "当前访问者消费码片", tokenIn = AccessTokenIn.nope)
     void consumeQrcodeSlice2(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "消费者，公号", name = "consumer") String consumer,
             @CjOpenportParameter(usage = "消费者昵称", name = "nickName") String nickName,
             @CjOpenportParameter(usage = "码片标识", name = "qrcodeSlice") String qrcodeSlice
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "判断我是否可能创建新码片，如有未消费码片则不可创建")
+    boolean cannotCreateQrocdeSlice(
+            ISecuritySession securitySession
     ) throws CircuitException;
 }

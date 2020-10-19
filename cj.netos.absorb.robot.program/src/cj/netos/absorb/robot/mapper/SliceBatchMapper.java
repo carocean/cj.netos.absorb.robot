@@ -62,5 +62,5 @@ public interface SliceBatchMapper {
      */
     int updateByPrimaryKey(SliceBatch record);
 
-    List<SliceBatch> page(@Param(value = "creator") String creator,@Param(value = "limit") int limit, @Param(value = "offset") long offset);
+    List<SliceBatch> page(@Param(value = "creator") String creator, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 }

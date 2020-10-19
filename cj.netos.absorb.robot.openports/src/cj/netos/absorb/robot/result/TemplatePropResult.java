@@ -6,6 +6,7 @@ public class TemplatePropResult {
     String id;
     String name;
     String value;
+    String type;
     String note;
 
     public String getId() {
@@ -14,6 +15,14 @@ public class TemplatePropResult {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -46,6 +55,7 @@ public class TemplatePropResult {
         prop.setName(name);
         prop.setValue(value);
         prop.setNote(note);
+        prop.setType(type);
         prop.setTemplate(template);
         return prop;
     }

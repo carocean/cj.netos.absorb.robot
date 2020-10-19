@@ -15,6 +15,7 @@ public class QrcodeSliceTemplateBO {
     String id;
     String name;
     String note;
+    String background;
     String copyright;
     long maxAbsorbers;
     long ownerWeight;
@@ -28,6 +29,14 @@ public class QrcodeSliceTemplateBO {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 
     public String getName() {
@@ -102,6 +111,7 @@ public class QrcodeSliceTemplateBO {
         template.setIngeoWeight(ingeoWeight);
         template.setMaxAbsorbers(maxAbsorbers);
         template.setName(name);
+        template.setBackground(background);
         template.setOwnerWeight(ownerWeight);
         template.setParticipWeight(participWeight);
         template.setNote(note);

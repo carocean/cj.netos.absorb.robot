@@ -23,16 +23,22 @@ public class SliceProp {
     private String name;
 
     /**
-     * Column: note
-     * Remark: 描述
+     * Column: type
+     * Remark: 属性类型 text 为文本 image为图片 color为颜色 href为地址 ……
      */
-    private String note;
+    private String type;
 
     /**
      * Column: value
      * Remark: 属性值
      */
     private String value;
+
+    /**
+     * Column: note
+     * Remark: 描述
+     */
+    private String note;
 
     public String getQrcodeSlice() {
         return qrcodeSlice;
@@ -58,12 +64,12 @@ public class SliceProp {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getNote() {
-        return note;
+    public String getType() {
+        return type;
     }
 
-    public void setNote(String note) {
-        this.note = note == null ? null : note.trim();
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public String getValue() {
@@ -72,5 +78,13 @@ public class SliceProp {
 
     public void setValue(String value) {
         this.value = value == null ? null : value.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
     }
 }

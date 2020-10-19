@@ -23,11 +23,6 @@ public class SliceTemplate {
     private String ctime;
 
     /**
-     * Column: note
-     */
-    private String note;
-
-    /**
      * Column: copyright
      * Remark: 版权信息
      */
@@ -57,6 +52,17 @@ public class SliceTemplate {
      */
     private Long ingeoWeight;
 
+    /**
+     * Column: background
+     * Remark: 背景 如果以#开头，表示背景色 如果以http开头，表示图
+     */
+    private String background;
+
+    /**
+     * Column: note
+     */
+    private String note;
+
     public String getId() {
         return id;
     }
@@ -79,14 +85,6 @@ public class SliceTemplate {
 
     public void setCtime(String ctime) {
         this.ctime = ctime == null ? null : ctime.trim();
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note == null ? null : note.trim();
     }
 
     public String getCopyright() {
@@ -127,5 +125,21 @@ public class SliceTemplate {
 
     public void setIngeoWeight(Long ingeoWeight) {
         this.ingeoWeight = ingeoWeight;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background == null ? null : background.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
     }
 }

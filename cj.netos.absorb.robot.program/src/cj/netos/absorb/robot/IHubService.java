@@ -53,7 +53,7 @@ public interface IHubService {
     boolean existsRecipientsEncourageCode(String principal, String absorberid, String encourageCode);
 
     @CjTransaction
-    boolean existsPubingSliceRecipients(String principal, String absorberid);
+    boolean canntPubingSliceRecipients(String principal, String absorberid);
 
     void addWeightToRecipients(String principal, String absorberid);
 

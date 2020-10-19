@@ -4,6 +4,7 @@
 ```java
     String id;
     String name;
+    String background;
     String note;
     String copyright;
     long maxAbsorbers;
@@ -25,6 +26,7 @@
   {
     "id":"normal",
     "name": "常规",
+    "background": "http://www.nodespower.com:7100/app/qrcodeslice/normal.jpg",
     "note": "极为简洁的模板",
     "copyright": "郑州节点动力信息科技有限公司",
     "maxAbsorbers": "100",
@@ -35,6 +37,7 @@
       {
         "id":"welcome",
         "name": "欢迎辞",
+        "type": "text",
         "value": "欢迎使用地微app",
         "note": ""
       } 

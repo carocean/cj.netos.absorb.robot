@@ -6,10 +6,7 @@ import cj.netos.absorb.robot.bo.LatLng;
 import cj.netos.absorb.robot.bo.QrcodeSliceTemplateBO;
 import cj.netos.absorb.robot.bo.RecipientsSummary;
 import cj.netos.absorb.robot.model.*;
-import cj.netos.absorb.robot.result.AbsorberHubTailsResult;
-import cj.netos.absorb.robot.result.AbsorberResult;
-import cj.netos.absorb.robot.result.QrcodeSliceResult;
-import cj.netos.absorb.robot.result.QrcodeSliceTemplateResult;
+import cj.netos.absorb.robot.result.*;
 import cj.netos.absorb.robot.util.IdWorker;
 import cj.netos.absorb.robot.util.RobotUtils;
 import cj.netos.rabbitmq.IRabbitMQProducer;
@@ -628,7 +625,7 @@ public class HubPorts implements IHubPorts {
 
 
     @Override
-    public List<QrcodeSliceResult> createQrcodeSlice(ISecuritySession securitySession, String template, long expire, LatLng location, long radius, String originAbsorber, String originPerson, int count, String note) throws CircuitException {
+    public List<QrcodeSliceResult> createQrcodeSlice(ISecuritySession securitySession, String template, long expire, LatLng location, long radius, String originAbsorber, String originPerson, int count,Map<String,TemplateProp> props, String note) throws CircuitException {
         if (StringUtil.isEmpty(template)) {
             throw new CircuitException("404", "参数template 为空");
         }
@@ -645,7 +642,21 @@ public class HubPorts implements IHubPorts {
         if (hubService.cannotCreateQrocdeSlice(securitySession.principal())) {
             throw new CircuitException("500", String.format("用户%s下存在未消费的码片，必须所有码片消费完才能生成新码片", securitySession.principal()));
         }
+        if (props != null) {
+            for (TemplatePropResult prop : sliceTemplate.getProperties()) {
+               TemplateProp p= props.get(prop.getId());
+                if (p == null) {
+                    continue;
+                }
+                prop.setValue(p.getValue());
+            }
+        }
         return hubService.createQrcodeSlice(securitySession.principal(), (String) securitySession.property("nickName"), sliceTemplate, expire, location, radius, originAbsorber, originPerson, count, note);
+    }
+
+    @Override
+    public boolean cannotCreateQrocdeSlice(ISecuritySession securitySession) throws CircuitException {
+        return hubService.cannotCreateQrocdeSlice(securitySession.principal());
     }
 
     @Override
@@ -685,15 +696,15 @@ public class HubPorts implements IHubPorts {
 
     @Override
     public void addQrcodeSliceRecipients(ISecuritySession securitySession, String absorberid, String qrcodeSlice) throws CircuitException {
-        if (hubService.existsPubingSliceRecipients(securitySession.principal(), absorberid)) {
-            return;
-        }
+//        if (hubService.canntPubingSliceRecipients(securitySession.principal(), absorberid)) {
+//            return;
+//        }
         hubService.addQrcodeSliceRecipients(securitySession.principal(), absorberid, qrcodeSlice);
     }
 
     @Override
-    public boolean existsPubSliceRecipients(ISecuritySession securitySession, String absorberid) throws CircuitException {
-        return hubService.existsPubingSliceRecipients(securitySession.principal(), absorberid);
+    public boolean canntPubSliceRecipients(ISecuritySession securitySession, String absorberid) throws CircuitException {
+        return hubService.canntPubingSliceRecipients(securitySession.principal(), absorberid);
     }
 
     @Override
@@ -704,6 +715,9 @@ public class HubPorts implements IHubPorts {
         }
         if (slice.getState() == 1) {
             throw new CircuitException("500", String.format("码片已消费:%s", qrcodeSlice));
+        }
+        if (securitySession.principal().equals(slice.getCreator())) {
+            throw new CircuitException("500", String.format("自已不能消费自己发的码片:%s", qrcodeSlice));
         }
         hubService.consumeQrcodeSlice(securitySession.principal(), (String) securitySession.property("nickName"), slice);
     }

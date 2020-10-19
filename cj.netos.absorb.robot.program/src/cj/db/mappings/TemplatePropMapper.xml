@@ -5,6 +5,7 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="template" jdbcType="VARCHAR" property="template" />
     <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="note" jdbcType="VARCHAR" property="note" />
@@ -71,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, `name`, `template`, `value`, note
+    id, `name`, `type`, `template`, `value`, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.TemplatePropExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -109,10 +110,12 @@
   </delete>
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.TemplateProp">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    insert into template_prop (id, `name`, `template`, 
-      `value`, note)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{template,jdbcType=VARCHAR}, 
-      #{value,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+    insert into template_prop (id, `name`, `type`, 
+      `template`, `value`, note
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{template,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.TemplateProp">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -123,6 +126,9 @@
       </if>
       <if test="name != null">
         `name`,
+      </if>
+      <if test="type != null">
+        `type`,
       </if>
       <if test="template != null">
         `template`,
@@ -140,6 +146,9 @@
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
       <if test="template != null">
         #{template,jdbcType=VARCHAR},
@@ -169,6 +178,9 @@
       <if test="record.name != null">
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.type != null">
+        `type` = #{record.type,jdbcType=VARCHAR},
+      </if>
       <if test="record.template != null">
         `template` = #{record.template,jdbcType=VARCHAR},
       </if>
@@ -188,6 +200,7 @@
     update template_prop
     set id = #{record.id,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=VARCHAR},
       `template` = #{record.template,jdbcType=VARCHAR},
       `value` = #{record.value,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR}
@@ -201,6 +214,9 @@
     <set>
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
       </if>
       <if test="template != null">
         `template` = #{template,jdbcType=VARCHAR},
@@ -218,6 +234,7 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update template_prop
     set `name` = #{name,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
       `template` = #{template,jdbcType=VARCHAR},
       `value` = #{value,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR}

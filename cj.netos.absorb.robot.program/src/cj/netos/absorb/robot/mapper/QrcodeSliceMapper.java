@@ -62,9 +62,9 @@ public interface QrcodeSliceMapper {
      */
     int updateByPrimaryKey(QrcodeSlice record);
 
-    List<QrcodeSlice> page(@Param(value = "creator") String creator,@Param(value = "limit") int limit, @Param(value = "offset") long offset);
+    List<QrcodeSlice> page(@Param(value = "creator") String creator, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
-    List<QrcodeSlice> pageByBatch(@Param(value = "batchNo") String batchNo,@Param(value = "creator") String creator, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+    List<QrcodeSlice> pageByBatch(@Param(value = "batchNo") String batchNo, @Param(value = "creator") String creator, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
     void updateState(@Param(value = "id") String id, @Param(value = "state") int state);
 

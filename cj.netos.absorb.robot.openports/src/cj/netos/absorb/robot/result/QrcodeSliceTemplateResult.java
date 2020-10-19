@@ -17,6 +17,7 @@ public class QrcodeSliceTemplateResult extends SliceTemplate {
         o.setIngeoWeight(template.getIngeoWeight());
         o.setMaxAbsorbers(template.getMaxAbsorbers());
         o.setName(template.getName());
+        o.setBackground(template.getBackground());
         o.setNote(template.getNote());
         o.setOwnerWeight(template.getOwnerWeight());
         o.setParticipWeight(template.getParticipWeight());
@@ -27,6 +28,7 @@ public class QrcodeSliceTemplateResult extends SliceTemplate {
                 r.setNote(prop.getNote());
                 r.setValue(prop.getValue());
                 r.setName(prop.getName());
+                r.setType(prop.getType());
                 r.setId(prop.getId());
                 list.add(r);
             }

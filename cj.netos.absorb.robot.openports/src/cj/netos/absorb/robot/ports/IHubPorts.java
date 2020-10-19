@@ -397,7 +397,7 @@ public interface IHubPorts extends IOpenportService {
             @CjOpenportParameter(usage = "生成码片依据的猫（洇取器）的标识，如果有的话", name = "originAbsorber") String originAbsorber,
             @CjOpenportParameter(usage = "生成码片依据的公众，必有。不论猫是否为空", name = "originPerson") String originPerson,
             @CjOpenportParameter(usage = "要生成的本批码片数量", name = "count") int count,
-            @CjOpenportParameter(usage = "自定义的模板属性，如果有", name = "props") Map<String,TemplateProp> props,
+            @CjOpenportParameter(usage = "自定义的模板属性，如果有", name = "props",elementType = {String.class,TemplateProp.class}) Map<String,TemplateProp> props,
             @CjOpenportParameter(usage = "备注，在码片上显示", name = "note") String note
     ) throws CircuitException;
 

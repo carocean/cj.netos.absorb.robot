@@ -307,7 +307,7 @@
     select
     <include refid="Base_Column_List" />
     from slice_template
-    order by ctime desc
+    order by ctime asc
     limit #{offset},#{limit}
   </select>
 </mapper>

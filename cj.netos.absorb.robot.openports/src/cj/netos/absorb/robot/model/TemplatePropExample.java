@@ -207,6 +207,76 @@ public class TemplatePropExample {
             return (Criteria) this;
         }
 
+        public Criteria andTemplateIsNull() {
+            addCriterion("`template` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateIsNotNull() {
+            addCriterion("`template` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateEqualTo(String value) {
+            addCriterion("`template` =", value, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateNotEqualTo(String value) {
+            addCriterion("`template` <>", value, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateGreaterThan(String value) {
+            addCriterion("`template` >", value, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateGreaterThanOrEqualTo(String value) {
+            addCriterion("`template` >=", value, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateLessThan(String value) {
+            addCriterion("`template` <", value, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateLessThanOrEqualTo(String value) {
+            addCriterion("`template` <=", value, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateLike(String value) {
+            addCriterion("`template` like", value, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateNotLike(String value) {
+            addCriterion("`template` not like", value, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateIn(List<String> values) {
+            addCriterion("`template` in", values, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateNotIn(List<String> values) {
+            addCriterion("`template` not in", values, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateBetween(String value1, String value2) {
+            addCriterion("`template` between", value1, value2, "template");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateNotBetween(String value1, String value2) {
+            addCriterion("`template` not between", value1, value2, "template");
+            return (Criteria) this;
+        }
+
         public Criteria andNameIsNull() {
             addCriterion("`name` is null");
             return (Criteria) this;
@@ -344,76 +414,6 @@ public class TemplatePropExample {
 
         public Criteria andTypeNotBetween(String value1, String value2) {
             addCriterion("`type` not between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateIsNull() {
-            addCriterion("`template` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateIsNotNull() {
-            addCriterion("`template` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateEqualTo(String value) {
-            addCriterion("`template` =", value, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateNotEqualTo(String value) {
-            addCriterion("`template` <>", value, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateGreaterThan(String value) {
-            addCriterion("`template` >", value, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateGreaterThanOrEqualTo(String value) {
-            addCriterion("`template` >=", value, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateLessThan(String value) {
-            addCriterion("`template` <", value, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateLessThanOrEqualTo(String value) {
-            addCriterion("`template` <=", value, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateLike(String value) {
-            addCriterion("`template` like", value, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateNotLike(String value) {
-            addCriterion("`template` not like", value, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateIn(List<String> values) {
-            addCriterion("`template` in", values, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateNotIn(List<String> values) {
-            addCriterion("`template` not in", values, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateBetween(String value1, String value2) {
-            addCriterion("`template` between", value1, value2, "template");
-            return (Criteria) this;
-        }
-
-        public Criteria andTemplateNotBetween(String value1, String value2) {
-            addCriterion("`template` not between", value1, value2, "template");
             return (Criteria) this;
         }
 

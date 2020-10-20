@@ -4,9 +4,9 @@
   <resultMap id="BaseResultMap" type="cj.netos.absorb.robot.model.TemplateProp">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="template" jdbcType="VARCHAR" property="template" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="template" jdbcType="VARCHAR" property="template" />
     <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
@@ -72,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, `name`, `type`, `template`, `value`, note
+    id, `template`, `name`, `type`, `value`, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.TemplatePropExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -89,17 +89,19 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     select 
     <include refid="Base_Column_List" />
     from template_prop
     where id = #{id,jdbcType=VARCHAR}
+      and `template` = #{template,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="map">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     delete from template_prop
     where id = #{id,jdbcType=VARCHAR}
+      and `template` = #{template,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cj.netos.absorb.robot.model.TemplatePropExample">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -110,12 +112,10 @@
   </delete>
   <insert id="insert" parameterType="cj.netos.absorb.robot.model.TemplateProp">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    insert into template_prop (id, `name`, `type`, 
-      `template`, `value`, note
-      )
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{template,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
-      )
+    insert into template_prop (id, `template`, `name`, 
+      `type`, `value`, note)
+    values (#{id,jdbcType=VARCHAR}, #{template,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.TemplateProp">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -124,14 +124,14 @@
       <if test="id != null">
         id,
       </if>
+      <if test="template != null">
+        `template`,
+      </if>
       <if test="name != null">
         `name`,
       </if>
       <if test="type != null">
         `type`,
-      </if>
-      <if test="template != null">
-        `template`,
       </if>
       <if test="value != null">
         `value`,
@@ -144,14 +144,14 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
+      <if test="template != null">
+        #{template,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
         #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="template != null">
-        #{template,jdbcType=VARCHAR},
       </if>
       <if test="value != null">
         #{value,jdbcType=VARCHAR},
@@ -175,14 +175,14 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
+      <if test="record.template != null">
+        `template` = #{record.template,jdbcType=VARCHAR},
+      </if>
       <if test="record.name != null">
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null">
         `type` = #{record.type,jdbcType=VARCHAR},
-      </if>
-      <if test="record.template != null">
-        `template` = #{record.template,jdbcType=VARCHAR},
       </if>
       <if test="record.value != null">
         `value` = #{record.value,jdbcType=VARCHAR},
@@ -199,9 +199,9 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update template_prop
     set id = #{record.id,jdbcType=VARCHAR},
+      `template` = #{record.template,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
       `type` = #{record.type,jdbcType=VARCHAR},
-      `template` = #{record.template,jdbcType=VARCHAR},
       `value` = #{record.value,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -218,9 +218,6 @@
       <if test="type != null">
         `type` = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="template != null">
-        `template` = #{template,jdbcType=VARCHAR},
-      </if>
       <if test="value != null">
         `value` = #{value,jdbcType=VARCHAR},
       </if>
@@ -229,15 +226,16 @@
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
+      and `template` = #{template,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cj.netos.absorb.robot.model.TemplateProp">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update template_prop
     set `name` = #{name,jdbcType=VARCHAR},
       `type` = #{type,jdbcType=VARCHAR},
-      `template` = #{template,jdbcType=VARCHAR},
       `value` = #{value,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
+      and `template` = #{template,jdbcType=VARCHAR}
   </update>
 </mapper>

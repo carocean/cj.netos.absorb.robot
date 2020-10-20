@@ -20,7 +20,7 @@ public interface TemplatePropMapper {
     /**
      * @mbg.generated generated automatically, do not modify!
      */
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(@Param("id") String id, @Param("template") String template);
 
     /**
      * @mbg.generated generated automatically, do not modify!
@@ -40,7 +40,7 @@ public interface TemplatePropMapper {
     /**
      * @mbg.generated generated automatically, do not modify!
      */
-    TemplateProp selectByPrimaryKey(String id);
+    TemplateProp selectByPrimaryKey(@Param("id") String id, @Param("template") String template);
 
     /**
      * @mbg.generated generated automatically, do not modify!

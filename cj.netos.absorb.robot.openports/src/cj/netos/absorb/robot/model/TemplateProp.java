@@ -11,6 +11,12 @@ public class TemplateProp {
     private String id;
 
     /**
+     * Column: template
+     * Remark: 模板
+     */
+    private String template;
+
+    /**
      * Column: name
      * Remark: 属性名
      */
@@ -21,12 +27,6 @@ public class TemplateProp {
      * Remark: 属性类型 text 为文本 image为图片 color为颜色 href为地址 ……
      */
     private String type;
-
-    /**
-     * Column: template
-     * Remark: 模板
-     */
-    private String template;
 
     /**
      * Column: value
@@ -48,6 +48,14 @@ public class TemplateProp {
         this.id = id == null ? null : id.trim();
     }
 
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template == null ? null : template.trim();
+    }
+
     public String getName() {
         return name;
     }
@@ -62,14 +70,6 @@ public class TemplateProp {
 
     public void setType(String type) {
         this.type = type == null ? null : type.trim();
-    }
-
-    public String getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(String template) {
-        this.template = template == null ? null : template.trim();
     }
 
     public String getValue() {

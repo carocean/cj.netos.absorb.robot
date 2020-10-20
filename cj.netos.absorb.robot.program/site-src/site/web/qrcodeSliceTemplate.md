@@ -40,7 +40,13 @@
         "type": "text",
         "value": "欢迎使用地微app",
         "note": ""
-      } 
+      },{
+                "id":"avatar",
+                "name": "头像",
+                "type": "image",
+                "value": "",
+                "note": "上传自已的头像，将放在二维码中展示"
+              }  
     ]
   }
 ]

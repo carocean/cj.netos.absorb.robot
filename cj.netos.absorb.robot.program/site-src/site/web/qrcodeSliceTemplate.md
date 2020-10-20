@@ -99,25 +99,6 @@
           }
         ]
   },{
-       "id":"minxinpian",
-       "name": "明信片",
-       "background": "http://www.nodespower.com:7100/app/qrcodeslice/minxinpian.jpeg",
-       "note": "万里传佳音，期待哪啥",
-       "copyright": "郑州节点动力信息科技有限公司",
-       "maxAbsorbers": "100",
-       "ownerWeight": "50",
-       "participWeight": "40",
-       "ingeoWeight": "80",
-       "properties":[
-         {
-           "id":"content",
-           "name": "内容",
-           "type": "text",
-           "value": "初见倾心，再见痴心。终日费心，欲得芳心。煞费苦心，想得催心。难道你心，不懂我心，如此狠心，让我伤心。",
-           "note": ""
-         }
-       ]
-  },{
           "id":"chiji",
           "name": "吃鸡",
           "background": "http://www.nodespower.com:7100/app/qrcodeslice/ciji.jpeg",
@@ -156,6 +137,25 @@
            }
          ]
   },{
+          "id":"minxinpian",
+          "name": "明信片",
+          "background": "http://www.nodespower.com:7100/app/qrcodeslice/minxinpian.jpeg",
+          "note": "万里传佳音，期待哪啥",
+          "copyright": "郑州节点动力信息科技有限公司",
+          "maxAbsorbers": "100",
+          "ownerWeight": "50",
+          "participWeight": "40",
+          "ingeoWeight": "80",
+          "properties":[
+            {
+              "id":"content",
+              "name": "内容",
+              "type": "text",
+              "value": "初见倾心，再见痴心。终日费心，欲得芳心。煞费苦心，想得催心。难道你心，不懂我心，如此狠心，让我伤心。",
+              "note": ""
+            }
+          ]
+  },{
         "id":"love",
         "name": "爱情",
         "background": "http://www.nodespower.com:7100/app/qrcodeslice/love.jpeg",
@@ -170,8 +170,8 @@
             "id":"poetry",
             "name": "诗词",
             "type": "text",
-            "value": "",
-            "note": "我说你是人间的四月天；笑响点亮了四面风；轻灵在春的光艳中交舞着变。"
+            "value": "我说你是人间的四月天；笑响点亮了四面风；轻灵在春的光艳中交舞着变。",
+            "note": ""
           }
         ]
   }

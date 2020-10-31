@@ -164,4 +164,6 @@ public interface IHubService {
 
     void updateRecipientsBalance(String recipientsid, BigDecimal amount);
 
+    List<QrcodeSlice> listUnconsumeSlices(String principal);
+
 }

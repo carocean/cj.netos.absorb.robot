@@ -481,4 +481,9 @@ public interface IHubPorts extends IOpenportService {
     boolean cannotCreateQrocdeSlice(
             ISecuritySession securitySession
     ) throws CircuitException;
+
+    @CjOpenport(usage = "获取我的未消费的码片列表")
+    public List<QrcodeSlice> listUnconsumeSlices(
+            ISecuritySession securitySession
+    )throws CircuitException;
 }

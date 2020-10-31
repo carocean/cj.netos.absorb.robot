@@ -427,4 +427,11 @@
       `state` = 1
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="listUnconsumeSlices" parameterType="cj.netos.absorb.robot.model.QrcodeSlice" resultMap="BaseResultMap">
+    select *
+    from qrcode_slice qrslice
+    where qrslice.state=0
+      and creator = #{creator,jdbcType=VARCHAR}
+    order by ctime desc;
+  </select>
 </mapper>

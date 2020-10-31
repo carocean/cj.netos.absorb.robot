@@ -1259,4 +1259,9 @@ public class HubService implements IHubService {
         byte[] body = new Gson().toJson(bill).getBytes();
         rabbitMQProducer.publish("wallet", properties, body);
     }
+    @CjTransaction
+    @Override
+    public List<QrcodeSlice> listUnconsumeSlices(String principal) {
+        return qrcodeSliceMapper.listUnconsumeSlices(principal);
+    }
 }

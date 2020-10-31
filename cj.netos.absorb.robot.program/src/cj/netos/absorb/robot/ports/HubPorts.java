@@ -733,4 +733,9 @@ public class HubPorts implements IHubPorts {
         }
         hubService.consumeQrcodeSlice(consumer, nickName, slice);
     }
+
+    @Override
+    public List<QrcodeSlice> listUnconsumeSlices(ISecuritySession securitySession) throws CircuitException {
+        return hubService.listUnconsumeSlices(securitySession.principal());
+    }
 }

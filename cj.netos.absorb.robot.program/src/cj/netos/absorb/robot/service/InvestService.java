@@ -53,7 +53,7 @@ public class InvestService implements IInvestService {
 
         investRecordMapper.insert(record);
 
-        if (result.getState() != 200) {//如果付款出错则不分发
+        if (result.getStatus() != 200) {//如果付款出错则不分发
             CJSystem.logging().error(getClass(), String.format("付款投单出错:%s %s", result.getStatus(), result.getMessage()));
             return;
         }

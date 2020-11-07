@@ -59,6 +59,18 @@ public class InvestRecord {
     private String investOrderTitle;
 
     /**
+     * Column: pay_status
+     * Remark: 渠道页来的支付状态\n200为成功\n不为200为出错，如：\n500为余额不足
+     */
+    private Integer payStatus;
+
+    /**
+     * Column: pay_message
+     * Remark: 支付消息
+     */
+    private String payMessage;
+
+    /**
      * Column: note
      */
     private String note;
@@ -133,6 +145,22 @@ public class InvestRecord {
 
     public void setInvestOrderTitle(String investOrderTitle) {
         this.investOrderTitle = investOrderTitle == null ? null : investOrderTitle.trim();
+    }
+
+    public Integer getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(Integer payStatus) {
+        this.payStatus = payStatus;
+    }
+
+    public String getPayMessage() {
+        return payMessage;
+    }
+
+    public void setPayMessage(String payMessage) {
+        this.payMessage = payMessage == null ? null : payMessage.trim();
     }
 
     public String getNote() {

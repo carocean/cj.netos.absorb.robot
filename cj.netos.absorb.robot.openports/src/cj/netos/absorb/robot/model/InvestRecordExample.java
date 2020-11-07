@@ -757,6 +757,136 @@ public class InvestRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andPayStatusIsNull() {
+            addCriterion("pay_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusIsNotNull() {
+            addCriterion("pay_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusEqualTo(Integer value) {
+            addCriterion("pay_status =", value, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusNotEqualTo(Integer value) {
+            addCriterion("pay_status <>", value, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusGreaterThan(Integer value) {
+            addCriterion("pay_status >", value, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pay_status >=", value, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusLessThan(Integer value) {
+            addCriterion("pay_status <", value, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("pay_status <=", value, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusIn(List<Integer> values) {
+            addCriterion("pay_status in", values, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusNotIn(List<Integer> values) {
+            addCriterion("pay_status not in", values, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusBetween(Integer value1, Integer value2) {
+            addCriterion("pay_status between", value1, value2, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("pay_status not between", value1, value2, "payStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageIsNull() {
+            addCriterion("pay_message is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageIsNotNull() {
+            addCriterion("pay_message is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageEqualTo(String value) {
+            addCriterion("pay_message =", value, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageNotEqualTo(String value) {
+            addCriterion("pay_message <>", value, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageGreaterThan(String value) {
+            addCriterion("pay_message >", value, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageGreaterThanOrEqualTo(String value) {
+            addCriterion("pay_message >=", value, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageLessThan(String value) {
+            addCriterion("pay_message <", value, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageLessThanOrEqualTo(String value) {
+            addCriterion("pay_message <=", value, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageLike(String value) {
+            addCriterion("pay_message like", value, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageNotLike(String value) {
+            addCriterion("pay_message not like", value, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageIn(List<String> values) {
+            addCriterion("pay_message in", values, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageNotIn(List<String> values) {
+            addCriterion("pay_message not in", values, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageBetween(String value1, String value2) {
+            addCriterion("pay_message between", value1, value2, "payMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayMessageNotBetween(String value1, String value2) {
+            addCriterion("pay_message not between", value1, value2, "payMessage");
+            return (Criteria) this;
+        }
+
         public Criteria andNoteIsNull() {
             addCriterion("note is null");
             return (Criteria) this;

@@ -12,6 +12,8 @@
     <result column="out_trade_sn" jdbcType="VARCHAR" property="outTradeSn" />
     <result column="invest_order_no" jdbcType="VARCHAR" property="investOrderNo" />
     <result column="invest_order_title" jdbcType="VARCHAR" property="investOrderTitle" />
+    <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
+    <result column="pay_message" jdbcType="VARCHAR" property="payMessage" />
     <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -77,7 +79,7 @@
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     sn, absorber, amount, invester, person_name, ctime, out_trade_sn, invest_order_no, 
-    invest_order_title, note
+    invest_order_title, pay_status, pay_message, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.absorb.robot.model.InvestRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -118,11 +120,13 @@
     insert into invest_record (sn, absorber, amount, 
       invester, person_name, ctime, 
       out_trade_sn, invest_order_no, invest_order_title, 
-      note)
+      pay_status, pay_message, note
+      )
     values (#{sn,jdbcType=VARCHAR}, #{absorber,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, 
       #{invester,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
       #{outTradeSn,jdbcType=VARCHAR}, #{investOrderNo,jdbcType=VARCHAR}, #{investOrderTitle,jdbcType=VARCHAR}, 
-      #{note,jdbcType=VARCHAR})
+      #{payStatus,jdbcType=INTEGER}, #{payMessage,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.absorb.robot.model.InvestRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -155,6 +159,12 @@
       <if test="investOrderTitle != null">
         invest_order_title,
       </if>
+      <if test="payStatus != null">
+        pay_status,
+      </if>
+      <if test="payMessage != null">
+        pay_message,
+      </if>
       <if test="note != null">
         note,
       </if>
@@ -186,6 +196,12 @@
       </if>
       <if test="investOrderTitle != null">
         #{investOrderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payMessage != null">
+        #{payMessage,jdbcType=VARCHAR},
       </if>
       <if test="note != null">
         #{note,jdbcType=VARCHAR},
@@ -230,6 +246,12 @@
       <if test="record.investOrderTitle != null">
         invest_order_title = #{record.investOrderTitle,jdbcType=VARCHAR},
       </if>
+      <if test="record.payStatus != null">
+        pay_status = #{record.payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.payMessage != null">
+        pay_message = #{record.payMessage,jdbcType=VARCHAR},
+      </if>
       <if test="record.note != null">
         note = #{record.note,jdbcType=VARCHAR},
       </if>
@@ -250,6 +272,8 @@
       out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
       invest_order_no = #{record.investOrderNo,jdbcType=VARCHAR},
       invest_order_title = #{record.investOrderTitle,jdbcType=VARCHAR},
+      pay_status = #{record.payStatus,jdbcType=INTEGER},
+      pay_message = #{record.payMessage,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -283,6 +307,12 @@
       <if test="investOrderTitle != null">
         invest_order_title = #{investOrderTitle,jdbcType=VARCHAR},
       </if>
+      <if test="payStatus != null">
+        pay_status = #{payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payMessage != null">
+        pay_message = #{payMessage,jdbcType=VARCHAR},
+      </if>
       <if test="note != null">
         note = #{note,jdbcType=VARCHAR},
       </if>
@@ -300,6 +330,8 @@
       out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
       invest_order_no = #{investOrderNo,jdbcType=VARCHAR},
       invest_order_title = #{investOrderTitle,jdbcType=VARCHAR},
+      pay_status = #{payStatus,jdbcType=INTEGER},
+      pay_message = #{payMessage,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>

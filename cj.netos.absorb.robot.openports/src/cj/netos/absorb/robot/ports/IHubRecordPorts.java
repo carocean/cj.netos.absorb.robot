@@ -3,6 +3,7 @@ package cj.netos.absorb.robot.ports;
 import cj.netos.absorb.robot.model.InvestRecord;
 import cj.netos.absorb.robot.model.RecipientsRecord;
 import cj.netos.absorb.robot.model.WithdrawRecord;
+import cj.netos.absorb.robot.result.RecipientsRecordInfoResult;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.IOpenportService;
 import cj.studio.openport.ISecuritySession;
@@ -18,6 +19,11 @@ public interface IHubRecordPorts extends IOpenportService {
     @CjOpenport(usage = "获取洇取单")
     RecipientsRecord getRecipientsRecord(ISecuritySession securitySession,
                                          @CjOpenportParameter(usage = "订单号", name = "record_sn") String record_sn
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取洇取单信息")
+    RecipientsRecordInfoResult getRecipientsRecordInfo(ISecuritySession securitySession,
+                                                       @CjOpenportParameter(usage = "订单号", name = "record_sn") String record_sn
     ) throws CircuitException;
 
     @CjOpenport(usage = "分页获取洇取单")
@@ -47,12 +53,12 @@ public interface IHubRecordPorts extends IOpenportService {
 
     @CjOpenport(usage = "分页获取洇取单")
     List<RecipientsRecord> pageRecipientsRecordWhere3(ISecuritySession securitySession,
-                                                     @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber,
-                                                     @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId,
-                                                     @CjOpenportParameter(usage = "年", name = "year") int year,
-                                                     @CjOpenportParameter(usage = "月，为实际月-1", name = "month") int month,
-                                                     @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
-                                                     @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
+                                                      @CjOpenportParameter(usage = "洇取器标识", name = "absorber") String absorber,
+                                                      @CjOpenportParameter(usage = "洇取人标识", name = "recipientsId") String recipientsId,
+                                                      @CjOpenportParameter(usage = "年", name = "year") int year,
+                                                      @CjOpenportParameter(usage = "月，为实际月-1", name = "month") int month,
+                                                      @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                                      @CjOpenportParameter(usage = "页偏移", name = "offset") long offset
     ) throws CircuitException;
 
     @CjOpenport(usage = "分页获取洇取单")

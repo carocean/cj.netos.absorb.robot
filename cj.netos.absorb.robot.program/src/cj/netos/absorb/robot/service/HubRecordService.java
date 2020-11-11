@@ -7,6 +7,7 @@ import cj.netos.absorb.robot.mapper.WithdrawRecordMapper;
 import cj.netos.absorb.robot.model.InvestRecord;
 import cj.netos.absorb.robot.model.RecipientsRecord;
 import cj.netos.absorb.robot.model.WithdrawRecord;
+import cj.netos.absorb.robot.result.RecipientsRecordInfoResult;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
@@ -31,6 +32,11 @@ public class HubRecordService implements IHubRecordService {
     @Override
     public RecipientsRecord getRecipientsRecord(String record_sn) {
         return recipientsRecordMapper.selectByPrimaryKey(record_sn);
+    }
+    @CjTransaction
+    @Override
+    public RecipientsRecordInfoResult getRecipientsRecordInfo(String record_sn) {
+        return recipientsRecordMapper.getRecipientsRecordInfo(record_sn);
     }
 
     @CjTransaction

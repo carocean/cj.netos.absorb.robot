@@ -17,6 +17,14 @@
     <result column="year" jdbcType="INTEGER" property="year" />
     <result column="month" jdbcType="INTEGER" property="month" />
   </resultMap>
+  <resultMap id="RecipientsRecordInfoMap" type="cj.netos.absorb.robot.result.RecipientsRecordInfoResult">
+    <id column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="absorber" jdbcType="VARCHAR" property="absorber" />
+    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="person" jdbcType="VARCHAR" property="person" />
+    <result column="personName" jdbcType="VARCHAR" property="person_name" />
+    <result column="bankid" jdbcType="VARCHAR" property="bankid" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     <where>
@@ -446,5 +454,18 @@
     and `month` = #{month,jdbcType=INTEGER}
     order by ctime desc
     limit #{offset},#{limit}
+  </select>
+  <select id="getRecipientsRecordInfo" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultMap="RecipientsRecordInfoMap">
+    select record.sn,record.absorber,record.`order`,invest.invester person,invest.person_name, null as bankid
+    from recipients_record record,invest_record invest
+    where record.refsn=invest.sn
+        and record.`order`=1
+        and record.sn=#{sn}
+    union
+    select record.sn,record.absorber,record.`order`,null person, null person_name ,withdraw.bankid
+    from recipients_record record,withdraw_record withdraw
+    where record.refsn=withdraw.sn
+      and record.`order`=0
+      and record.sn=#{sn}
   </select>
 </mapper>

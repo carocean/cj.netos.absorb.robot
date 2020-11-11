@@ -4,6 +4,7 @@ import cj.netos.absorb.robot.IHubRecordService;
 import cj.netos.absorb.robot.model.InvestRecord;
 import cj.netos.absorb.robot.model.RecipientsRecord;
 import cj.netos.absorb.robot.model.WithdrawRecord;
+import cj.netos.absorb.robot.result.RecipientsRecordInfoResult;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
@@ -20,6 +21,11 @@ public class HubRecordPorts implements IHubRecordPorts {
     @Override
     public RecipientsRecord getRecipientsRecord(ISecuritySession securitySession, String record_sn) throws CircuitException {
         return hubRecordService.getRecipientsRecord(record_sn);
+    }
+
+    @Override
+    public RecipientsRecordInfoResult getRecipientsRecordInfo(ISecuritySession securitySession, String record_sn) throws CircuitException {
+        return hubRecordService.getRecipientsRecordInfo(record_sn);
     }
 
     @Override

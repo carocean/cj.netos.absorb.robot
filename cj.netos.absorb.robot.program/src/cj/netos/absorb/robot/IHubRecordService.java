@@ -3,6 +3,7 @@ package cj.netos.absorb.robot;
 import cj.netos.absorb.robot.model.InvestRecord;
 import cj.netos.absorb.robot.model.RecipientsRecord;
 import cj.netos.absorb.robot.model.WithdrawRecord;
+import cj.netos.absorb.robot.result.RecipientsRecordInfoResult;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 
 import java.math.BigDecimal;
@@ -44,5 +45,7 @@ public interface IHubRecordService {
     BigDecimal totalRecipientsRecordByOrderWhere2(String absorberid, String recipientsId, int order, int year, int month);
 
     List<RecipientsRecord> pageRecipientsRecordWhere3(String absorber, String recipientsId, int year, int month, int limit, long offset);
+
+    RecipientsRecordInfoResult getRecipientsRecordInfo(String record_sn);
 
 }

@@ -1019,14 +1019,14 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public List<SliceBatch> pageQrcodeSliceBatch(String principal,int limit, long offset) {
-        return sliceBatchMapper.page(principal,limit, offset);
+    public List<SliceBatch> pageQrcodeSliceBatch(String principal, int limit, long offset) {
+        return sliceBatchMapper.page(principal, limit, offset);
     }
 
     @CjTransaction
     @Override
-    public List<QrcodeSliceResult> pageQrcodeSlice(String principal,int limit, long offset) {
-        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.page(principal,limit, offset);
+    public List<QrcodeSliceResult> pageQrcodeSlice(String principal, int limit, long offset) {
+        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.page(principal, limit, offset);
         List<QrcodeSliceResult> list = new ArrayList<>();
         for (QrcodeSlice slice : qrcodeSlices) {
             SlicePropExample example = new SlicePropExample();
@@ -1040,8 +1040,8 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public List<QrcodeSliceResult> pageQrcodeSliceOfBatch(String batchno,String principal, int limit, long offset) {
-        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.pageByBatch(batchno,principal, limit, offset);
+    public List<QrcodeSliceResult> pageQrcodeSliceOfBatch(String batchno, String principal, int limit, long offset) {
+        List<QrcodeSlice> qrcodeSlices = qrcodeSliceMapper.pageByBatch(batchno, principal, limit, offset);
         List<QrcodeSliceResult> list = new ArrayList<>();
         for (QrcodeSlice slice : qrcodeSlices) {
             SlicePropExample example = new SlicePropExample();
@@ -1106,7 +1106,10 @@ public class HubService implements IHubService {
         recipients.setId(new IdWorker().nextId());
         recipients.setPerson(slice.getCreator());
         recipients.setPersonName(slice.getCname());
-        recipients.setWeight(new BigDecimal(absorber.getState() == 0 ? "2.0" : "100.0"));
+        recipients.setWeight(new BigDecimal(absorber.getType() == 0 ?
+                String.format("%s", (new Random().nextInt(90) + 10.0)) :
+                String.format("%s", (new Random().nextInt(900) + 100.0))
+        ));
         addRecipients(recipients);
         //添加余额
         RecipientsBalance balance = new RecipientsBalance();
@@ -1149,7 +1152,10 @@ public class HubService implements IHubService {
             if (absorber == null) {
                 continue;
             }
-            updateRecipientsWeights(r.getId(), new BigDecimal(absorber.getState() == 0 ? "2.0" : "100.0"));
+            updateRecipientsWeights(r.getId(), new BigDecimal(absorber.getType() == 0 ?
+                    String.format("%s", (new Random().nextInt(90) + 10.0)) :
+                    String.format("%s", (new Random().nextInt(900) + 100.0))
+            ));
         }
     }
 
@@ -1259,6 +1265,7 @@ public class HubService implements IHubService {
         byte[] body = new Gson().toJson(bill).getBytes();
         rabbitMQProducer.publish("wallet", properties, body);
     }
+
     @CjTransaction
     @Override
     public List<QrcodeSlice> listUnconsumeSlices(String principal) {

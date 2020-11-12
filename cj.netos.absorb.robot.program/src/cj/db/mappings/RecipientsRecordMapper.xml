@@ -457,15 +457,20 @@
   </select>
   <select id="getRecipientsRecordInfo" parameterType="cj.netos.absorb.robot.model.RecipientsRecord" resultMap="RecipientsRecordInfoMap">
     select record.sn,record.absorber,record.`order`,invest.invester person,invest.person_name, null as bankid
-    from recipients_record record,invest_record invest
-    where record.refsn=invest.sn
-        and record.`order`=1
-        and record.sn=#{sn}
-    union
-    select record.sn,record.absorber,record.`order`,null person, null person_name ,withdraw.bankid
-    from recipients_record record,withdraw_record withdraw
-    where record.refsn=withdraw.sn
-      and record.`order`=0
-      and record.sn=#{sn}
+from recipients_record record,invest_record invest
+where record.refsn=invest.sn
+      and record.`order`=1
+     and record.sn=#{sn}
+union
+select record.sn,record.absorber,record.`order`,null person, null person_name ,withdraw.bankid
+from recipients_record record,withdraw_record withdraw
+where record.refsn=withdraw.sn
+  and record.`order`=0
+  and record.sn=#{sn}
+union
+select bill.sn,bill.absorber,2 'order',slice.creator person, slice.cname person_name ,null as bankid
+from recipients_balance_bill bill,qrcode_slice slice
+where bill.qrcode_slice=slice.id
+  and bill.sn=#{sn}
   </select>
 </mapper>

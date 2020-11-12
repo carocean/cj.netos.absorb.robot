@@ -733,7 +733,7 @@ public class HubService implements IHubService {
 
         recipientsRecordMapper.insert(record);
 
-        return new RecipientsAbsorbBill(absorber.getTitle(), recipients, money, record.getSn());
+        return new RecipientsAbsorbBill(absorber.getTitle(), recipients, money,"recipientsRecord", record.getSn());
     }
 
     @CjTransaction
@@ -1210,7 +1210,7 @@ public class HubService implements IHubService {
                 recipientsBalanceBillMapper.insert(bill);
                 recipientsBalanceMapper.updateBalance(r.getId(), balanceAmount);
                 r.setEncourageCause("码片余额转结");
-                RecipientsAbsorbBill abill = new RecipientsAbsorbBill(absorber.getTitle(), r, balance.getAmount(), bill.getSn());
+                RecipientsAbsorbBill abill = new RecipientsAbsorbBill(absorber.getTitle(), r, balance.getAmount(),"recipientsBalanceBill", bill.getSn());
                 transToWallet(abill);
             }
         }
@@ -1218,7 +1218,7 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public void addRecipientsBalanceBill(Recipients recipients, RecipientsBalance balance, BigDecimal money) {
+    public void addRecipientsBalanceBill(Recipients recipients,String recipientsRecrodSn, RecipientsBalance balance, BigDecimal money) {
         RecipientsBalanceBill bill = new RecipientsBalanceBill();
         bill.setQrcodeSlice(recipients.getEncourageBy());
         bill.setRecipientsId(recipients.getId());
@@ -1229,6 +1229,7 @@ public class HubService implements IHubService {
         bill.setTitle("洇取到码片余额");
         bill.setOrder(0);
         bill.setSn(new IdWorker().nextId());
+        bill.setRefSn(recipientsRecrodSn);
         bill.setAbsorber(recipients.getAbsorber());
         BigDecimal nextBalance = balance.getAmount().add(bill.getAmount());
         bill.setBalance(nextBalance);

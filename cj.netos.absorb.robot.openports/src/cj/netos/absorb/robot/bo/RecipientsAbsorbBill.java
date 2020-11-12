@@ -8,18 +8,28 @@ import java.math.BigDecimal;
 
 public class RecipientsAbsorbBill {
     String absorberTitle;
-   Recipients recipients;
-   BigDecimal amount;
-   String refsn;//派发记录流水号
+    Recipients recipients;
+    BigDecimal amount;
+    String refsn;//派发记录流水号
+    String refType;//引用的sn类型，recipientsRecord；recipientsBalanceBill
 
     public RecipientsAbsorbBill() {
     }
 
-    public RecipientsAbsorbBill(String absorberTitle, Recipients recipients, BigDecimal amount, String refsn) {
+    public RecipientsAbsorbBill(String absorberTitle, Recipients recipients, BigDecimal amount, String refType, String refsn) {
         this.absorberTitle = absorberTitle;
         this.recipients = recipients;
         this.amount = amount;
+        this.refType = refType;
         this.refsn = refsn;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
     }
 
     public String getAbsorberTitle() {

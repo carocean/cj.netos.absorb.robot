@@ -129,7 +129,8 @@ public class AbsorberDistribute implements IAbsorberDistribute {
             RecipientsAbsorbBill bill = absorberHubService.addRecipientsRecord(absorber, recipients, result, money);
             RecipientsBalance balance = absorberHubService.getRecipientsBalnace(recipients.getId());
             if (balance != null && balance.getState() == 0) {//积累到余额而跳过转出钱包
-                absorberHubService.addRecipientsBalanceBill(recipients,balance,money);
+                String recipientsRecrodSn=bill.getRefsn();
+                absorberHubService.addRecipientsBalanceBill(recipients,recipientsRecrodSn,balance,money);
                 continue;
             }
             transToWallet(bill);
@@ -172,7 +173,8 @@ public class AbsorberDistribute implements IAbsorberDistribute {
                 RecipientsAbsorbBill bill = absorberHubService.addRecipientsRecord(absorber, recipients, result, money);
                 RecipientsBalance balance = absorberHubService.getRecipientsBalnace(recipients.getId());
                 if (balance != null && balance.getState() == 0) {//积累到余额而跳过转出钱包
-                    absorberHubService.addRecipientsBalanceBill(recipients,balance,money);
+                    String recipientsRecrodSn=bill.getRefsn();
+                    absorberHubService.addRecipientsBalanceBill(recipients,recipientsRecrodSn,balance,money);
                     continue;
                 }
                 transToWallet(bill);

@@ -49,6 +49,18 @@
               }  
     ]
   },{
+            "id":"official",
+            "name": "官方",
+            "background": "http://www.nodespower.com:7100/app/qrcodeslice/official.jpg",
+            "note": "一键封神",
+            "copyright": "郑州节点动力信息科技有限公司",
+            "maxAbsorbers": "100",
+            "ownerWeight": "50",
+            "participWeight": "40",
+            "ingeoWeight": "80",
+            "properties":[
+            ]
+  },{
         "id":"happiness",
         "name": "小确幸",
         "background": "http://www.nodespower.com:7100/app/qrcodeslice/happiness.jpg",

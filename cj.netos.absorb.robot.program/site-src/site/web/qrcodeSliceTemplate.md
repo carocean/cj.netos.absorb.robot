@@ -24,35 +24,10 @@
 ```json
 [
   {
-    "id":"normal",
-    "name": "常规",
-    "background": "http://www.nodespower.com:7100/app/qrcodeslice/normal.jpg",
-    "note": "简简单单吧",
-    "copyright": "郑州节点动力信息科技有限公司",
-    "maxAbsorbers": "100",
-    "ownerWeight": "50",
-    "participWeight": "40",
-    "ingeoWeight": "80",
-    "properties":[
-      {
-        "id":"welcome",
-        "name": "欢迎辞",
-        "type": "text",
-        "value": "欢迎使用地微app",
-        "note": ""
-      },{
-                "id":"avatar",
-                "name": "头像",
-                "type": "image",
-                "value": "",
-                "note": "上传自已的头像，将放在二维码中展示"
-              }  
-    ]
-  },{
             "id":"official",
             "name": "官方",
             "background": "http://www.nodespower.com:7100/app/qrcodeslice/official.jpg",
-            "note": "一键封神",
+            "note": "一招封神",
             "copyright": "郑州节点动力信息科技有限公司",
             "maxAbsorbers": "100",
             "ownerWeight": "50",
@@ -60,6 +35,31 @@
             "ingeoWeight": "80",
             "properties":[
             ]
+  },{
+        "id":"normal",
+        "name": "简易",
+        "background": "http://www.nodespower.com:7100/app/qrcodeslice/normal.jpg",
+        "note": "简简单单吧",
+        "copyright": "郑州节点动力信息科技有限公司",
+        "maxAbsorbers": "100",
+        "ownerWeight": "50",
+        "participWeight": "40",
+        "ingeoWeight": "80",
+        "properties":[
+          {
+            "id":"welcome",
+            "name": "欢迎辞",
+            "type": "text",
+            "value": "欢迎使用地微app",
+            "note": ""
+          },{
+                    "id":"avatar",
+                    "name": "头像",
+                    "type": "image",
+                    "value": "",
+                    "note": "上传自已的头像，将放在二维码中展示"
+                  }  
+        ]
   },{
         "id":"happiness",
         "name": "小确幸",

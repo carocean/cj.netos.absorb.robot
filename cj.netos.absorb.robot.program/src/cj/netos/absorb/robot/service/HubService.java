@@ -72,7 +72,8 @@ public class HubService implements IHubService {
     IServiceSite site;
     @CjServiceRef(refByName = "@.rabbitmq.producer.distributeAbsorbsToWallet")
     IRabbitMQProducer rabbitMQProducer;
-
+    @CjServiceRef(refByName = "@.rabbitmq.producer.addTrialFundsToWallet")
+    IRabbitMQProducer addTrialFundsToWallet;
     @CjTransaction
     @Override
     public void createAbsorber(Absorber absorber) {
@@ -733,7 +734,7 @@ public class HubService implements IHubService {
 
         recipientsRecordMapper.insert(record);
 
-        return new RecipientsAbsorbBill(absorber.getTitle(), recipients, money,"recipientsRecord", record.getSn());
+        return new RecipientsAbsorbBill(absorber.getTitle(), recipients, money, "recipientsRecord", record.getSn());
     }
 
     @CjTransaction
@@ -1123,14 +1124,27 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
+    public long totalTimesOfConsumer(String consumer) {
+        QrcodeSliceExample example = new QrcodeSliceExample();
+        example.createCriteria().andConsumerEqualTo(consumer);
+        return qrcodeSliceMapper.countByExample(example);
+    }
+
+    @CjTransaction
+    @Override
     public void consumeQrcodeSlice(String consumer, String nickName, QrcodeSlice qrcodeSlice) throws CircuitException {
         //修改发码人在各个洇取器中的权重，要保证：但不是消费一个码片就修改全部，至到所有码片消费完才全部修改完
         //处理当前码片的洇取人余额，并将洇取人修改为实际的消费者
         //注意码片状态的修改
+        long totalTimesOfConsumer = totalTimesOfConsumer(consumer);
         updateSlicePublisherWeight(qrcodeSlice);
         doRecipientsBalance(consumer, nickName, qrcodeSlice);
         qrcodeSliceMapper.consume(qrcodeSlice.getId(), consumer);
+        if (totalTimesOfConsumer == 0) {//说明此消费者是第一次消费码片，则通知钱包中心发体验金(这也说明，如果一个用户消费了A发码人的码片，而后该用户又消费了B发码人的码片，B发码人是不用的体验金奖历的)
+            _addTrialFundToWallet(qrcodeSlice, consumer, nickName);
+        }
     }
+
 
     private void updateSlicePublisherWeight(QrcodeSlice qrcodeSlice) {
         long countSliceInBatch = countSliceInBatch(qrcodeSlice.getBatchNo());
@@ -1210,7 +1224,7 @@ public class HubService implements IHubService {
                 recipientsBalanceBillMapper.insert(bill);
                 recipientsBalanceMapper.updateBalance(r.getId(), balanceAmount);
                 r.setEncourageCause("码片余额转结");
-                RecipientsAbsorbBill abill = new RecipientsAbsorbBill(absorber.getTitle(), r, balance.getAmount(),"recipientsBalanceBill", bill.getSn());
+                RecipientsAbsorbBill abill = new RecipientsAbsorbBill(absorber.getTitle(), r, balance.getAmount(), "recipientsBalanceBill", bill.getSn());
                 transToWallet(abill);
             }
         }
@@ -1218,7 +1232,7 @@ public class HubService implements IHubService {
 
     @CjTransaction
     @Override
-    public void addRecipientsBalanceBill(Recipients recipients,String recipientsRecrodSn, RecipientsBalance balance, BigDecimal money) {
+    public void addRecipientsBalanceBill(Recipients recipients, String recipientsRecrodSn, RecipientsBalance balance, BigDecimal money) {
         RecipientsBalanceBill bill = new RecipientsBalanceBill();
         bill.setQrcodeSlice(recipients.getEncourageBy());
         bill.setRecipientsId(recipients.getId());
@@ -1265,6 +1279,23 @@ public class HubService implements IHubService {
                 }).build();
         byte[] body = new Gson().toJson(bill).getBytes();
         rabbitMQProducer.publish("wallet", properties, body);
+    }
+
+    private void _addTrialFundToWallet(QrcodeSlice qrcodeSlice, String consumer, String nickName) throws CircuitException {
+        AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
+                .type("/robot/hub.ports")
+                .headers(new HashMap() {
+                    {
+                        put("command", "addTrialFunds");
+                        put("consumer", consumer);
+                        put("nickName", nickName);
+                        put("qrslice-id", qrcodeSlice.getId());
+                        put("qrslice-creator", qrcodeSlice.getCreator());
+                        put("qrslice-cname", qrcodeSlice.getCname());
+                    }
+                }).build();
+        byte[] body = new byte[0];
+        addTrialFundsToWallet.publish("wallet", properties, body);
     }
 
     @CjTransaction

@@ -154,7 +154,10 @@ public interface IHubService {
 
     QrcodeSliceResult getQrcodeSlice(String slice);
 
-    void consumeQrcodeSlice(String consumer,String nickName, QrcodeSlice qrcodeSlice) throws CircuitException;
+    @CjTransaction
+    long totalTimesOfConsumer(String consumer);
+
+    void consumeQrcodeSlice(String consumer, String nickName, QrcodeSlice qrcodeSlice) throws CircuitException;
 
     @CjTransaction
     void addRecipientsBalanceBill(Recipients recipients,String recipientsRecrodSn ,RecipientsBalance balance, BigDecimal money);

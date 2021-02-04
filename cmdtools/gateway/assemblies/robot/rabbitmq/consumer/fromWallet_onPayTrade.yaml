@@ -30,7 +30,7 @@ queue:
 #仅接收来自exchanges配置的routingKey的消息。如果exchange是的type=fanout则忽略routingKey直接接收
 #  *（星号）仅代表一个单词
 #  #（井号）代表任意个单词
-routingKey: node.#
+routingKey: absorber.#
 #当自动应答等于true的时候，表示当消费者一收到消息就表示消费者收到了消息，消费者收到了消息就会立即从队列中删除。
 #消息的自动ACK确认机制默认是true
 #在非自动确认模式下如果忘记了ACK，那么后果很严重。当Consumer退出时候，Message会一直重新分发

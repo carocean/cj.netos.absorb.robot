@@ -344,7 +344,7 @@
         limit #{offset},#{limit}
     </select>
     <select id="totalAmountInvests" parameterType="cj.netos.absorb.robot.model.InvestRecord" resultType="java.lang.Long">
-        select sum(amount)
+        select IFNULL(sum(amount),0)
         from invest_record
         where absorber = #{absorber,jdbcType=VARCHAR}
     </select>

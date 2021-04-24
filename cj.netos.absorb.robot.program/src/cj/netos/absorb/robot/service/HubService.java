@@ -718,6 +718,7 @@ public class HubService implements IHubService {
             BankWithdrawResult bankWithdrawResult = (BankWithdrawResult) result;
             record.setRefsn(bankWithdrawResult.getOutTradeSn());
             record.setOrder(0);
+            CJSystem.logging().info(getClass(),String.format("RecipientsRecord refsn:%s",record.getRefsn()));
         }
         if (result instanceof InvestRecord) {
             InvestRecord investRecord = (InvestRecord) result;

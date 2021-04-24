@@ -146,11 +146,11 @@ public class AbsorbOutRecord {
 
     public BankWithdrawResult convertResult() {
         BankWithdrawResult result = new BankWithdrawResult();
+        result.setSn(sn);
         result.setBankid(_bankid);
         result.setCtime(this.ctime);
         result.setDtime(RobotUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         result.setNote(note);
-        result.setOutTradeSn(sn);
         result.setPersonName(nickName);
         result.setReqAmount(amount);
         result.setRealAmount(amount);
